@@ -47,6 +47,8 @@ app.get('/chat', function(req, res) {
 
 // ##############################################################################################	
 
+var routes = require("../routes/routes.js")(app);
+var schroute = require("../routes/schapi.js")(app);
 var mrchtroute = require("../routes/merchant.js")(app);
 
 

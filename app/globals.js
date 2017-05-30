@@ -5,6 +5,14 @@ global.globvar = {
     "marketapi": "/marketapi"
 }
 
+global.schema = function schema(params) {
+    return "ginv." + params;
+};
+
+global.schema2 = function schema2(params) {
+    return "mrktn." + params;
+};
+
 global.merchant = function merchant(params) {
     return "mrcht." + params;
 };
