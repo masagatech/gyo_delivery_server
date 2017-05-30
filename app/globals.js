@@ -6,7 +6,7 @@ global.globvar = {
 }
 
 global.merchant = function merchant(params) {
-    return "murchant." + params;
+    return "mrcht." + params;
 };
 
 global.constr = function constr() {

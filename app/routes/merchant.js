@@ -3,6 +3,8 @@ var globals = require("gen").globals;
 var user = require("../appmodule/merchant/user.js");
 var login = require("../appmodule/merchant/login.js");
 var menu = require("../appmodule/merchant/menu.js");
+var rider = require('../appmodule/merchant/rider.js');
+var outlet = require('../appmodule/merchant/outlet.js');
 var restaurant = require('../appmodule/merchant/restaurant.js');
 var category = require('../appmodule/merchant/category.js');
 var items = require('../appmodule/merchant/items.js');
@@ -58,6 +60,16 @@ var appRouter = function(app) {
     app.post(root + "/getMenuDetails", menu.getMenuDetails);
 
     //##################################### Menu ##################################################
+
+    //############################ Rider ##########################################################
+    app.post(root + "/getRiderDetails", rider.getRiderDetails);
+    app.post(root + "/saveRiderInfo", rider.saveRiderInfo);
+    //#############################################################################################
+
+    //############################ Outlet #########################################################
+    app.post(root + "/getOutletDetails", outlet.getOutletDetails);
+    app.post(root + "/saveOutletInfo", outlet.saveOutletInfo);
+    //#############################################################################################
 
     //############################ Restaurant #####################################################
     app.post(root + "/getRestaurantMaster", restaurant.getRestaurantMaster);
