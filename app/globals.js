@@ -10,9 +10,10 @@ global.merchant = function merchant(params) {
 };
 
 global.constr = function constr() {
-    return 'postgres://postgres:123@127.0.0.1:5432/goyo_groc';
+    // return 'postgres://postgres:123@127.0.0.1:5432/goyo_groc';
 
-    //return 'postgres://postgres:123@192.168.1.105:5432/goyo_sch';
+    return 'postgres://postgres:123@192.168.1.105:5432/goyo_sch';
+
     //return 'postgres://postgres:sa@123@35.154.230.244:5432/goyo_sch';
     //return 'postgres://postgres:sa@123@35.154.230.244:5432/goyo_app';
 };
