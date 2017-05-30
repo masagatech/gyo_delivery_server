@@ -1,0 +1,9 @@
+{
+    "server": {
+        "port": 8082,
+        "ip": "0.0.0.0"
+    },
+    "fcm": {
+        "serverkey": "AIzaSyCU8agC8CBQ4h1STU969yQaFCOwtXxeziE"
+    }
+}
