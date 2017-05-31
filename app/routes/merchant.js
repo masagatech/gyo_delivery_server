@@ -7,6 +7,7 @@ var restaurant = require('../appmodule/merchant/restaurant.js');
 var category = require('../appmodule/merchant/category.js');
 var items = require('../appmodule/merchant/items.js');
 var order = require('../appmodule/merchant/order.js');
+var orderdash = require('../appmodule/merchant/orderdashboard.js');
 
 const root = globals.globvar.rootAPI + "/mrcht";
 
@@ -61,6 +62,10 @@ var appRouter = function(app) {
     //#############################################################################################
 
     //############################ API TEST / ##########################
+    
+    //############################ Orders API / ###################################
+     app.get(root + "/getOrderDash", orderdash.getOrderDash);
+     app.post(root + "/getOrderDash", orderdash.postOrderDash);
 }
 
 module.exports = appRouter;
