@@ -10,7 +10,7 @@ var conf = require("gen").conf;
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
-var io = require('socket.io')(server);
+var io = require('socket.io').listen(8001);
 var path = require('path');
 
 var mondb = require("../db/mongodbservice.js"); //mongo db import
@@ -71,3 +71,6 @@ var expserver = server.listen(conf.server.port, conf.server.ip, function() {
 });
 
 // ##############################################################################################
+
+
+

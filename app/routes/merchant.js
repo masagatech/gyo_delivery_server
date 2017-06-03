@@ -8,6 +8,12 @@ var category = require('../appmodule/merchant/category.js');
 var items = require('../appmodule/merchant/items.js');
 var order = require('../appmodule/merchant/order.js');
 var orderdash = require('../appmodule/merchant/orderdashboard.js');
+var mobile = require('../appmodule/merchant/mobile.js');
+var ordallocation = require('../appmodule/merchant/orderallocation.js');
+var status = require('../appmodule/merchant/status.js');
+
+var notification = require('../appmodule/merchant/notification.js');
+
 
 const root = globals.globvar.rootAPI + "/mrcht";
 
@@ -59,6 +65,8 @@ var appRouter = function(app) {
     //############################ Orders / ###################################
     app.post(root + "/saveOrderInfo", order.saveOrderInfo);
     app.post(root + "/getOrderDetails", order.getOrderDetails);
+    app.get(root + "/getOrders", order.getapiOrders);
+
     //#############################################################################################
 
     //############################ API TEST / ##########################
@@ -66,6 +74,19 @@ var appRouter = function(app) {
     //############################ Orders API / ###################################
      app.get(root + "/getOrderDash", orderdash.getOrderDash);
      app.post(root + "/getOrderDash", orderdash.postOrderDash);
+     app.get(root + "/getAvailRider", rider.getAvailable);
+     app.post(root + "/pushOrderToRider", ordallocation.sendorder);
+
+     //############################ Rider API / ###################################
+     app.get(root + "/getDashOrdDetails", orderdash.getOrderDetails);
+    //############################ Mobile API / ###################################
+     app.get(root + "/saveLiveBeat", mobile.savelivebeat);
+     //############################ Status / ###################################
+     app.get(root + "/getStatus", status.getStatus);
+     app.post(root + "/setStatus", status.setStatus);
+     //############################ Status / ###################################
+     app.get(root + "/getNotify", notification.getNotify);
+     app.post(root + "/createNotify", notification.createNotify);
 }
 
 module.exports = appRouter;

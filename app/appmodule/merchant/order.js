@@ -19,3 +19,12 @@ order.getOrderDetails = function getOrderDetails(req, res, done) {
         rs.resp(res, 401, "error : " + err);
     }, 1)
 }
+
+
+order.getapiOrders = function getapiOrders(req, res, done) {
+    db.callProcedure("select " + globals.merchant("api_funget_orderdetails") + "($1,$2::json);", ['orddet', req.query], function(data) {
+        rs.resp(res, 200, data.rows);
+    }, function(err) {
+        rs.resp(res, 401, "error : " + err);
+    }, 1)
+}

@@ -34,12 +34,14 @@ db.callProcedure = function callProcedure(funName, data, callback, errcallback, 
                 refcount = refcount === undefined ? 1 : refcount;
                 for (var index = 0; index < refcount; index++) {
                     var element = data[index];
-
                     client.query('FETCH all from ' + element + ' ;', function(err, result) {
                         if (err) {
                             //  rs.resp(res, 401, "error : " + err);
+                            error =true;
                             errcallback(err);
+                            
                             commit(client, done);
+                            
                             return
                         }
                         querycount += 1;
@@ -64,6 +66,8 @@ db.callProcedure = function callProcedure(funName, data, callback, errcallback, 
         });
 
     });
+
+    
 
     function commit(client, done) {
         client.query('COMMIT;', function(err, result) {
