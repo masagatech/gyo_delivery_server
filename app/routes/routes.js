@@ -6,10 +6,12 @@ var login = require("../appmodule/schoolapi/login.js");
 var fileupload = require('../appmodule/schoolapi/fileupload.js');
 var menu = require("../appmodule/schoolapi/menu.js");
 var common = require("../appmodule/schoolapi/common.js");
+var location = require("../appmodule/schoolapi/location.js");
 var school = require("../appmodule/schoolapi/school.js");
 var holiday = require("../appmodule/schoolapi/holiday.js");
 var batch = require("../appmodule/schoolapi/batch.js");
 var driver = require("../appmodule/schoolapi/driver.js");
+var vehicle = require("../appmodule/schoolapi/vehicle.js");
 var owner = require("../appmodule/schoolapi/owner.js");
 var user = require("../appmodule/schoolapi/user.js");
 var student = require("../appmodule/schoolapi/student.js");
@@ -83,6 +85,13 @@ var appRouter = function(app) {
 
     //##################################### Common ####################################################
 
+    //##################################### Location ####################################################
+
+    app.post(globals.globvar.rootAPI + "/saveLocationInfo", location.saveLocationInfo);
+    app.post(globals.globvar.rootAPI + "/getLocationDetails", location.getLocationDetails);
+
+    //##################################### Location ###################################################
+
     //##################################### School ####################################################
 
     app.post(globals.globvar.rootAPI + "/saveSchoolInfo", school.saveSchoolInfo);
@@ -108,6 +117,13 @@ var appRouter = function(app) {
 
     app.post(globals.globvar.rootAPI + "/saveDriverInfo", driver.saveDriverInfo);
     app.post(globals.globvar.rootAPI + "/getDriverDetails", driver.getDriverDetails);
+
+    //##################################### Driver ####################################################
+
+    //##################################### Vehicle ####################################################
+
+    app.post(globals.globvar.rootAPI + "/saveVehicleInfo", vehicle.saveVehicleInfo);
+    app.post(globals.globvar.rootAPI + "/getVehicleDetails", vehicle.getVehicleDetails);
 
     //##################################### Driver ####################################################
 

@@ -1,5 +1,6 @@
 var globals = require("gen").globals;
 
+var hotspot = require('../appmodule/merchant/hotspot.js');
 var rider = require('../appmodule/merchant/rider.js');
 var merchant = require('../appmodule/merchant/merchant.js');
 var outlet = require('../appmodule/merchant/outlet.js');
@@ -7,6 +8,7 @@ var restaurant = require('../appmodule/merchant/restaurant.js');
 var category = require('../appmodule/merchant/category.js');
 var items = require('../appmodule/merchant/items.js');
 var order = require('../appmodule/merchant/order.js');
+var common = require('../appmodule/merchant/common.js');
 
 const root = globals.globvar.rootAPI + "/mrcht";
 
@@ -23,6 +25,11 @@ var appRouter = function(app) {
     //#############################################################################################
 
     //############################ VIVEK / ####################################
+
+    //############################ Hotspot #####################################
+    app.post(root + "/getHotspotDetails", hotspot.getHotspotDetails);
+    app.post(root + "/saveHotspotInfo", hotspot.saveHotspotInfo);
+    //#############################################################################################
 
     //############################ Rider #####################################
     app.post(root + "/getRiderDetails", rider.getRiderDetails);
@@ -58,6 +65,11 @@ var appRouter = function(app) {
     //############################ Orders / ###################################
     app.post(root + "/saveOrderInfo", order.saveOrderInfo);
     app.post(root + "/getOrderDetails", order.getOrderDetails);
+    //#############################################################################################
+
+    //############################ Common / ###################################
+    app.get(root + "/getAutoData", common.getAutoData);
+    app.post(root + "/getDropDownData", common.getDropDownData);
     //#############################################################################################
 
     //############################ API TEST / ##########################
