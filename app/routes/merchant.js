@@ -1,5 +1,6 @@
 var globals = require("gen").globals;
 
+var hotspot = require('../appmodule/merchant/hotspot.js');
 var rider = require('../appmodule/merchant/rider.js');
 var merchant = require('../appmodule/merchant/merchant.js');
 var outlet = require('../appmodule/merchant/outlet.js');
@@ -7,6 +8,8 @@ var restaurant = require('../appmodule/merchant/restaurant.js');
 var category = require('../appmodule/merchant/category.js');
 var items = require('../appmodule/merchant/items.js');
 var order = require('../appmodule/merchant/order.js');
+
+var common = require('../appmodule/merchant/common.js');
 var orderdash = require('../appmodule/merchant/orderdashboard.js');
 var mobile = require('../appmodule/merchant/mobile.js');
 var ordallocation = require('../appmodule/merchant/orderallocation.js');
@@ -30,6 +33,11 @@ var appRouter = function(app) {
     //#############################################################################################
 
     //############################ VIVEK / ####################################
+
+    //############################ Hotspot #####################################
+    app.post(root + "/getHotspotDetails", hotspot.getHotspotDetails);
+    app.post(root + "/saveHotspotInfo", hotspot.saveHotspotInfo);
+    //#############################################################################################
 
     //############################ Rider #####################################
     app.post(root + "/getRiderDetails", rider.getRiderDetails);
@@ -69,8 +77,13 @@ var appRouter = function(app) {
 
     //#############################################################################################
 
+    //############################ Common / ###################################
+    app.get(root + "/getAutoData", common.getAutoData);
+    app.post(root + "/getDropDownData", common.getDropDownData);
+    //#############################################################################################
+
     //############################ API TEST / ##########################
-    
+
     //############################ Orders API / ###################################
      app.get(root + "/getOrderDash", orderdash.getOrderDash);
      app.post(root + "/getOrderDash", orderdash.postOrderDash);
@@ -87,6 +100,7 @@ var appRouter = function(app) {
      //############################ Status / ###################################
      app.get(root + "/getNotify", notification.getNotify);
      app.post(root + "/createNotify", notification.createNotify);
+
 }
 
 module.exports = appRouter;
