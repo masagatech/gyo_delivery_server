@@ -46,8 +46,8 @@ var fcm = require("gen").fcm();
                 // tokens.push(devicetokens[i].devtok);
                 // users.push(devicetokens[i].uid);
                  _data.uid = devicetokens[i].uid;
+                // console.log(_data);
                  ordallocation.sendOrderToManualNotification(_data);
-                
                 //console.log(devicetokens[i].devtok);
            }
            

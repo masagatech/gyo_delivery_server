@@ -36,11 +36,14 @@ notification.getNotify = function getNotify(req, res1, done) {
     // })
 }
 
-
+var expiryTime = 180;
 notification.createNotify = function createNotify(req, res1, done) {
-            var keys = redis.hkeys('USER' + req.body.uid, function(err, res){
+
+            var uid = req.body.uid;
+            var keys = redis.hkeys('USER' + uid, function(err, res){
                     if(res.length > 20){
-                        var retunval = redis.hdel('USER' + req.body.uid,res[0].toString(), function(err, res){
+                        //delete if order greater than 20
+                        var retunval = redis.hdel('USER' + uid,res[0].toString(), function(err, res){
                               if(err){
                                     if(res1)
                                     rs.resp(res1, 200,  {"state":false,"error 1": err});
@@ -48,12 +51,15 @@ notification.createNotify = function createNotify(req, res1, done) {
                                 }
                           
                             var uniq = new Date().getTime();
-                            redis.hmset(['USER' + req.body.uid, uniq, JSON.stringify(req.body)],function(err, res){
+                            //add to new order
+                            redis.hmset(['USER' + uid, uniq, JSON.stringify(req.body)],function(err, res){
                                  if(err){
                                     if(res1)
                                     rs.resp(res1, 200,  {"state":false,"error 2": err});
                                     return;
                                 }
+                                redis.expire('USER' + uid, expiryTime);
+
                                 if(res1)
                                 rs.resp(res1, 200,  {"state":true,"data": res});
                             });
@@ -61,12 +67,14 @@ notification.createNotify = function createNotify(req, res1, done) {
 
                     }else{
                          var uniq = new Date().getTime();
-                        redis.hmset(['USER' + req.body.uid, uniq, JSON.stringify(req.body)],function(err, res){
+                         //add to new order
+                        redis.hmset(['USER' + uid, uniq, JSON.stringify(req.body)],function(err, res){
                                 if(err){
                                     if(res1)
                                     rs.resp(res1, 200,  {"state":false,"error 3": err});
                                     return;
                                 }
+                                redis.expire('USER' + uid, expiryTime);
                                 if(res1)
                                  rs.resp(res1, 200,  {"state":true,"data": res});
                         });

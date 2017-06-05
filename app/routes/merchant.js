@@ -17,6 +17,7 @@ var ordallocation = require('../appmodule/merchant/orderallocation.js');
 var status = require('../appmodule/merchant/status.js');
 
 var notification = require('../appmodule/merchant/notification.js');
+var trip = require('../appmodule/merchant/trip.js');
 
 const root = globals.globvar.rootAPI + "/mrcht";
 
@@ -111,6 +112,12 @@ var appRouter = function(app) {
     app.get(root + "/getNotify", notification.getNotify);
     app.post(root + "/createNotify", notification.createNotify);
     //#############################################################################################
+    
+    //############################ trip / #######################################
+    app.post(root + "/setTripAction", trip.setTripAction);
+    
+    //#############################################################################################
+
 }
 
 module.exports = appRouter;

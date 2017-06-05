@@ -9,25 +9,31 @@ socketserver.start = function() {
 
         });
      
-        client.on('register', function(msg) {
+        client.on('regord', function(msg) {
             // client.
-            client.join(msg.regname);
-            client.emit("msgd", { "evt": "registered", "msg": msg.regname });
-
+            var olids = JSON.parse(msg);
+            var olidss = olids.ids;
+            for (var index = 0; index < olidss.length - 1; index++) {
+              client.join(olidss[index].toString());
+            }
+            //console.log(olids.ids);    
+            //client.join(msg.regname);
+            client.emit("ordmsg", { "evt": "registered", "msg": msg.regname });
         });
 
-         client.on('unregister', function(msg) {
+         client.on('unregord', function(msg) {
             // client.
             client.leave(msg);
-            client.emit("msgd", { "evt": "unregistered", "msg": msg });
+            client.emit("ordmsg", { "evt": "unregistered", "msg": msg });
 
         });
 
         client.on('room', function(msg) {
             socketserver.io.sockets.in(msg.room).emit("data", { "evt": "unregistered", "msg": msg.data });
         });
-
-        client.emit("msgd", { "evt": "regreq" });
+        console.log("olids");    
+        client.emit("ordmsg", { "evt": "regreq" });
 
     });
+    console.log("socket server started");
 }

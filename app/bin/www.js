@@ -10,7 +10,7 @@ var conf = require("gen").conf;
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
-var io = require('socket.io').listen(8001);
+var io = require('socket.io').listen(8083);
 var path = require('path');
 
 var mondb = require("../db/mongodbservice.js"); //mongo db import
@@ -23,7 +23,7 @@ socketserver.start();
 var bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-console.log(path.join(__dirname.replace(/\\app\\bin/gi, ""), '\\www\\uploads'));
+//console.log(path.join(__dirname.replace(/\\app\\bin/gi, ""), '\\www\\uploads'));
 
 //###############################################################################################
 
