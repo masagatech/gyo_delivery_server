@@ -9,6 +9,7 @@ var restaurant = require('../appmodule/merchant/restaurant.js');
 var category = require('../appmodule/merchant/category.js');
 var items = require('../appmodule/merchant/items.js');
 var order = require('../appmodule/merchant/order.js');
+var dayend = require('../appmodule/merchant/dayend.js');
 var customer = require('../appmodule/merchant/customer.js');
 
 var orderdash = require('../appmodule/merchant/orderdashboard.js');
@@ -81,6 +82,11 @@ var appRouter = function(app) {
     app.get(root + "/getOrders", order.getapiOrders);
     //#############################################################################################
 
+    //############################ Day End / ######################################
+    app.post(root + "/saveDayEndInfo", dayend.saveDayEndInfo);
+    app.post(root + "/getDayEndDetails", dayend.getDayEndDetails);
+    //#############################################################################################
+
     //############################ Customer / #######################################
     app.post(root + "/getCustomerDetails", customer.getCustomerDetails);
     app.post(root + "/saveCustomerInfo", customer.saveCustomerInfo);
@@ -112,10 +118,10 @@ var appRouter = function(app) {
     app.get(root + "/getNotify", notification.getNotify);
     app.post(root + "/createNotify", notification.createNotify);
     //#############################################################################################
-    
+
     //############################ trip / #######################################
     app.post(root + "/setTripAction", trip.setTripAction);
-    
+
     //#############################################################################################
 
 }
