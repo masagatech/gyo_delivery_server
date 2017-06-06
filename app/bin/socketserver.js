@@ -13,8 +13,11 @@ socketserver.start = function() {
             // client.
             var olids = JSON.parse(msg);
             var olidss = olids.ids;
-            for (var index = 0; index < olidss.length - 1; index++) {
+            //console.log(olidss.length);
+            for (var index = 0; index < olidss.length; index++) {
+                console.log(olidss[index].toString());
               client.join(olidss[index].toString());
+              
             }
             //console.log(olids.ids);    
             //client.join(msg.regname);
@@ -36,4 +39,11 @@ socketserver.start = function() {
 
     });
     console.log("socket server started");
+}
+
+    socketserver.sendOrder= function(channel, data){
+        channel.forEach(function(room){
+        socketserver.io.sockets.in(room).emit('ordmsg', { "evt": "data", "data": data });
+    });
+        
 }
