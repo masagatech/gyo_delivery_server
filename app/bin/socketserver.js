@@ -15,7 +15,7 @@ socketserver.start = function() {
             var olidss = olids.ids;
             //console.log(olidss.length);
             for (var index = 0; index < olidss.length; index++) {
-                console.log(olidss[index].toString());
+              //  console.log(olidss[index].toString());
               client.join(olidss[index].toString());
               
             }
@@ -34,7 +34,7 @@ socketserver.start = function() {
         client.on('room', function(msg) {
             socketserver.io.sockets.in(msg.room).emit("data", { "evt": "unregistered", "msg": msg.data });
         });
-        console.log("olids");    
+        //console.log("olids");    
         client.emit("ordmsg", { "evt": "regreq" });
 
     });

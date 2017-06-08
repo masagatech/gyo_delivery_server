@@ -12,7 +12,7 @@ order.saveOrderInfo = function saveOrderInfo(req, res, done) {
        
         try {
          var ordid =data.rows[0].funsave_orderinfo;
-         console.log(ordid);     
+         //console.log(ordid);     
          var orderdata = {
              "olid":  req.body.olid ,
              "olnm":req.body.olnm ,
