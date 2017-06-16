@@ -21,13 +21,13 @@ rider.getRiderDetails = function getRiderDetails(req, res, done) {
 }
 
 rider.getAvailable = function getAvailable(req, res, done) {
-    if(req.query.flag == undefined){
-        
+    if (req.query.flag == undefined) {
+
         rs.resp(res, 401, "invalid input parameters flag");
         return;
     }
 
-    db.callProcedure("select " + globals.merchant("api_funget_availrider") + "($1,$2::json);", ['availrider', req.query ], function(data) {
+    db.callProcedure("select " + globals.merchant("api_funget_availrider") + "($1,$2::json);", ['availrider', req.query], function(data) {
         rs.resp(res, 200, data.rows);
     }, function(err) {
         rs.resp(res, 401, "error : " + err);
