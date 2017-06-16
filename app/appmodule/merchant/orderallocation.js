@@ -9,6 +9,7 @@ ordallocation.sendorder = function(req, res, done) {
 
     var userIds = req.body.uids;
     var orderdetails = req.body.orddt;
+    
     var status = req.body.status;
     ordallocation.sendNotification({
         "userids":userIds,
@@ -29,18 +30,21 @@ ordallocation.sendorder = function(req, res, done) {
 // sending FCM notification
 var fcm = require("gen").fcm();
 
-    ordallocation.sendNotification = function(_users, _data,_data1, res) {
+    ordallocation.sendNotification = function(_users, _data,_extra, res) {
        db.callProcedure("select " + globals.merchant("funget_api_getnotifyids") + "($1,$2,$3::json);", ['tripnotify','tripnotify1', _users], 
        function(data) {
           
 
            var devicetokens = data.rows[0];
+
+           
         //    var tokens = [];
         //    var users = [];
             var msg = data.rows[1][0];
             _data["body"] = msg.body;
             _data["title"] = msg.title;
-            _data["extra"] = _data1;
+            _extra["expmin"] =  msg.conf.notifymin == undefined ? 3 : msg.conf.notifymin;
+            _data["extra"] = _extra;
 
            for(var i=0;i<=devicetokens.length -1;i++){
                 // tokens.push(devicetokens[i].devtok);

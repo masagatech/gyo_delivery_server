@@ -80,6 +80,8 @@ var appRouter = function(app) {
     app.post(root + "/saveOrderInfo", order.saveOrderInfo);
     app.post(root + "/getOrderDetails", order.getOrderDetails);
     app.get(root + "/getOrders", order.getapiOrders);
+    app.get(root + "/getOrdersCount", order.getapiOrdersCounts);
+    
     //#############################################################################################
 
     //############################ Day End / ######################################

@@ -11,7 +11,7 @@ order.saveOrderInfo = function saveOrderInfo(req, res, done) {
 
         try {
          var ordid =data.rows[0].funsave_orderinfo;
-         //console.log(ordid);     
+         //console.log(ordid);      
          var orderdata = {
              "olid":  req.body.olid ,
              "olnm":req.body.olnm ,
@@ -39,6 +39,20 @@ order.getOrderDetails = function getOrderDetails(req, res, done) {
 
 order.getapiOrders = function getapiOrders(req, res, done) {
     db.callProcedure("select " + globals.merchant("api_funget_orderdetails") + "($1,$2::json);", ['orddet', req.query], function(data) {
+
+        if (data.rows.length > 0 && data.rows[0].status != undefined && !data.rows[0].status) {
+            data.rows = [];
+        }
+
+        rs.resp(res, 200, data.rows);
+    }, function(err) {
+        rs.resp(res, 401, "error : " + err);
+    }, 1)
+}
+
+
+order.getapiOrdersCounts = function getapiOrdersCounts(req, res, done) {
+    db.callProcedure("select " + globals.merchant("api_funget_ordcount") + "($1,$2::json);", ['ordcount', req.query], function(data) {
 
         if (data.rows.length > 0 && data.rows[0].status != undefined && !data.rows[0].status) {
             data.rows = [];
