@@ -11,3 +11,4 @@ dashboard.getDashboard = function getDashboard(req, res, done) {
         rs.resp(res, 401, "error : " + err);
     }, 1)
 }
+

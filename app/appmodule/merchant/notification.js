@@ -1,7 +1,7 @@
 var rs = require("gen").res;
 var globals = require("gen").globals;
 var redis = require('redisdb');
-
+var socket = require("socket");
 var notification = module.exports = {};
 
 notification.getNotify = function getNotify(req, res1, done) {
@@ -59,7 +59,7 @@ notification.createNotify = function createNotify(req, res1, done) {
                                     return;
                                 }
                                 redis.expire('USER' + uid, expiryTime);
-
+                                socket.sendNotify(uid,"1");
                                 if(res1)
                                 rs.resp(res1, 200,  {"state":true,"data": res});
                             });
@@ -75,6 +75,7 @@ notification.createNotify = function createNotify(req, res1, done) {
                                     return;
                                 }
                                 redis.expire('USER' + uid, expiryTime);
+                                socket.sendNotify(uid,"1");
                                 if(res1)
                                  rs.resp(res1, 200,  {"state":true,"data": res});
                         });

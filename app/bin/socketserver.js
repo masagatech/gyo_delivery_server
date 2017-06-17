@@ -34,6 +34,15 @@ socketserver.start = function() {
         client.on('room', function(msg) {
             socketserver.io.sockets.in(msg.room).emit("data", { "evt": "unregistered", "msg": msg.data });
         });
+
+
+
+        ///notification registration 
+        client.on('regnotify', function(msg) {     
+            console.log(msg);       
+            client.join(msg);
+        });
+        console.log("connected ne client");
         //console.log("olids");    
         client.emit("ordmsg", { "evt": "regreq" });
 
@@ -44,6 +53,9 @@ socketserver.start = function() {
     socketserver.sendOrder= function(channel, data){
         channel.forEach(function(room){
         socketserver.io.sockets.in(room).emit('ordmsg', { "evt": "data", "data": data });
-    });
-        
+        });        
+    }
+
+socketserver.sendNotify= function(channel, data){        
+        socketserver.io.sockets.in(channel).emit('ordmsg', { "evt": "data", "data": data });                
 }

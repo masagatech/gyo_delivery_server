@@ -20,6 +20,8 @@ var status = require('../appmodule/merchant/status.js');
 var notification = require('../appmodule/merchant/notification.js');
 var trip = require('../appmodule/merchant/trip.js');
 
+var gmap = require('../appmodule/merchant/gmap.js');
+
 const root = globals.globvar.rootAPI + "/mrcht";
 
 var appRouter = function(app) {
@@ -123,6 +125,8 @@ var appRouter = function(app) {
 
     //############################ trip / #######################################
     app.post(root + "/setTripAction", trip.setTripAction);
+    //############################ gmap / #######################################
+    app.get(root + "/getgMapData", gmap.getmapData);
 
     //#############################################################################################
 

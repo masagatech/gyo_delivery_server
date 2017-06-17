@@ -33,6 +33,7 @@ app.all('/*', function(req, res, next) {
 
     // Set custom headers for CORS
     res.header('Access-Control-Allow-Headers', 'Content-type,Accept,App-Id,Password');
+    console.log(req.originalUrl);
     if (req.method == 'OPTIONS') {
         res.status(200).end();
     } else {
