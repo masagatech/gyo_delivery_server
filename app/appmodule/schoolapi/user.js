@@ -22,6 +22,14 @@ user.getUserDetails = function getUserDetails(req, res, done) {
     }, 1)
 }
 
+user.changePassword = function changePassword(req, res, done) {
+    db.callFunction("select " + globals.schema("funsave_userchpwd") + "($1::json);", [req.body], function(data) {
+        rs.resp(res, 200, data.rows);
+    }, function(err) {
+        rs.resp(res, 401, "error : " + err);
+    })
+}
+
 // User Rights
 
 user.saveUserRights = function saveUserRights(req, res, done) {

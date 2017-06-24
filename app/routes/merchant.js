@@ -19,6 +19,7 @@ var status = require('../appmodule/merchant/status.js');
 
 var notification = require('../appmodule/merchant/notification.js');
 var trip = require('../appmodule/merchant/trip.js');
+var reports = require('../appmodule/merchant/reports.js');
 
 var gmap = require('../appmodule/merchant/gmap.js');
 
@@ -81,9 +82,10 @@ var appRouter = function(app) {
     //############################ Orders / ######################################
     app.post(root + "/saveOrderInfo", order.saveOrderInfo);
     app.post(root + "/getOrderDetails", order.getOrderDetails);
+      app.get(root + "/getDailyOrderDetails", order.getDailyOrderDetails);
     app.get(root + "/getOrders", order.getapiOrders);
     app.get(root + "/getOrdersCount", order.getapiOrdersCounts);
-    
+
     //#############################################################################################
 
     //############################ Day End / ######################################
@@ -127,6 +129,10 @@ var appRouter = function(app) {
     app.post(root + "/setTripAction", trip.setTripAction);
     //############################ gmap / #######################################
     app.get(root + "/getgMapData", gmap.getmapData);
+
+    //############################ Reports / ######################################
+    app.post(root + "/getDayEndReports", reports.getDayEndReports);
+    //#############################################################################################
 
     //#############################################################################################
 
