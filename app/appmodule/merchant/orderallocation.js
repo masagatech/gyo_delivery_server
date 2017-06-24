@@ -8,8 +8,7 @@ var ordallocation = module.exports = {};
 ordallocation.sendorder = function(req, res, done) {
 
     var userIds = req.body.uids;
-    var orderdetails = req.body.orddt;
-    
+    var orderdetails = req.body.orddt;    
     var status = req.body.status;
     ordallocation.sendNotification({
         "userids":userIds,
@@ -27,8 +26,6 @@ ordallocation.sendorder = function(req, res, done) {
     rs.resp(res, 200, "success");
 }
 
-// sending FCM notification
-var fcm = require("gen").fcm();
 
     ordallocation.sendNotification = function(_users, _data,_extra, res) {
        db.callProcedure("select " + globals.merchant("funget_api_getnotifyids") + "($1,$2,$3::json);", ['tripnotify','tripnotify1', _users], 
@@ -126,6 +123,52 @@ ordallocation.sendOrderToManualNotification= function(data)
 
     notification.createNotify(req);
 }
+
+// sending FCM notification
+var fcm = require("gen").fcm();
+
+ordallocation.sendFCMToRider= function(data)
+{
+  data["flag"] = "assigned";  
+ db.callProcedure("select " + globals.merchant("funget_api_getnotifyids") + "($1,$2,$3::json);", ['tripnotify','tripnotify1', {'rdrid': data.rdid,'flag':'assigned'}], 
+       function(data) {          
+
+            var devicetokens = data.rows[0][0];
+            var msg = data.rows[1][0];
+         
+            if(devicetokens){
+                var message = {
+                        "registration_ids": [devicetokens.devtok],
+                        "notification": {
+                            "sound": "default",
+                             "body": msg.body,
+                            "title": msg.title,
+                        },
+                        "priority": "HIGH",
+                        "time_to_live": (60 * 60 * 24)
+                    };
+     
+
+                fcm.send(message, function(err, response) {
+
+                    if (err) {
+
+                        console.log("Something has gone wrong!" ,err );
+
+                    } else {
+                        console.log("Successfully sent with response: ", response);
+
+                    }
+                });
+
+            }
+
+    }, function(err) {
+      
+    },2);
+
+}
+
 
 ordallocation.sendorderResp = function (){
 

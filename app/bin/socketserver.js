@@ -57,5 +57,5 @@ socketserver.start = function() {
     }
 
 socketserver.sendNotify= function(channel, data){        
-        socketserver.io.sockets.in(channel).emit('ordmsg', { "evt": "data", "data": data });                
+        socketserver.io.sockets.in("notify_" +channel).emit('ordmsg', { "evt": "data", "data": data });                
 }
