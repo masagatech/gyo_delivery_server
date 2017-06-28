@@ -14,7 +14,9 @@ ordallocation.sendorder = function(req, res, done) {
         "userids":userIds,
         "ordid" : orderdetails.ordid,
         "flag" : "ordnotify",
-         "status": status,      
+        "status": status,  
+        "sbflg": req.body.sbflg   ,
+        "hsid":req.body.hsid  
 
     } , {
             "ordid" : orderdetails.ordid,
@@ -23,6 +25,7 @@ ordallocation.sendorder = function(req, res, done) {
     }, 
        orderdetails
    );
+   if(res)
     rs.resp(res, 200, "success");
 }
 
