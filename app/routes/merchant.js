@@ -82,8 +82,8 @@ var appRouter = function(app) {
     //############################ Orders / ######################################
     app.post(root + "/saveOrderInfo", order.saveOrderInfo);
     app.post(root + "/getOrderDetails", order.getOrderDetails);
-      app.get(root + "/getDailyOrderDetails", order.getDailyOrderDetails);
-      app.get(root + "/getFullOrderDetails", order.getFullOrderDetails);
+    app.get(root + "/getDailyOrderDetails", order.getDailyOrderDetails);
+    app.get(root + "/getFullOrderDetails", order.getFullOrderDetails);
     app.get(root + "/getOrders", order.getapiOrders);
     app.get(root + "/getOrdersCount", order.getapiOrdersCounts);
 
@@ -133,10 +133,10 @@ var appRouter = function(app) {
 
     //############################ Reports / ######################################
     app.post(root + "/getDayEndReports", reports.getDayEndReports);
+    app.post(root + "/getInvoiceDetails", reports.getInvoiceDetails);
     //#############################################################################################
 
     //#############################################################################################
-
 }
 
 module.exports = appRouter;
