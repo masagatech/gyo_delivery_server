@@ -58,6 +58,7 @@ var appRouter = function(app) {
     //##################################### Menu ####################################################
 
     app.post(globals.globvar.rootAPI + "/getMenuDetails", menu.getMenuDetails);
+    app.post(globals.globvar.rootAPI + "/getMenuAccess", menu.getMenuAccess);
 
     //##################################### Menu ####################################################
 
