@@ -60,7 +60,14 @@ order.sendAuto = function auto(_req)// send auto order function
 
     ordallocation.sendorder(req);// send order allocation function
 }
-
+//for update orders
+order.updateOrderDetails = function updateOrderDetails(req, res, done) {
+    db.callFunction("select " + globals.merchant("funupdate_orderdetails") + "($1::json);", [req.body], function(data) {
+        rs.resp(res, 200, data.rows[0].funupdate_orderdetails);
+    }, function(err) {
+        rs.resp(res, 401, "error : " + err);
+    })
+}
 
 order.getOrderDetails = function getOrderDetails(req, res, done) {
     db.callProcedure("select " + globals.merchant("funget_orderdetails") + "($1,$2::json);", ['bi', req.body], function(data) {
@@ -70,6 +77,8 @@ order.getOrderDetails = function getOrderDetails(req, res, done) {
     }, 1)
 }
 
+
+
 order.getDailyOrderDetails = function getDailyOrderDetails(req, res, done) {
     db.callProcedure("select " + globals.merchant("funget_dailyorderdetails") + "($1,$2::json);", ['bi', req.query], function(data) {
         rs.resp(res, 200, data.rows);
@@ -77,6 +86,7 @@ order.getDailyOrderDetails = function getDailyOrderDetails(req, res, done) {
         rs.resp(res, 401, "error : " + err);
     }, 1)
 }
+
 order.getFullOrderDetails = function getFullOrderDetails(req, res, done) {
     db.callProcedure("select " + globals.merchant("funget_fullorderdetails") + "($1,$2::json);", ['bi', req.query], function(data) {
         rs.resp(res, 200, data.rows);
