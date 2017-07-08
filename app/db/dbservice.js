@@ -121,24 +121,3 @@ db.callFunction = function callFunction(funName, data, callback, errcallback) {
     }
 
 }
-
-
-var client = new pg.Client();
-db.query = function callQury(query, data, callback, errcallback) {
-   client.connect(function (err) {
-        if (err) throw err; 
-  // execute a query on our database 
-    client.query(query, data, function (err, result) {
-        if (err) errcallback(err);    
-        // just print the result to the console 
-        //console.log(result.rows[0]); // outputs: { name: 'brianc' }
-            if(callback) 
-                callback(result);
-    
-        // disconnect the client 
-            client.end(function (err) {
-                if (err) errcallback(err);
-            });
-        });
-    });
-}

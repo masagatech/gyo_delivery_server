@@ -3,6 +3,10 @@
         "port": 8082,
         "ip": "0.0.0.0"
     },
+    "reportserver": {
+        "port": 8086,
+        "ip": "0.0.0.0"
+    },
     "fcm": {
         "serverkey": "AIzaSyBP3He3J0CqexBF_uDx4O5Suiz9UvSz1RE"
     }
