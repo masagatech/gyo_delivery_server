@@ -6,7 +6,7 @@ var util = require('util');
 var pdf = require('phantom-html2pdf');
 var tempFile = require('tmp');
 var fs = require('fs');
-var globals = require("../../../globals.js");
+var globals = require("../../globals.js");
 var Handlebars = require('handlebars');
 var helpers = require('./globalfun.js');
 
@@ -71,7 +71,7 @@ reprs.resp = function resp(template, data, req, res, done, _handlebars, _pdfopti
         //stream.pipe(file);
         file.write(result, 'utf8');
         file.end();
-        console.log(reportRootPath + "\\util\\runningfile.js");
+        console.log(reportRootPath + "\\runningfile.js");
         pdf.convert({
             "html": tmpobj.name,
             "paperSize": {
@@ -81,7 +81,7 @@ reprs.resp = function resp(template, data, req, res, done, _handlebars, _pdfopti
 
 
             },
-            "runnings": reportRootPath + "\\util\\runningfile.js",
+            "runnings": reportRootPath + "\\runningfile.js",
             "deleteOnAction": true
         }, function(err, result) {
             /* Using a buffer and callback */

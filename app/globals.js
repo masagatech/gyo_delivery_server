@@ -32,10 +32,10 @@ global.monconstr = function constr() {
 };
 
 global.reportTemplatePath = function reportTemplatePath() {
-    console.log(__dirname + '\\app\\reports\\templates');
-    return __dirname + '\\app\\reports\\templates';
+    console.log(__dirname + '\\reports\\templates');
+    return __dirname + '\\reports\\templates';
 };
 global.reportRootPath = function reportRootPath() {
-    console.log(__dirname + '\\app\\reports');
-    return __dirname + '\\app\\reports';
+    console.log(__dirname + '\\reports');
+    return __dirname + '\\reports';
 };

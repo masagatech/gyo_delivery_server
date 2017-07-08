@@ -89,6 +89,8 @@ if (cluster.isMaster) {
         console.log("API Server is listening on port %s...", expserver.address().port);
     });
 
+
+    var reportServer = require("./report-server.js");
     // ##############################################################################################
 
 }
