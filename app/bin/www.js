@@ -9,18 +9,18 @@ var cluster = require('cluster');
 //var bodyParser = require("./udp-server");
 
 // Code to run if we're in the master process
-if (cluster.isMaster) {
+// if (cluster.isMaster) {
 
-    // Count the machine's CPUs
-    var cpuCount = require('os').cpus().length;
+//     // Count the machine's CPUs
+//     var cpuCount = require('os').cpus().length;
 
-    // Create a worker for each CPU
-    for (var i = 0; i < cpuCount; i += 1) {
-        cluster.fork();
-    }
+//     // Create a worker for each CPU
+//     for (var i = 0; i < cpuCount; i += 1) {
+//         cluster.fork();
+//     }
 
-    // Code to run if we're in a worker process
-} else {
+//     // Code to run if we're in a worker process
+// } else {
 
 
 
@@ -93,4 +93,4 @@ if (cluster.isMaster) {
     var reportServer = require("./report-server.js");
     // ##############################################################################################
 
-}
+//}

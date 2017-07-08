@@ -4,7 +4,9 @@ var globals = require("gen").globals;
 var socket = require("socket");
 var ordallocation = require("./orderallocation.js");
 var js2html =require("json-to-htmltable");
-var represt = require("reportutil");
+
+var download = require("gen").download;
+
 
 
 
@@ -66,50 +68,42 @@ order.sendAuto = function auto(_req)// send auto order function
 }
 
 // download details
+var rider = require("../../reports/apis/rider.js");
 order.downloadOrderDetails = function downloadOrderDetails(req, res, done) {
      db.callProcedure("select " + globals.merchant("funget_reports") + "($1,$2::json);", ['bi', req.query], function(data) {
-
-         if(!req.query["format"]){
-              rs.resp(res, 401, "format not specified!");
-              return;
-         }
-         if(req.query["format"] == "excel"){
-            style={"color":"red","border":true}  ;
-            download('xls',data.rows,res);
-         }else if(req.query["format"] == "pdf"){
-            represt.resp('rider/monthlyorder-pdf.html', { data: data.rows }, req, res, done,{ pdfoptions:{orientation : "landscape"}});
-         }
-        //rs.resp(res, 200, data.rows);
+        //  _hndlbar=rider.resolveTemplate(false, data, res);
+         
+  
+         download(req,res,data.rows, 'rider/monthlyorder-pdf.html',rider.resolveTemplate);
+        //download(req.query["format"],data.rows,res,_hndlbar);
     }, function(err) {
         rs.resp(res, 401, "error : " + err);
     }, 1)
 }
 
 
-// order.downloadOrderDetails = function downloadOrderDetails(req, res, done) {
-//     db.callFunction("with ctedates as (                        select i::date as dayofmonth from generate_series('2017-06-01',                         '2017-07-07','1 day'::interval) i),                        recs as (select ord.rdrid, count(1) as counts,To_Char(dts.dayofmonth,'DD')::int as DE,                        l.locname,r.fname as rider_name,r.workshift from                         ctedates dts                        left join mrcht.tblorder ord on ord.createdon::date = dts.dayofmonth                        inner join mrcht.tblrider r on ord.rdrid=r.rdrid						inner join ginv.location l on r.city=l.locid                        where ord.rdrid <> 0  						group by ord.rdrid,dts.dayofmonth,l.locname,r.fname,r.workshift                               )                         select rdrid,locname,rider_name,workshift,DE, counts as count from recs",[], function(data) {
-//         downloadCsv(data.rows,res);
-//        //  rs.resp(res, 200,data.rows);
-//     }, function(err) {
-//         rs.resp(res, 401, "error : " + err);
-//     })    
+
+// function generate_order_report(data){
+//      var temp=[];
+//          var colsum=[];
+//          colsum['Total']=0;
+//          colsum['locname']='Total';
+//          var rowsum;
+//          for (var i = 0, len = data.rows.length; i < len; i++) {
+//               for (var j=1,rowsum=0;j<=31; j++){
+//                   if(i==0){colsum[j] =0;}
+//                     rowsum+=data.rows[i][j];
+//                     colsum[j]+=data.rows[i][j];
+//               }
+//             data.rows[i]['Total']=rowsum;
+//               colsum['Total']+=rowsum;
+//         }
+//         data.rows.push(colsum);
+//         return data.rows;
 // }
 
-function download(filetype,data,res,style=''){
-        if(filetype=="csv"){
-          fields=Object.keys(data[0]);      
-        //    fields= ["locname","rider_name","workshift","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"];
-            var json2csv = require('json2csv');
-            var result = json2csv({ data: data,fields:fields });
-            res.setHeader('Content-disposition', 'attachment; filename=data.csv');
-            res.set('Content-Type', 'text/csv');
-        }else if(filetype=='xls'){
-            result=js2html(data);
-            res.setHeader('Content-disposition', 'attachment; filename=demo.xls');
-            res.set('Content-Type', 'application/vnd.ms-excel');
-        }
-         res.status(200).send(result);      
-}
+
+
 
 //for update orders
 order.updateOrderDetails = function updateOrderDetails(req, res, done) {
