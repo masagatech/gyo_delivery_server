@@ -16,18 +16,27 @@ var reportRootPath = globals.reportRootPath();
 
 reprs.resp = function resp(template, data, req, res, done, options,_handlebars) {
     try {
-       
+        var onlyHtml = false;
         var _pdfOptions = { 
-            format:  "A4",
-                orientation: "portrait"
+                 format:  "A4",
+                 orientation: "portrait"
             };
 
         var _hndlbar = _handlebars || Handlebars;  
 
-        if(options !== undefined){    
+        if(options !== undefined){   
+            if( options.pdfoptions !== undefined) 
             _pdfOptions.format = options.pdfoptions.format || _pdfOptions.format;
+             if( options.pdfoptions !== undefined) 
             _pdfOptions.orientation = options.pdfoptions.orientation || _pdfOptions.orientation;
-        }    
+            if(options.onlyHtml!== undefined){
+                onlyHtml = options.onlyHtml;
+            }
+        }
+         
+        
+
+
 
         
 
@@ -43,6 +52,10 @@ reprs.resp = function resp(template, data, req, res, done, options,_handlebars) 
         // var stream = mu.compileAndRender(template, data);
         var template = _hndlbar.compile(htmlBody);
         var result = template(data);
+        if(onlyHtml){
+           return result; 
+        }
+
         var tmpobj = tempFile.fileSync({ mode: 0644, prefix: 'reports-', postfix: '.html' });
         // // console.log(tmpobj.name);
         const file = fs.createWriteStream(tmpobj.name);
