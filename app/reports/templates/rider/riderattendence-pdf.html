@@ -1,0 +1,64 @@
+<style>
+	table#rpttable {
+		border-collapse: collapse;
+		font-size: 12px;
+		width:100%;
+	}
+
+
+	
+	table#rpttable,
+	#rpttable tr th,
+	#rpttable tr td {
+		min-width: 16px!important;
+		border: 1px solid black!important;
+		padding-left:5px;
+	
+	}
+	
+	.text-center#rpttable {
+		text-align: center!important;
+	}
+	
+	#rpttable .bold {
+		font-weight: bold!important;
+	}
+	#header_row th{
+		color:#FFF;
+		background: #5e9ca0!important;
+	}
+</style>
+
+<div class="entry">
+	{{> rptheader}}
+	<h3 style="color: #5e9ca0; text-align: center;"> Rider Attendence</h3>
+
+	<div class="body">
+		<table  border="1" id="rpttable" style="border-collapse: collapse;font-size: 12px;width:100%;border: 1px solid black!important;" cellspacing=0 cellpadding=5>
+			<tr id="header_row" >
+				<th > City</th>
+				<th > Hotspot</th>
+				<th > Rider Name</th>
+				<th > Date</th>
+				<th>Login Time</th>
+				<th >Logout Time</th>
+				<th> Login Distance (KM) </th>
+				<th> Logout Distance (KM) </th>
+				<!-- <th> Time </th> -->
+			</tr>
+			{{#data}}
+			<tr>
+				<td>{{locname}}</td>
+				<td>{{htspnm}}</td>
+				<td>{{rider_name}}</td>
+				<td >{{cr_date}}</td>
+				<td >{{login_time}}</td>
+				<td >{{logout_time}}</td>
+				<td >{{login_dist}}</td>
+				<td >{{logout_dist}}</td>
+				<!-- <td >{{cr_ar}}</td> -->
+			</tr>
+			{{/data}}
+		</table>
+	</div>
+</div>

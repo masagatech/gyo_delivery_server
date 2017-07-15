@@ -1,68 +1,74 @@
 <style>
-	table {
+	table#rpttable {
 		border-collapse: collapse;
 		font-size: 12px;
-		display:block;
 		width:100%;
 	}
+
+
 	
-	table,
-	th,
-	td {
-		min-width: 15px;
-		border: 1px solid black;
+	table#rpttable,
+	#rpttable tr th,
+	#rpttable tr td {
+		min-width: 16px!important;
+		border: 1px solid black!important;
 	}
 	
-	.text-center {
-		text-align: center;
+	.text-center#rpttable {
+		text-align: center!important;
 	}
 	
-	.bold {
-		font-weight: bold;
+	#rpttable .bold {
+		font-weight: bold!important;
+	}
+	#header_row th{
+		color:#FFF;
+		background: #5e9ca0!important;
 	}
 </style>
 
 <div class="entry">
+	{{> rptheader}}
+	<h3 style="color: #5e9ca0; text-align: center;"> Rider Order Count</h3>
 
-	<h1 style="color: #5e9ca0; text-align: center;">May 2016 Rider Order Count</h1>
 	<div class="body">
-		<table cellspacing=0 cellpadding=5>
-			<tr bgcolor=" #5e9ca0">
+		<table  border="1" id="rpttable" style="border-collapse: collapse;font-size: 12px;width:100%;border: 1px solid black!important;" cellspacing=0 cellpadding=5>
+			<tr id="header_row">
 				<th>Location</th>
 				<th>Rider</th>
 				<th>Work Shift</th>
-				<th>1</th>
-				<th>2</th>
-				<th>3</th>
-				<th>4</th>
-				<th>5</th>
-				<th>6</th>
-				<th>7</th>
-				<th>8</th>
-				<th>9</th>
-				<th>10</th>
-				<th>11</th>
-				<th>12</th>
-				<th>13</th>
-				<th>14</th>
-				<th>15</th>
-				<th>16</th>
-				<th>17</th>
-				<th>18</th>
-				<th>19</th>
-				<th>20</th>
-				<th>21</th>
-				<th>22</th>
-				<th>23</th>
-				<th>24</th>
-				<th>25</th>
-				<th>26</th>
-				<th>27</th>
-				<th>28</th>
-				<th>29</th>
-				<th>30</th>
-				<th>31</th>
-				<th>Total</th>
+				<th class="text-center">1</th>
+				<th class="text-center">2</th>
+				<th class="text-center">3</th>
+				<th class="text-center">4</th>
+				<th class="text-center">5</th>
+				<th class="text-center">6</th>
+				<th class="text-center">7</th>
+				<th class="text-center">8</th>
+				<th class="text-center">9</th>
+				<th class="text-center">10</th>
+				<th class="text-center">11</th>
+				<th class="text-center">12</th>
+				<th class="text-center">13</th>
+				<th class="text-center">14</th>
+				<th class="text-center">15</th>
+				<th class="text-center">16</th>
+				<th class="text-center">17</th>
+				<th class="text-center">18</th>
+				<th class="text-center">19</th>
+				<th class="text-center">20</th>
+				<th class="text-center">21</th>
+				<th class="text-center">22</th>
+				<th class="text-center">23</th>
+				<th class="text-center">24</th>
+				<th class="text-center">25</th>
+				<th class="text-center">26</th>
+				<th class="text-center">27</th>
+				<th class="text-center">28</th>
+				<th class="text-center">29</th>
+				<th class="text-center">30</th>
+				<th class="text-center">31</th>
+				<th class="text-center">Total</th>
 
 			</tr>
 			{{#data}}
@@ -70,7 +76,7 @@
 				<td>{{locname}}</td>
 				<td>{{rider_name}}</td>
 				<td>{{workshift}}</td>
-				<td class="text-center">{{1}}</td>
+				<td class="text-center" >{{1}}</td>
 				<td class="text-center">{{2}}</td>
 				<td class="text-center">{{3}}</td>
 				<td class="text-center">{{4}}</td>
@@ -105,10 +111,8 @@
 			</tr>
 			{{/data}}
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				{{total}}
+				<td colspan="3" class="bold" >Total</td>
+				{{{total}}}
 			</tr>
 		</table>
 	</div>

@@ -1,9 +1,9 @@
 var Handlebars = require('handlebars');
 
-var reportsorder = module.exports = {};
+var riderReports = module.exports = {};
 
 //handlebar resolver
-reportsorder.resolveTemplate = function resolveTemplate(data){
+riderReports.monthlyOrders = function resolveTemplate(data){
 //declare global variables 
         var _hndlbar = Handlebars;
         var cols = [],Total = [];
@@ -31,7 +31,7 @@ reportsorder.resolveTemplate = function resolveTemplate(data){
         });
 
         _hndlbar.registerHelper('total',function() {  
-            var _footertotal = '<td class="text-center bold">'
+            var _footertotal = ''
                         for(var i =0; i <= Total.length -1;i++ ){
                             _footertotal = _footertotal + '<td class="text-center bold">'+ Total[i]  +'</td>'
                         } 
@@ -41,4 +41,46 @@ reportsorder.resolveTemplate = function resolveTemplate(data){
              //represt.resp('rider/monthlyorder-pdf.html', { data: data }, null, res, null,{ pdfoptions:{orientation : "landscape"}});
             
 }
+
+riderReports.monthlyAttendence = function resolveTemplate(data){
+//declare global variables 
+        var _hndlbar = Handlebars;
+        data_header=data.data2;
+        data_cols=data.data;
+      
+        _hndlbar.registerHelper('header',function() {  
+            var _footertotal = ' '
+                        for(var i =0; i<data_header.length;i++ ){
+                            _footertotal = _footertotal + '<th>'+ data_header[i]['date']+' '+  data_header[i]['day'] +'</td>'
+                        } 
+                return _footertotal;
+        });
+        _hndlbar.registerHelper('date_cols',function(row) {  
+            var _footertotal = ''
+             var total_present=0,total_abesent=0,total_leave=0,total = 0;
+            let data= '';
+                        for(var i =0; i < data_header.length;i++ ){
+                            data = row[i + 4];
+                            if(data=='P'){
+                                total_present++;
+                            }if(data=='A'){
+                                total_abesent++;
+                            }if(data=='L'){
+                                total_leave++;
+                            }if(data=='P' || data=='A' || data=='L'){
+                                total++;
+                            }
+                            _footertotal = _footertotal + '<td class="text-center">'+ (data == null ? '-' : data) +'</td>'
+                        } 
+                         _footertotal+='<td class="text-center">'+total_present+'</td>';
+                         _footertotal+='<td class="text-center">'+total_abesent+'</td>';
+                         _footertotal+='<td class="text-center">'+total_leave+'</td>';
+                         _footertotal+='<td class="text-center">'+total+'</td>';
+                return _footertotal;
+        });
+        return  _hndlbar
+}
+
+
+
 
