@@ -1,15 +1,13 @@
 var globals = require("gen").globals;
 const  pg = require("pg");
 
-const pool = require('./dbservicepool.js');
-
 var db = module.exports = {};
 
 db.constr = globals.constr();
 
 db.callProcedure = function callProcedure(funName, data, callback, errcallback, refcount) {
 
-    pool.connect(function(err, client, done) {
+    pg.connect(db.constr, function(err, client, done) {
         //console.log("here");
         if (err) {
             done();
@@ -82,7 +80,7 @@ db.callProcedure = function callProcedure(funName, data, callback, errcallback, 
 
 db.callFunction = function callFunction(funName, data, callback, errcallback) {
 
-    pool.connect(function(err, client, done) {
+    pg.connect(db.constr, function(err, client, done) {
         //console.log("here");
         if (err) {
             done();
