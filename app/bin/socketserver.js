@@ -22,6 +22,7 @@ socketserver.start = function() {
             //console.log(olids.ids);    
             //client.join(msg.regname);
             client.emit("ordmsg", { "evt": "registered", "msg": msg.regname });
+            
         });
 
          client.on('unregord', function(msg) {
