@@ -40,10 +40,10 @@ reprs.resp = function resp(template, data, req, res, done, options,_handlebars) 
         }
         var options = { encoding: 'utf8' };
 
-        var htmlBody = fs.readFileSync(rootPath + '\\' + template, 'utf8');
+        var htmlBody = fs.readFileSync(rootPath + '/' + template, 'utf8');
         if(headerfooter == 'yes'){
-            var htmlHeader = fs.readFileSync(rootPath + '\\partials\\' + 'header.html', 'utf8');
-            var htmlFooter = fs.readFileSync(rootPath + '\\partials\\' + 'footer.html', 'utf8');
+            var htmlHeader = fs.readFileSync(rootPath + '/partials/' + 'header.html', 'utf8');
+            var htmlFooter = fs.readFileSync(rootPath + '/partials/' + 'footer.html', 'utf8');
             _hndlbar.registerPartial('rptheader', htmlHeader);
             _hndlbar.registerPartial('rptfooter', htmlFooter);
         }else{
@@ -66,7 +66,7 @@ reprs.resp = function resp(template, data, req, res, done, options,_handlebars) 
         //stream.pipe(file);
         file.write(result, 'utf8');
         file.end();
-        console.log(reportRootPath + "\\runningfile.js");
+        console.log(reportRootPath + "/runningfile.js");
         pdf.convert({
             "html": tmpobj.name,
             "paperSize": {
@@ -76,7 +76,7 @@ reprs.resp = function resp(template, data, req, res, done, options,_handlebars) 
 
 
             },
-            "runnings": reportRootPath + "\\runningfile.js",
+            "runnings": reportRootPath + "/runningfile.js",
             "deleteOnAction": true
         }, function(err, result) {
             /* Using a buffer and callback */
