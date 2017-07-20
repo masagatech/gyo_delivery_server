@@ -40,6 +40,7 @@ var printjob = module.exports = function download(req,res, data, template, resol
             // represt.resp('rider/monthlyorder-pdf.html', { data: data }, null, res, null,{ pdfoptions:{orientation : "landscape"}});
         }else if(filetype=='html'){
              var tmpet = template.html || template.all || default_template; 
+           
             result = represt.resp(tmpet, data, null, res, null,
             {onlyHtml:true , pdfoptions:{orientation : "landscape"},headerfooter :isheader}, resolveTemplate(data));
             res.set('Content-Type', 'text/html');

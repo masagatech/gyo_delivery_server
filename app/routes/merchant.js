@@ -51,6 +51,7 @@ var appRouter = function(app) {
     //############################ Rider #########################################
     app.post(root + "/getRiderDetails", rider.getRiderDetails);
     app.post(root + "/saveRiderInfo", rider.saveRiderInfo);
+    app.post(root + "/updateRdrWkOfDtls", rider.updateRdrWkOfDtls);
     //#############################################################################################
 
     //############################ Merchant ######################################

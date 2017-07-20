@@ -11,6 +11,13 @@ rider.saveRiderInfo = function saveRiderInfo(req, res, done) {
         rs.resp(res, 401, "error : " + err);
     })
 }
+rider.updateRdrWkOfDtls = function updateRdrWkOfDtls(req, res, done) {
+    db.callFunction("select " + globals.merchant("funsave_rdrwkoff") + "($1::json);", [req.body], function(data) {
+        rs.resp(res, 200, data.rows);
+    }, function(err) {
+        rs.resp(res, 401, "error : " + err);
+    })
+}
 
 rider.getRiderDetails = function getRiderDetails(req, res, done) {
     db.callProcedure("select " + globals.merchant("funget_riderdetails") + "($1,$2::json);", ['rdr', req.body], function(data) {
