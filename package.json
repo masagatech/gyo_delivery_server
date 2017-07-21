@@ -8,6 +8,7 @@
     "node": "~6.0"
   },
   "scripts": {
+    "st": "nodemon ./app/bin/www.js",
     "start": "concurrently \"node ./app/bin/www\" \"http-server www --cors --port 8081\""
   },
   "dependencies": {

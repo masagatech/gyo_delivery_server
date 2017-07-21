@@ -69,16 +69,16 @@ order.sendAuto = function auto(_req)// send auto order function
 
 // download details
 var rider = require("../../reports/apis/rider.js");
-order.downloadOrderDetails = function downloadOrderDetails(req, res, done) {
+order.downloadOrderDetails = function downloadOrderDetails(req, res, done) { 
     try {
         db.callProcedure("select " + globals.merchant("funget_reports") + "($1,$2,$3,$4::json);", ['cus1', 'cus2', 'cus3', req.query], function (data) {
             //  _hndlbar=rider.resolveTemplate(false, data, res);		
             if (req.query["flag"] == 'rider_attendence_report') {
-                download(req, res, { data: data.rows[0], data1: data.rows[1][0] }, { 'all': 'rider/riderattendence-pdf.html' },rider.attendence);
+                download(req, res, { data: data.rows[0], data1: data.rows[1][0],params:req.query  }, { 'all': 'rider/riderattendence-pdf.html' },rider.attendence);
             } else if (req.query["flag"] == 'rider_attendence_monthly_report') {
-                download(req, res, { data: data.rows[0], data1: data.rows[1][0], data2: data.rows[2] }, { 'all': 'rider/ridermonthlyattendence-pdf.html' },rider.monthlyAttendence);
+                download(req, res, { data: data.rows[0], data1: data.rows[1][0], data2: data.rows[2],params:req.query  }, { 'all': 'rider/ridermonthlyattendence-pdf.html' },rider.monthlyAttendence);
             } else if (req.query["flag"] == 'rider_order_report') {
-                download(req, res, { data: data.rows[0], data1: data.rows[1][0], data2: data.rows[2]  }, { 'all': 'rider/monthlyorder-pdf.html' }, rider.monthlyOrders);
+                download(req, res, { data: data.rows[0], data1: data.rows[1][0], data2: data.rows[2],params:req.query  }, { 'all': 'rider/monthlyorder-pdf.html' }, rider.monthlyOrders);
             }
             //download(req.query["format"],data.rows,res,_hndlbar);
         }, function (err) {

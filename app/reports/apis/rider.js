@@ -6,6 +6,12 @@ riderReports.monthlyOrders = function resolveTemplate(data) {
     var _hndlbar = Handlebars;
      data_header = data.data2;
     data_cols = data.data;
+    
+    if(data.data.length>0){
+         data.city=data.data[0]['locname'];
+         data.hotspot=data.data[0]['locname'];
+    }
+    console.log(data.city);
     var col_total = [];
     var date_ar = [];
     for (i = 0; i < data_header.length; i++) {
@@ -94,6 +100,16 @@ riderReports.monthlyOrders = function resolveTemplate(data) {
 }
 
 riderReports.attendence = function resolveTemplate(data) {
+     var _hndlbar = Handlebars;
+    data_header = data.data2;
+    data_cols = data.data;
+
+    if(data.data.length>0){
+         data.city=data.data[0]['locname'];
+         data.hotspot=data.data[0]['locname'];
+    }
+    return _hndlbar;
+
 }
 riderReports.monthlyAttendence = function resolveTemplate(data) {
     //declare global variables 
@@ -101,6 +117,10 @@ riderReports.monthlyAttendence = function resolveTemplate(data) {
     data_header = data.data2;
     data_cols = data.data;
 
+    if(data.data.length>0){
+         data.city=data.data[0]['locname'];
+         data.hotspot=data.data[0]['locname'];
+    }
     var date_ar = [];
     for (i = 0; i < data_header.length; i++) {
         date_ar.push(parseInt(data_header[i]['date']));
@@ -129,7 +149,7 @@ riderReports.monthlyAttendence = function resolveTemplate(data) {
     _hndlbar.registerHelper('header', function () {
         var header = ' '
         for (var i = 0; i < data_header.length; i++) {
-            header = header + '<th>' + data_header[i]['date'] + '<br> ' + data_header[i]['day'] + '</td>'
+            header = header + '<th style="text-align:center">' + data_header[i]['date'] + '<br> ' + data_header[i]['day'] + '</td>'
         }
         return header;
     });
