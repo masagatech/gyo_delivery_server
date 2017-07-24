@@ -52,6 +52,7 @@ reprs.resp = function resp(template, data, req, res, done, options,_handlebars) 
         }
         
         _hndlbar.registerHelper('formatnumber', helpers.formatnumber);
+        _hndlbar.registerHelper('eq', helpers.eq);
 
         // var stream = mu.compileAndRender(template, data);
         var template = _hndlbar.compile(htmlBody);

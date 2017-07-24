@@ -7,6 +7,11 @@ module.exports = {
 
         return amt(params, 2, 3, thousandSep, decimalSep);
 
+    },
+
+     eq: function(param1,param2) {
+        return param1 === param2;
+
     }
 
 }
