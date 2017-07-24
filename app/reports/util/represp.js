@@ -61,15 +61,15 @@ reprs.resp = function resp(template, data, req, res, done, options,_handlebars) 
            return result; 
         }
 
-        var tmpobj = tempFile.fileSync({ mode: 0644, prefix: 'reports-', postfix: '.html' });
-        // // console.log(tmpobj.name);
-        const file = fs.createWriteStream(tmpobj.name);
-        //stream.pipe(file);
-        file.write(result, 'utf8');
-        file.end();
+        // var tmpobj = tempFile.fileSync({ mode: 0644, prefix: 'reports-', postfix: '.html' });
+        // // // console.log(tmpobj.name);
+        // const file = fs.createWriteStream(tmpobj.name);
+        // //stream.pipe(file);
+        // file.write(result, 'utf8');
+        // file.end();
         console.log(reportRootPath + "/runningfile.js");
         pdf.convert({
-            "html": tmpobj.name,
+            "html": result,
             "paperSize": {
                 format:  _pdfOptions.format,
                 orientation: _pdfOptions.orientation,
