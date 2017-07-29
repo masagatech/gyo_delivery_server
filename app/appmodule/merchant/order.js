@@ -141,11 +141,11 @@ order.getOrderDetails = function getOrderDetails(req, res, done) {
 
 
 order.getDailyOrderDetails = function getDailyOrderDetails(req, res, done) {
-    db.callProcedure("select " + globals.merchant("funget_dailyorderdetails") + "($1,$2::json);", ['bi', req.query], function (data) {
+    db.callProcedure("select " + globals.merchant("funget_dailyorderdetails") + "($1,$2,$3::json);", ['cus1', 'cus2', req.query], function (data) {
         rs.resp(res, 200, data.rows);
     }, function (err) {
         rs.resp(res, 401, "error : " + err);
-    }, 1)
+    }, 2)
 }
 
 order.getFullOrderDetails = function getFullOrderDetails(req, res, done) {
