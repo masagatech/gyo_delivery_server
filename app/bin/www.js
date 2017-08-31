@@ -52,9 +52,12 @@ var cluster = require('cluster');
         // Set custom headers for CORS
         res.header('Access-Control-Allow-Headers', 'Content-type,Accept,App-Id,Password');
         //console.log(req.originalUrl);
+        //console.log(req);
         if (req.method == 'OPTIONS') {
+           // console.log('hete');
             res.status(200).end();
         } else {
+           // console.log('there');
             next();
         }
     });
@@ -76,6 +79,7 @@ var cluster = require('cluster');
     // If no route is matched by now, it must be a 404
 
     app.use(function(req, res, next) {
+
         var err = new Error('Not Found');
         err.status = 404;
         next(err);

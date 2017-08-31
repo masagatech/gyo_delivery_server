@@ -9,6 +9,12 @@ rs.resp = function resp(res, status, data) {
     });
 }
 
+rs.resp_api = function resp(res, data) {
+    res.status(data.status ? 200 : 401);
+    res.json(data);
+}
+
+
 rs.gridresp = function gridresp(res, status, data) {
     res.status(status);
     res.json({
@@ -19,3 +25,4 @@ rs.gridresp = function gridresp(res, status, data) {
         "recordsFiltered": data[1][0].recordsfiltered,
     });
 }
+

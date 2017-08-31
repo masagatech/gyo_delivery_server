@@ -23,9 +23,13 @@ var reports = require('../appmodule/merchant/reports.js');
 
 var gmap = require('../appmodule/merchant/gmap.js');
 
-const root = globals.globvar.rootAPI + "/mrcht";
+var integration = require('../routes/integration.js');
+var integrationApi = require('../appmodule/integration/api.js');
 
-var appRouter = function(app) {
+var root = globals.globvar.rootAPI + "/mrcht";
+
+var appRouter = function (app) {
+    console.log(root);
     //############################ API Details ####################################################
 
     var APIInfo = {
@@ -141,7 +145,10 @@ var appRouter = function(app) {
     app.post(root + "/getInvoiceDetails", reports.getInvoiceDetails);
     app.get(root + "/exportInvoiceDetails", reports.exportInvoiceDetails);
     //#############################################################################################
+    app.post(root + "/getIntegration", integrationApi.getIntegration);
+    app.post(root + "/generetKey", integrationApi.generetKey);
 
+    integration.createRoute(app);
     //#############################################################################################
 }
 

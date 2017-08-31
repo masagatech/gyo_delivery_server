@@ -10,21 +10,23 @@ ordallocation.sendorder = function (req, res, done) {
     var userIds = req.body.uids;
     var orderdetails = req.body.orddt;
     var status = req.body.status;
-    ordallocation.sendNotification({
-        "userids": userIds,
-        "ordid": orderdetails.ordid,
-        "flag": "ordnotify",
-        "status": status,
-        "sbflg": req.body.sbflg,
-        "hsid": req.body.hsid
-
-    }, {
+   
+        ordallocation.sendNotification({
+            "userids": userIds,
             "ordid": orderdetails.ordid,
-            "type": "ordering",
-            "subtype": "neworder"
-        },
-        orderdetails
-    );
+            "flag": "ordnotify",
+            "status": status,
+            "sbflg": req.body.sbflg,
+            "hsid": req.body.hsid
+
+        }, {
+                "ordid": orderdetails.ordid,
+                "type": "ordering",
+                "subtype": "neworder"
+            },
+            orderdetails
+        );
+ 
     if (res)
         rs.resp(res, 200, "success");
 }
@@ -33,11 +35,7 @@ ordallocation.sendorder = function (req, res, done) {
 ordallocation.sendNotification = function (_users, _data, _extra, res) {
     db.callProcedure("select " + globals.merchant("funget_api_getnotifyids") + "($1,$2,$3::json);", ['tripnotify', 'tripnotify1', _users],
         function (data) {
-
-
             var devicetokens = data.rows[0];
-
-
             var tokens = [];
             //    var users = [];
             var msg = data.rows[1][0];
@@ -47,7 +45,7 @@ ordallocation.sendNotification = function (_users, _data, _extra, res) {
             _data["extra"] = _extra;
 
             for (var i = 0; i <= devicetokens.length - 1; i++) {
-                 tokens.push(devicetokens[i].devtok);
+                tokens.push(devicetokens[i].devtok);
                 //users.push(devicetokens[i].uid);
                 _data.uid = devicetokens[i].uid;
                 // console.log(_data);
@@ -106,7 +104,7 @@ ordallocation.sendNotification = function (_users, _data, _extra, res) {
                     console.log("Something has gone wrong!", err);
 
                 } else {
-                   // console.log("Successfully sent with response: ", response);
+                    // console.log("Successfully sent with response: ", response);
 
                 }
             });

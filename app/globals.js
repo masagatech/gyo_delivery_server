@@ -6,7 +6,7 @@ global.prodmode = {
     "prod": 3
 }
 
-global.mode = global.prodmode.local;
+global.mode = global.prodmode.prod;
 
 
 global.globvar = {
@@ -42,12 +42,19 @@ global.monconstr = function constr() {
 };
 
 global.reportTemplatePath = function reportTemplatePath() {
-    console.log(__dirname + '\\reports\\templates');
-    return __dirname + '\\reports\\templates';
+    //console.log(__dirname + '\\reports\\templates');
+    if (global.mode == global.prodmode.prod)
+        return __dirname + '/reports/templates';
+    else
+        return __dirname + '/reports/templates';
 };
 global.reportRootPath = function reportRootPath() {
-    console.log(__dirname + '\\reports');
-    return __dirname + '\\reports';
+    //console.log(__dirname + '\\reports');
+    if (global.mode == global.prodmode.prod)
+        return __dirname + '/reports';
+    else
+         return __dirname + '/reports';
+   
 };
 
 // global.pgdbconnection = {
@@ -59,9 +66,9 @@ global.reportRootPath = function reportRootPath() {
 //     max: 10, // max number of clients in the pool
 //     idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
 // };
-  console.log(global.mode);
+console.log(global.mode);
 if (global.mode == global.prodmode.localprod) {
-       console.log('here');
+    console.log('here');
     global.pgdbconnection = {
         user: 'postgres', //env var: PGUSER
         database: 'goyo_ordering', //env var: PGDATABASE
@@ -83,7 +90,7 @@ if (global.mode == global.prodmode.localprod) {
         idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
     };
 } else if (global.mode == global.prodmode.prod) {
-       console.log('here');
+    //   console.log('here');
     global.pgdbconnection = {
         user: 'postgres', //env var: PGUSER
         database: 'goyo_ordering', //env var: PGDATABASE
