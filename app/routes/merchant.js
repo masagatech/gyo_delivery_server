@@ -148,7 +148,7 @@ var appRouter = function (app) {
     app.post(root + "/getIntegration", integrationApi.getIntegration);
     app.post(root + "/generetKey", integrationApi.generetKey);
 
-    integration.createRoute(app);
+    integration.createIntegration(app);
     //#############################################################################################
 }
 

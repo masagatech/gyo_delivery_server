@@ -4,7 +4,12 @@ var order = require('../appmodule/merchant/order.js');
 
 var rt = module.exports = {};
 
-rt.createRoute = function createRoute(app) {
+rt.createIntegration = function createIntegration(app) {
+    
+    app.post(apiroot + "/order/create", order.apiPreSave);
+    app.post(apiroot + "/order/cancel", order.apiPreCancel);
+    app.post(apiroot + "/order/status", order.apiPreStatus);
+    
 
-    app.post(apiroot + "/createorder", order.apiPreSave);
 };
+
