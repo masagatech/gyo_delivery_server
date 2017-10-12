@@ -12,3 +12,13 @@ dashboard.getDashboard = function getDashboard(req, res, done) {
     }, 1)
 }
 
+
+
+dashboard.getDashboard_new = function getDashboard(req, res, done) {
+    db.callProcedure("select " + globals.merchant("funget_dashboard") + "($1,$2,$3,$4::json);", ['db_1','db_2','db_3', req.body], function(data) {
+        rs.resp(res, 200, data.rows);
+    }, function(err) {
+        rs.resp(res, 401, "error : " + err);
+    }, 3)
+}
+

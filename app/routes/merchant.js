@@ -45,6 +45,7 @@ var appRouter = function (app) {
 
     //############################ Dashboard #####################################
     app.post(root + "/getDashboard", dashboard.getDashboard);
+    app.post(root + "/getDashboardNew", dashboard.getDashboard_new);
     //#############################################################################################
 
     //############################ Hotspot #######################################
