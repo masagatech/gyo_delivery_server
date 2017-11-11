@@ -9,6 +9,7 @@ var restaurant = require('../appmodule/merchant/restaurant.js');
 var category = require('../appmodule/merchant/category.js');
 var items = require('../appmodule/merchant/items.js');
 var order = require('../appmodule/merchant/order.js');
+var mord = require('../appmodule/merchant/manualorder.js');
 var dayend = require('../appmodule/merchant/dayend.js');
 var customer = require('../appmodule/merchant/customer.js');
 
@@ -28,7 +29,7 @@ var integrationApi = require('../appmodule/integration/api.js');
 
 var root = globals.globvar.rootAPI + "/mrcht";
 
-var appRouter = function (app) {
+var appRouter = function(app) {
     console.log(root);
     //############################ API Details ####################################################
 
@@ -85,17 +86,25 @@ var appRouter = function (app) {
     app.post(root + "/saveItems", items.saveItems);
     //#############################################################################################
 
+    //############################ Manual Order / ######################################
+
+    app.post(root + "/saveManualOrder", mord.saveManualOrder);
+    app.post(root + "/getManualOrder", mord.getManualOrder);
+
+    //############################ Manual Order / ######################################
+
     //############################ Orders / ######################################
+
     app.post(root + "/saveOrderInfo", order.saveOrderInfo);
     app.post(root + "/getOrderDetails", order.getOrderDetails);
-    //    app.get(root + "/downloadOrderDetails", order.downloadOrderDetails);
+
+    app.get(root + "/getOrders", order.getapiOrders);
+    app.get(root + "/getOrdersCount", order.getapiOrdersCounts);
+
     app.get(root + "/downloadOrderDetails", order.downloadOrderDetails);
     app.post(root + "/updateOrderDetails", order.updateOrderDetails);
     app.get(root + "/getDailyOrderDetails", order.getDailyOrderDetails);
     app.get(root + "/getFullOrderDetails", order.getFullOrderDetails);
-
-    app.get(root + "/getOrders", order.getapiOrders);
-    app.get(root + "/getOrdersCount", order.getapiOrdersCounts);
 
     //#############################################################################################
 
