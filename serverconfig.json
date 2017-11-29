@@ -1,6 +1,6 @@
 {
     "server": {
-        "port": 8082,
+        "port": 8092,
         "ip": "0.0.0.0"
     },
     "reportserver": {

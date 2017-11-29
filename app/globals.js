@@ -1,5 +1,7 @@
 var global = module.exports = {};
+
 //database settings
+
 global.prodmode = {
     "local": 1,
     "localprod": 2,
@@ -7,7 +9,6 @@ global.prodmode = {
 }
 
 global.mode = global.prodmode.prod;
-
 
 global.globvar = {
     "rootAPI": "/goyoapi",
@@ -22,18 +23,21 @@ global.schema2 = function schema2(params) {
     return "mrktn." + params;
 };
 
+global.menuschema = function menuschema(params) {
+    return "menu." + params;
+};
+
 global.merchant = function merchant(params) {
     return "mrcht." + params;
 };
-// do not use 
-global.constr = function constr() {
-    // return 'postgres://postgres:123@127.0.0.1:5432/goyo_groc';
 
+// do not use 
+
+global.constr = function constr() {
     // return 'postgres://postgres:123@192.168.1.108:5432/goyo_order';
     // return 'postgres://postgres:sa@123@13.126.2.220:5432/goyo_ordering';
-    //return 'postgres://postgres:sa@123@13.126.2.220:5432/goyo_ordering';
-    //return 'postgres://postgres:sa@123@35.154.230.244:5432/goyo_app';
 };
+
 global.pgdbconnection = {};
 
 global.monconstr = function constr() {
@@ -53,8 +57,17 @@ global.reportRootPath = function reportRootPath() {
     if (global.mode == global.prodmode.prod)
         return __dirname + '/reports';
     else
-         return __dirname + '/reports';
-   
+        return __dirname + '/reports';
+};
+
+global.pgdbconnection = {
+    user: 'postgres', //env var: PGUSER
+    database: 'goyo_order', //env var: PGDATABASE
+    password: '123', //env var: PGPASSWORD
+    host: '192.168.1.108', // Server hosting the postgres database
+    port: 5432, //env var: PGPORT
+    max: 10, // max number of clients in the pool
+    idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
 };
 
 // global.pgdbconnection = {
@@ -67,37 +80,39 @@ global.reportRootPath = function reportRootPath() {
 //     idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
 // };
 console.log(global.mode);
-if (global.mode == global.prodmode.localprod) {
-    console.log('here');
-    global.pgdbconnection = {
-        user: 'postgres', //env var: PGUSER
-        database: 'goyo_ordering', //env var: PGDATABASE
-        password: 'sa@123', //env var: PGPASSWORD
-        host: 'order.goyo.in', // Server hosting the postgres database
-        port: 5432, //env var: PGPORT
-        max: 10, // max number of clients in the pool
-        idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
-    };
-} else if (global.mode == global.prodmode.local) {
-    console.log('here');
-    global.pgdbconnection = {
-        user: 'postgres', //env var: PGUSER
-        database: 'goyo_order', //env var: PGDATABASE
-        password: '123', //env var: PGPASSWORD
-        host: '192.168.1.108', // Server hosting the postgres database
-        port: 5432, //env var: PGPORT
-        max: 10, // max number of clients in the pool
-        idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
-    };
-} else if (global.mode == global.prodmode.prod) {
-    //   console.log('here');
-    global.pgdbconnection = {
-        user: 'postgres', //env var: PGUSER
-        database: 'goyo_ordering', //env var: PGDATABASE
-        password: 'sa@123', //env var: PGPASSWORD
-        host: '127.0.0.1', // Server hosting the postgres database
-        port: 5432, //env var: PGPORT
-        max: 10, // max number of clients in the pool
-        idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
-    };
-}
+// if (global.mode == global.prodmode.localprod) {
+//     console.log('here');
+//     global.pgdbconnection = {
+//         user: 'postgres', //env var: PGUSER
+//         database: 'goyo_ordering', //env var: PGDATABASE
+//         password: 'sa@123', //env var: PGPASSWORD
+//         host: 'order.goyo.in', // Server hosting the postgres database
+//         port: 5432, //env var: PGPORT
+//         max: 10, // max number of clients in the pool
+//         idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
+//     };
+// } else if (global.mode == global.prodmode.local) {
+// console.log('here');
+
+// global.pgdbconnection = {
+//     user: 'postgres', //env var: PGUSER
+//     database: 'goyo_order', //env var: PGDATABASE
+//     password: '123', //env var: PGPASSWORD
+//     host: '192.168.1.108', // Server hosting the postgres database
+//     port: 5432, //env var: PGPORT
+//     max: 10, // max number of clients in the pool
+//     idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
+// };
+
+// } else if (global.mode == global.prodmode.prod) {
+//     //   console.log('here');
+//     global.pgdbconnection = {
+//         user: 'postgres', //env var: PGUSER
+//         database: 'goyo_ordering', //env var: PGDATABASE
+//         password: 'sa@123', //env var: PGPASSWORD
+//         host: '127.0.0.1', // Server hosting the postgres database
+//         port: 5432, //env var: PGPORT
+//         max: 10, // max number of clients in the pool
+//         idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
+//     };
+// }

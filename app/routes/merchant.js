@@ -5,11 +5,7 @@ var hotspot = require('../appmodule/merchant/hotspot.js');
 var rider = require('../appmodule/merchant/rider.js');
 var merchant = require('../appmodule/merchant/merchant.js');
 var outlet = require('../appmodule/merchant/outlet.js');
-var restaurant = require('../appmodule/merchant/restaurant.js');
-var category = require('../appmodule/merchant/category.js');
-var items = require('../appmodule/merchant/items.js');
 var order = require('../appmodule/merchant/order.js');
-var mord = require('../appmodule/merchant/manualorder.js');
 var dayend = require('../appmodule/merchant/dayend.js');
 var customer = require('../appmodule/merchant/customer.js');
 
@@ -66,45 +62,25 @@ var appRouter = function(app) {
     //#############################################################################################
 
     //############################ Outlet ########################################
+
     app.post(root + "/getOutletDetails", outlet.getOutletDetails);
     app.post(root + "/saveOutletInfo", outlet.saveOutletInfo);
+
     //#############################################################################################
 
-    //############################ Restaurant ####################################
-    app.post(root + "/getRestaurantMaster", restaurant.getRestaurantMaster);
-    app.post(root + "/getRestaurantDetails", restaurant.getRestaurantDetails);
-    app.post(root + "/saveRestaurantMaster", restaurant.saveRestaurantMaster);
-    //#############################################################################################
-
-    //############################ Category ######################################
-    app.post(root + "/saveCategory", category.saveCategory);
-    app.post(root + "/saveSubCategory", category.saveSubCategory);
-    //#############################################################################################
-
-    //############################ Items / #######################################
-    app.post(root + "/getItems", items.getItems);
-    app.post(root + "/saveItems", items.saveItems);
-    //#############################################################################################
-
-    //############################ Manual Order / ######################################
-
-    app.post(root + "/saveManualOrder", mord.saveManualOrder);
-    app.post(root + "/getManualOrder", mord.getManualOrder);
-
-    //############################ Manual Order / ######################################
-
-    //############################ Orders / ######################################
+    //############################ Orders / #######################################################
 
     app.post(root + "/saveOrderInfo", order.saveOrderInfo);
     app.post(root + "/getOrderDetails", order.getOrderDetails);
 
-    app.get(root + "/getOrders", order.getapiOrders);
-    app.get(root + "/getOrdersCount", order.getapiOrdersCounts);
-
     app.get(root + "/downloadOrderDetails", order.downloadOrderDetails);
     app.post(root + "/updateOrderDetails", order.updateOrderDetails);
+
     app.get(root + "/getDailyOrderDetails", order.getDailyOrderDetails);
     app.get(root + "/getFullOrderDetails", order.getFullOrderDetails);
+
+    app.get(root + "/getOrders", order.getapiOrders);
+    app.get(root + "/getOrdersCount", order.getapiOrdersCounts);
 
     //#############################################################################################
 
