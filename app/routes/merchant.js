@@ -6,6 +6,7 @@ var rider = require('../appmodule/merchant/rider.js');
 var merchant = require('../appmodule/merchant/merchant.js');
 var outlet = require('../appmodule/merchant/outlet.js');
 var order = require('../appmodule/merchant/order.js');
+var mnlord = require('../appmodule/merchant/manualorder.js');
 var dayend = require('../appmodule/merchant/dayend.js');
 var customer = require('../appmodule/merchant/customer.js');
 
@@ -38,30 +39,38 @@ var appRouter = function(app) {
 
     //#############################################################################################
 
-    //############################ VIVEK / #######################################
+    //############################ VIVEK / ########################################################
 
-    //############################ Dashboard #####################################
+    //############################ Dashboard ######################################################
+
     app.post(root + "/getDashboard", dashboard.getDashboard);
     app.post(root + "/getDashboardNew", dashboard.getDashboard_new);
+
     //#############################################################################################
 
-    //############################ Hotspot #######################################
+    //############################ Hotspot ########################################################
+
     app.post(root + "/getHotspotDetails", hotspot.getHotspotDetails);
     app.post(root + "/saveHotspotInfo", hotspot.saveHotspotInfo);
+
     //#############################################################################################
 
-    //############################ Rider #########################################
+    //############################ Rider ##########################################################
+
     app.post(root + "/getRiderDetails", rider.getRiderDetails);
     app.post(root + "/saveRiderInfo", rider.saveRiderInfo);
     app.post(root + "/updateRdrWkOfDtls", rider.updateRdrWkOfDtls);
+
     //#############################################################################################
 
-    //############################ Merchant ######################################
+    //############################ Merchant #######################################################
+
     app.post(root + "/getMerchantDetails", merchant.getMerchantDetails);
     app.post(root + "/saveMerchantInfo", merchant.saveMerchantInfo);
+
     //#############################################################################################
 
-    //############################ Outlet ########################################
+    //############################ Outlet #########################################################
 
     app.post(root + "/getOutletDetails", outlet.getOutletDetails);
     app.post(root + "/saveOutletInfo", outlet.saveOutletInfo);
@@ -82,54 +91,76 @@ var appRouter = function(app) {
     app.get(root + "/getOrders", order.getapiOrders);
     app.get(root + "/getOrdersCount", order.getapiOrdersCounts);
 
-    //#############################################################################################
+    app.post(root + "/getManualOrder", mnlord.getManualOrder);
+    app.post(root + "/saveManualOrder", mnlord.saveManualOrder);
 
-    //############################ Day End / ######################################
+    //############################ Orders / #######################################################
+
+    //############################ Day End / ######################################################
+
     app.post(root + "/saveDayEndInfo", dayend.saveDayEndInfo);
     app.post(root + "/getDayEndDetails", dayend.getDayEndDetails);
+
     //#############################################################################################
 
-    //############################ Customer / #######################################
+    //############################ Customer / #####################################################
+
     app.post(root + "/getCustomerDetails", customer.getCustomerDetails);
     app.post(root + "/saveCustomerInfo", customer.saveCustomerInfo);
+
     //#############################################################################################
 
-    //############################ API TEST / #####################################
+    //############################ API TEST / #####################################################
 
-    //############################ Orders API / ###################################
+    //############################ Orders API / ###################################################
+
     app.get(root + "/getOrderDash", orderdash.getOrderDash);
     app.post(root + "/getOrderDash", orderdash.postOrderDash);
     app.get(root + "/getAvailRider", rider.getAvailable);
     app.post(root + "/pushOrderToRider", ordallocation.sendorder);
+
     //#############################################################################################
 
-    //############################ Rider API / ####################################
+    //############################ Rider API / ####################################################
+
     app.get(root + "/getDashOrdDetails", orderdash.getOrderDetails);
+
     //#############################################################################################
 
-    //############################ Mobile API / ###################################
+    //############################ Mobile API / ###################################################
+
     app.get(root + "/saveLiveBeat", mobile.savelivebeat);
+
     //#############################################################################################
 
-    //############################ Status / #######################################
+    //############################ Status / #######################################################
+
     app.get(root + "/getStatus", status.getStatus);
     app.post(root + "/setStatus", status.setStatus);
+
     //#############################################################################################
 
-    //############################ Notify / #######################################
+    //############################ Notify / #######################################################
+
     app.get(root + "/getNotify", notification.getNotify);
     app.post(root + "/createNotify", notification.createNotify);
+
     //#############################################################################################
 
-    //############################ trip / #######################################
+    //############################ trip / #########################################################
+
     app.post(root + "/setTripAction", trip.setTripAction);
-    //############################ gmap / #######################################
+
+    //############################ gmap / #########################################################
+
     app.get(root + "/getgMapData", gmap.getmapData);
 
-    //############################ Reports / ######################################
+    //############################ Reports / ######################################################
+
     app.post(root + "/getDayEndReports", reports.getDayEndReports);
     app.post(root + "/getInvoiceDetails", reports.getInvoiceDetails);
     app.get(root + "/exportInvoiceDetails", reports.exportInvoiceDetails);
+
     //#############################################################################################
     app.post(root + "/getIntegration", integrationApi.getIntegration);
     app.post(root + "/generetKey", integrationApi.generetKey);

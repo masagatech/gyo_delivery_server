@@ -13,10 +13,6 @@ var js2html = require("json-to-htmltable");
 
 var download = gen.download;
 const encr = gen.encr;
-
-
-
-
 var order = module.exports = {};
 
 //api functions start
@@ -28,51 +24,64 @@ function responseData(_status, _code, _msg, _ordid, res) {
         msg: _msg,
         error_code: _code
     }
-    rs.resp_api(res, data);
 
+    rs.resp_api(res, data);
 }
 
-
-
-order.validate = function (req, res, done) {
-
-    var _data = req.body;
+order.validate = function(req, res, done) {
+    var _data = req.body
     var olid = _data.ol_id,
         prcd = (_data.partner_code || '').toString().trim(),
         tok = _data.token || req.headers['x-access-token'] || '';
 
     var decrypt_token = "";
+
     var resdata = {
         status: true,
-        olnm: "", hsid: 0,
-        areaid: 0, area_name: "",
-        ctid: 0, ctname: "",
-        stid: 0, stname: "",
-        intpartcode: "", ucode: "",
+        olnm: "",
+        hsid: 0,
+        areaid: 0,
+        area_name: "",
+        ctid: 0,
+        ctname: "",
+        stid: 0,
+        stname: "",
+        intpartcode: "",
+        ucode: "",
         olid: olid
     }
 
     //validation
+
     if (tok.trim() === "") {
         resdata.status = false;
-        responseData(false, "er-021", "'token' is required!", 0, res); return;
+        responseData(false, "er-021", "'token' is required!", 0, res);
+        return;
     }
-    if (isNaN(olid) || olid <= 0) { resdata.status = false; responseData(false, "er-021", "'olid' is required or invalid!", 0, res); return; }
-    if (prcd.trim() === "") { resdata.status = false; responseData(false, "er-021", "'partner_code' is required!", 0, res); return; }
 
+    if (isNaN(olid) || olid <= 0) {
+        resdata.status = false;
+        responseData(false, "er-021", "'olid' is required or invalid!", 0, res);
+        return;
+    }
 
-    // let var1 = encr.encrypt("1$kabir kabir$1$2$area name$3$pralhad nagar$7$gujrat$amir.p$ptpj1");
-
-    //console.log(encr.encrypt("10$Pizza Hut _ demo,Outlet Vikhroli$2$2$Kalyan$1$Mumbai$21$Maharashtra$ptpj$christo"));
+    if (prcd.trim() === "") {
+        resdata.status = false;
+        responseData(false, "er-021", "'partner_code' is required!", 0, res);
+        return;
+    }
 
     try {
-        //0=olid,1=olnm,2=hsid,3=areaid,4=area name,5=ctid,6=ctname,7
-
         decrypt_token = encr.decrypt(tok)
         var splittok = decrypt_token.split('$');
+
         //validate token
 
-        if (parseInt(splittok[0]) !== parseInt(olid)) { resdata.status = false; responseData(false, "er-023", "Invalid 'token'!", 0, res); return; }
+        if (parseInt(splittok[0]) !== parseInt(olid)) {
+            resdata.status = false;
+            responseData(false, "er-023", "Invalid 'token'!", 0, res);
+            return;
+        }
 
         resdata.olnm = splittok[1];
         resdata.hsid = splittok[2];
@@ -84,18 +93,22 @@ order.validate = function (req, res, done) {
         resdata.stname = splittok[8];
         resdata.intpartcode = splittok[9];
         resdata.ucode = splittok[10];
-
     } catch (error) {
-        resdata.status = false; responseData(false, "er-022", "Invalid 'token'!", 0, res); return;
+        resdata.status = false;
+        responseData(false, "er-022", "Invalid 'token'!", 0, res);
+        return;
     }
 
-    if (prcd.trim() !== resdata.intpartcode) { resdata.status = false; responseData(false, "er-021", "'partner_code' is invalid!", 0, res); return; }
-
+    if (prcd.trim() !== resdata.intpartcode) {
+        resdata.status = false;
+        responseData(false, "er-021", "'partner_code' is invalid!", 0, res);
+        return;
+    }
 
     return resdata;
 }
 
-order.apiPreSave = function (req, res, done) {
+order.apiPreSave = function(req, res, done) {
     var _data = req.body;
     let _ol_data = order.validate(req, res, done);
     if (!_ol_data.status) return;
@@ -115,7 +128,7 @@ order.apiPreSave = function (req, res, done) {
     if (ordamt.trim() === "" || isNaN(ordamt)) { responseData(false, "er-021", "'ordamt' is required or invalid!", 0, res); return; }
     if (colamt.trim() === "" || isNaN(colamt)) { responseData(false, "er-021", "'collect_amt' is required or invalid!", 0, res); return; }
 
-    //if (olid !== splittok[0]) { invalidData("er-021", "Invaid Token Key For The Outlet"); }
+
     var _orddtlsDT = {
         "orddid": 0,
         "ordno": ordno,
@@ -169,15 +182,14 @@ order.apiPreSave = function (req, res, done) {
         "src": "api"
     }
 
-
-    order.saveOrderInfo_post({ body: saveord }, false, null, function (_d) {
+    order.saveOrderInfo_post({ body: saveord }, false, null, function(_d) {
         responseData(_d.status, _d.code, _d.msg, _d.ordid, res);
     })
 }
 
 //cancel order api funtion
 
-order.apiPreCancel = function (req, res, done) {
+order.apiPreCancel = function(req, res, done) {
     let _data = req.body;
     let _ol_data = order.validate(req, res, done);
     if (!_ol_data.status) return;
@@ -195,7 +207,7 @@ order.apiPreCancel = function (req, res, done) {
         "reason": reason,
         "cuid": _ol_data.ucode
     };
-    order.CancelOrder(_dparams, function (err, data) {
+    order.CancelOrder(_dparams, function(err, data) {
         if (err != null) {
 
             rs.resp_api(res, {
@@ -212,15 +224,12 @@ order.apiPreCancel = function (req, res, done) {
             "msg": _respData.msg,
             "error_code": _respData.errcd
         });
-
     });
 }
 
-
-
 //cancel order api funtion
 
-order.apiPreStatus = function (req, res, done) {
+order.apiPreStatus = function(req, res, done) {
     let _data = req.body;
     let _ol_data = order.validate(req, res, done);
     if (!_ol_data.status) return;
@@ -233,9 +242,9 @@ order.apiPreStatus = function (req, res, done) {
         "flag": "api_status",
         "ordid": ordid,
         "olid": _ol_data.olid,
-        "uid" : _ol_data.ucode
+        "uid": _ol_data.ucode
     };
-    order.getOrderStatus(_dparams, function (err, data) {
+    order.getOrderStatus(_dparams, function(err, data) {
         if (err != null) {
 
             rs.resp_api(res, {
@@ -260,69 +269,55 @@ order.apiPreStatus = function (req, res, done) {
 
 //api functions end
 
-
 // nomral order info
-
 
 order.saveOrderInfo = function saveOrderInfo(req, res, done) {
     order.saveOrderInfo_post(req, res, done, false)
 }
 
-
 order.saveOrderInfo_post = function saveOrderInfo(req, res, done, api_callback) {
+    db.callFunction("select " + globals.merchant("funsave_orderinfo") + "($1::json);", [req.body], function(data) {
+        if (res) {
+            rs.resp(res, 200, data.rows);
+        } else {
+            try {
+                var ordresponse = data.rows[0].funsave_orderinfo;
 
-    db.callFunction("select " + globals.merchant("funsave_orderinfo") + "($1::json);", [req.body], function (data) {
-        if (res) rs.resp(res, 200, data.rows);
-
-        try {
-            var ordresponse = data.rows[0].funsave_orderinfo;
-            //console.log(ordid);      
-            if (api_callback) {
-                api_callback({
-                    status: ordresponse.status,
-                    code: "",
-                    msg: ordresponse.msg,
-                    ordid: ordresponse.ordid
-                })
-            }
-
-            if (ordresponse.status) {
-
-                var orderdata = {
-                    "olid": req.body.olid,
-                    "olnm": req.body.olnm,
-                    "pcktm": req.body.picktime,
-                    "amt": req.body.amt,
-                    "ordid": ordresponse.ordid
+                if (api_callback) {
+                    api_callback({
+                        status: ordresponse.status,
+                        code: "",
+                        msg: ordresponse.msg,
+                        ordid: ordresponse.ordid
+                    })
                 }
 
-                req.body["ordid"] = ordresponse.ordid
+                if (ordresponse.status) {
+                    var orderdata = {
+                        "olid": req.body.olid,
+                        "olnm": req.body.olnm,
+                        "pcktm": req.body.picktime,
+                        "amt": req.body.amt,
+                        "ordid": ordresponse.ordid
+                    }
 
-                // sending after 11pm and before morning 10am
-                //let hours = new Date().getHours();
-                //if (hours >= 23 || hours <= 10) {
-                    order.sendAuto(req.body);// send auto order hook
-                //}
-                //socket.sendOrder([req.body.olid.toString(), "all"], orderdata);
-            }
-
-
-
-
-        } catch (error) {
-            console.log(error);
-            if (res) rs.resp(res, 401, "error : " + err);
-            if (api_callback) {
-                api_callback({
-                    status: false,
-                    code: "er-023",
-                    msg: error.message,
-                    ordid: 0
-                })
+                    req.body["ordid"] = ordresponse.ordid
+                    order.sendAuto(req.body);
+                }
+            } catch (error) {
+                console.log(error);
+                if (res) rs.resp(res, 401, "error : " + err);
+                if (api_callback) {
+                    api_callback({
+                        status: false,
+                        code: "er-023",
+                        msg: error.message,
+                        ordid: 0
+                    })
+                }
             }
         }
-
-    }, function (err) {
+    }, function(err) {
         if (res) rs.resp(res, 401, "error : " + err);
         if (api_callback) {
             api_callback({
@@ -335,10 +330,9 @@ order.saveOrderInfo_post = function saveOrderInfo(req, res, done, api_callback) 
     })
 }
 
-
-order.sendAuto = function auto(_req)// send auto order function
-{
+order.sendAuto = function auto(_req) {
     var req = {};
+
     req.body = {
         "sbflg": "auto",
         "hsid": _req.hsid,
@@ -353,14 +347,15 @@ order.sendAuto = function auto(_req)// send auto order function
         "uids": "{}",
         "status": "0"
     }
-    ordallocation.sendorder(req);// send order allocation function
+    ordallocation.sendorder(req); // send order allocation function
 }
 
 // download details
 var rider = require("../../reports/apis/rider.js");
+
 order.downloadOrderDetails = function downloadOrderDetails(req, res, done) {
     try {
-        db.callProcedure("select " + globals.merchant("funget_reports") + "($1,$2,$3,$4::json);", ['cus1', 'cus2', 'cus3', req.query], function (data) {
+        db.callProcedure("select " + globals.merchant("funget_reports") + "($1,$2,$3,$4::json);", ['cus1', 'cus2', 'cus3', req.query], function(data) {
             //  _hndlbar=rider.resolveTemplate(false, data, res);		
             if (req.query["flag"] == 'rider_attendence_report') {
                 download(req, res, { data: data.rows[0], data1: data.rows[1][0], params: req.query }, { 'all': 'rider/riderattendence-pdf.html' }, rider.attendence);
@@ -370,108 +365,98 @@ order.downloadOrderDetails = function downloadOrderDetails(req, res, done) {
                 download(req, res, { data: data.rows[0], data1: data.rows[1][0], data2: data.rows[2], params: req.query }, { 'all': 'rider/monthlyorder-pdf.html' }, rider.monthlyOrders);
             }
             //download(req.query["format"],data.rows,res,_hndlbar);
-        }, function (err) {
+        }, function(err) {
             rs.resp(res, 401, "error : " + err);
         }, 3)
 
     } catch (error) {
         console.log(error);
     }
-
 }
 
-
 order.query = function dyquery(req, res, done) {
-    db.callFunction("SELECT rider_name,locname,htspnm,rider_name,MAX(CASE cr_date WHEN '2017-07-12' THEN Status END),MAX(CASE cr_date WHEN '2017-07-13' THEN Status END),  MAX(CASE cr_date WHEN '2017-07-14' THEN Status END)FROM (select rl.riderid,l.locname,hs.htspnm,r.fname || ' '  || r.lname as rider_name,rl.cr_date::text,case when sum(case when rl.onoff=true then 1 else 0 end)>=1 and sum(case when rl.onoff=false then 1 else 0 end) >=1 then 'P' else 'A' end Status from mrcht.tblrideronllog rl inner join mrcht.tblrider r on r.rdrid=rl.riderid inner join mrcht.tblhotspot hs on r.hsid=hs.htspid inner join ginv.location l on r.city=l.locid group by rl.riderid,rl.cr_date,rider_name,l.locname,hs.htspnm order by l.locname,hs.htspnm,rl.riderid,rl.cr_date) a  group by rider_name,locname,htspnm,rider_name", [req.body], function (data) {
+    db.callFunction("SELECT rider_name,locname,htspnm,rider_name,MAX(CASE cr_date WHEN '2017-07-12' THEN Status END),MAX(CASE cr_date WHEN '2017-07-13' THEN Status END),  MAX(CASE cr_date WHEN '2017-07-14' THEN Status END)FROM (select rl.riderid,l.locname,hs.htspnm,r.fname || ' '  || r.lname as rider_name,rl.cr_date::text,case when sum(case when rl.onoff=true then 1 else 0 end)>=1 and sum(case when rl.onoff=false then 1 else 0 end) >=1 then 'P' else 'A' end Status from mrcht.tblrideronllog rl inner join mrcht.tblrider r on r.rdrid=rl.riderid inner join mrcht.tblhotspot hs on r.hsid=hs.htspid inner join ginv.location l on r.city=l.locid group by rl.riderid,rl.cr_date,rider_name,l.locname,hs.htspnm order by l.locname,hs.htspnm,rl.riderid,rl.cr_date) a  group by rider_name,locname,htspnm,rider_name", [req.body], function(data) {
         rs.resp(res, 200, data.rows[0]);
-    }, function (err) {
+    }, function(err) {
         rs.resp(res, 401, "error : " + err);
     })
 }
 
-
-//for update/cancel order for web
 order.updateOrderDetails = function updateOrderDetails(req, res, done) {
-    db.callFunction("select " + globals.merchant("funupdate_orderdetails") + "($1::json);", [req.body], function (data) {
+    db.callFunction("select " + globals.merchant("funupdate_orderdetails") + "($1::json);", [req.body], function(data) {
         rs.resp(res, 200, data.rows[0].funupdate_orderdetails);
-    }, function (err) {
+    }, function(err) {
         rs.resp(res, 401, "error : " + err);
     })
 }
 
 //cancel order for api
-order.CancelOrder = function CancelOrder(data, callback) {
-    db.callFunction("select " + globals.merchant("funupdate_orderdetails") + "($1::json);", [data], function (data) {
-        callback(null, data.rows[0].funupdate_orderdetails);
-    }, function (err) {
-        callback(err, "");
 
+order.CancelOrder = function CancelOrder(data, callback) {
+    db.callFunction("select " + globals.merchant("funupdate_orderdetails") + "($1::json);", [data], function(data) {
+        callback(null, data.rows[0].funupdate_orderdetails);
+    }, function(err) {
+        callback(err, "");
     })
 }
 
 order.getOrderDetails = function getOrderDetails(req, res, done) {
-    db.callProcedure("select " + globals.merchant("funget_orderdetails") + "($1,$2::json);", ['bi', req.body], function (data) {
+    db.callProcedure("select " + globals.merchant("funget_orderdetails") + "($1,$2::json);", ['bi', req.body], function(data) {
         rs.resp(res, 200, data.rows);
-    }, function (err) {
+    }, function(err) {
         rs.resp(res, 401, "error : " + err);
     }, 1)
 }
 
-
-
 order.getDailyOrderDetails = function getDailyOrderDetails(req, res, done) {
-    db.callProcedure("select " + globals.merchant("funget_dailyorderdetails") + "($1,$2,$3::json);", ['cus1', 'cus2', req.query], function (data) {
+    db.callProcedure("select " + globals.merchant("funget_dailyorderdetails") + "($1,$2,$3::json);", ['cus1', 'cus2', req.query], function(data) {
         rs.resp(res, 200, data.rows);
-    }, function (err) {
+    }, function(err) {
         rs.resp(res, 401, "error : " + err);
     }, 2)
 }
 
 // for get tting details of order 
+
 order.getFullOrderDetails = function getFullOrderDetails(req, res, done) {
-    db.callProcedure("select " + globals.merchant("funget_fullorderdetails") + "($1,$2::json);", ['bi', req.query], function (data) {
+    db.callProcedure("select " + globals.merchant("funget_fullorderdetails") + "($1,$2::json);", ['bi', req.query], function(data) {
         rs.resp(res, 200, data.rows);
-    }, function (err) {
+    }, function(err) {
         rs.resp(res, 401, "error : " + err);
     }, 1)
 }
 
 // get status of order
+
 order.getOrderStatus = function getOrderStatus(data, callback) {
-    db.callProcedure("select " + globals.merchant("funget_fullorderdetails") + "($1,$2::json);", ['bi1', data], function (data) {
+    db.callProcedure("select " + globals.merchant("funget_fullorderdetails") + "($1,$2::json);", ['bi1', data], function(data) {
         callback(null, data.rows);
-    }, function (err) {
+    }, function(err) {
         callback(err, "");
     }, 1)
 }
 
-
-
-
-
 order.getapiOrders = function getapiOrders(req, res, done) {
-    db.callProcedure("select " + globals.merchant("api_funget_orderdetails") + "($1,$2::json);", ['orddet', req.query], function (data) {
-
+    db.callProcedure("select " + globals.merchant("api_funget_orderdetails") + "($1,$2::json);", ['orddet', req.query], function(data) {
         if (data.rows.length > 0 && data.rows[0].status != undefined && !data.rows[0].status) {
             data.rows = [];
         }
 
         rs.resp(res, 200, data.rows);
-    }, function (err) {
+    }, function(err) {
         rs.resp(res, 401, "error : " + err);
     }, 1)
 }
 
 
 order.getapiOrdersCounts = function getapiOrdersCounts(req, res, done) {
-    db.callProcedure("select " + globals.merchant("api_funget_ordcount") + "($1,$2::json);", ['ordcount', req.query], function (data) {
-
+    db.callProcedure("select " + globals.merchant("api_funget_ordcount") + "($1,$2::json);", ['ordcount', req.query], function(data) {
         if (data.rows.length > 0 && data.rows[0].status != undefined && !data.rows[0].status) {
             data.rows = [];
         }
 
         rs.resp(res, 200, data.rows);
-    }, function (err) {
+    }, function(err) {
         rs.resp(res, 401, "error : " + err);
     }, 1)
 }
