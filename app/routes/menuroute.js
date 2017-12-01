@@ -2,6 +2,7 @@ var rs = require("../appmodule/util/resp.js");
 var globals = require("../globals.js");
 var fs = require('fs');
 
+var holiday = require("../appmodule/menuapi/holiday.js");
 var items = require("../appmodule/menuapi/items.js");
 var gst = require("../appmodule/menuapi/gstsetting.js");
 
@@ -28,6 +29,13 @@ var appRouter = function(app) {
 
 
     //##################################### VIVEK ###########################################################
+
+    //##################################### Holiday #########################################################
+
+    app.post(root + "/saveHoliday", holiday.saveHoliday);
+    app.post(root + "/getHoliday", holiday.getHoliday);
+
+    //##################################### Holiday #########################################################
 
     //##################################### Items ##########################################################
 
