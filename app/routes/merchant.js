@@ -26,6 +26,16 @@ var integrationApi = require('../appmodule/integration/api.js');
 
 var root = globals.globvar.rootAPI + "/mrcht";
 
+var multer = require('multer');
+
+var upload = multer({
+    limits: {
+        fieldNameSize: 999999999,
+        fieldSize: 999999999
+    },
+    dest: 'www/mobile/mord'
+});
+
 var appRouter = function(app) {
     console.log(root);
     //############################ API Details ####################################################
@@ -162,11 +172,43 @@ var appRouter = function(app) {
     app.get(root + "/exportInvoiceDetails", reports.exportInvoiceDetails);
 
     //#############################################################################################
+
     app.post(root + "/getIntegration", integrationApi.getIntegration);
     app.post(root + "/generetKey", integrationApi.generetKey);
 
     integration.createIntegration(app);
+
     //#############################################################################################
+
+
+    //##################################### Save Manual Uploads #########################################################
+
+    app.post(root + "/saveManualOrderOnMobile", upload.any(), function(req, res) {
+        var tmp_path = req.files[0].path;
+        req.body.uploadimg = req.files[0].originalname;
+        var target_path = 'www/mobile/' + req.files[0].originalname;
+        var src = fs.createReadStream(tmp_path);
+        var dest = fs.createWriteStream(target_path);
+
+        src.pipe(dest);
+
+        fs.unlink(req.files[0].path, function(err) {
+            if (err) return console.log(err);
+        });
+
+        // src.on('end', function() { status: "true" });
+        src.on('end', function() {
+            mnlord.saveManualOrder(req, res)
+                // tripapi.saveTripStops(req, res);
+                // res.send({ status: "true" });
+        });
+        src.on('error', function(err) {
+            res.send({ error: "upload failed" });
+        });
+    });
+
+    //##################################### File Uploads #########################################################
+
 }
 
 module.exports = appRouter;
