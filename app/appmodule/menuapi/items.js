@@ -19,3 +19,11 @@ item.saveItemInfo = function saveItemInfo(req, res, done) {
         rs.resp(res, 401, "error : " + err);
     })
 }
+
+item.saveMultiItemInfo = function saveMultiItemInfo(req, res, done) {
+    db.callFunction("select " + globals.menuschema("funsave_multiitems") + "($1::json);", [req.body], function(data) {
+        rs.resp(res, 200, data.rows);
+    }, function(err) {
+        rs.resp(res, 401, "error : " + err);
+    })
+}

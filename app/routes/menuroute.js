@@ -2,6 +2,7 @@ var rs = require("../appmodule/util/resp.js");
 var globals = require("../globals.js");
 var fs = require('fs');
 
+var fy = require("../appmodule/menuapi/financialyear.js");
 var holiday = require("../appmodule/menuapi/holiday.js");
 var items = require("../appmodule/menuapi/items.js");
 var gst = require("../appmodule/menuapi/gstsetting.js");
@@ -30,6 +31,13 @@ var appRouter = function(app) {
 
     //##################################### VIVEK ###########################################################
 
+    //##################################### Financial Year ##################################################
+
+    app.post(root + "/saveFinancialYear", fy.saveFinancialYear);
+    app.post(root + "/getFinancialYear", fy.getFinancialYear);
+
+    //##################################### Financial Year ##################################################
+
     //##################################### Holiday #########################################################
 
     app.post(root + "/saveHoliday", holiday.saveHoliday);
@@ -37,21 +45,21 @@ var appRouter = function(app) {
 
     //##################################### Holiday #########################################################
 
-    //##################################### Items ##########################################################
+    //##################################### Items ###########################################################
 
     app.post(root + "/saveItemInfo", items.saveItemInfo);
     app.post(root + "/getItemDetails", items.getItemDetails);
 
-    //##################################### Items ##########################################################
+    //##################################### Items ###########################################################
 
-    //##################################### GST Setting ####################################################
+    //##################################### GST Setting #####################################################
 
     app.post(globals.globvar.rootAPI + "/saveGSTSetting", gst.saveGSTSetting);
     app.post(globals.globvar.rootAPI + "/getGSTSetting", gst.getGSTSetting);
 
-    //##################################### GST Setting ####################################################
+    //##################################### GST Setting #####################################################
 
-    //##################################### VIVEK ##########################################################
+    //##################################### VIVEK ###########################################################
 }
 
 module.exports = appRouter;

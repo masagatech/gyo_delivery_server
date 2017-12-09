@@ -186,7 +186,7 @@ var appRouter = function(app) {
     app.post(root + "/saveManualOrderOnMobile", upload.any(), function(req, res) {
         var tmp_path = req.files[0].path;
         req.body.uploadimg = req.files[0].originalname;
-        var target_path = 'www/mobile/' + req.files[0].originalname;
+        var target_path = 'www/mobile/mord/' + req.files[0].originalname;
         var src = fs.createReadStream(tmp_path);
         var dest = fs.createWriteStream(target_path);
 
@@ -204,6 +204,7 @@ var appRouter = function(app) {
         });
         src.on('error', function(err) {
             res.send({ error: "upload failed" });
+            console.log(err);
         });
     });
 

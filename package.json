@@ -36,6 +36,9 @@
         "phantom-html2pdf": "^4.0.0",
         "q": "^1.4.1",
         "redis": "^2.7.1",
-        "socket.io": "^1.7.3"
+        "socket.io": "^1.7.3",
+        "sendmail": "^1.2.0",
+        "xls-to-json-lc": "^0.3.4",
+        "xlsx-to-json-lc": "^0.5.0"
     }
 }
