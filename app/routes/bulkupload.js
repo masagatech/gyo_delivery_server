@@ -10,6 +10,8 @@ var fs = require('fs');
 
 var items = require("../appmodule/menuapi/items.js");
 
+var root = globals.globvar.rootAPI + "/menu";
+
 var multer = require('multer');
 
 var upload = multer({
@@ -23,30 +25,30 @@ var upload = multer({
 var appRouter = function(app) {
     app.use(bodyParser.json());
 
-    var storage = multer.diskStorage({ //multers disk storage settings
-        destination: function(req, file, cb) {
-            cb(null, './excelupload/')
-        },
-        filename: function(req, file, cb) {
-            var datetimestamp = Date.now();
-            cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1])
-        }
-    });
+    // var storage = multer.diskStorage({ //multers disk storage settings
+    //     destination: function(req, file, cb) {
+    //         cb(null, './menu/uploadMultiItems/')
+    //     },
+    //     filename: function(req, file, cb) {
+    //         var datetimestamp = Date.now();
+    //         cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1])
+    //     }
+    // });
 
-    var excelupload = multer({ //multer settings
-        storage: storage,
-        fileFilter: function(req, file, callback) { //file filter
-            if (['xls', 'xlsx'].indexOf(file.originalname.split('.')[file.originalname.split('.').length - 1]) === -1) {
-                return callback(new Error('Wrong extension type'));
-            }
-            callback(null, true);
-        }
-    }).single('file');
+    // var uploadMultiItems = multer({ //multer settings
+    //     storage: storage,
+    //     fileFilter: function(req, file, callback) { //file filter
+    //         if (['xls', 'xlsx'].indexOf(file.originalname.split('.')[file.originalname.split('.').length - 1]) === -1) {
+    //             return callback(new Error('Wrong extension type'));
+    //         }
+    //         callback(null, true);
+    //     }
+    // }).single('file');
 
 
     /** API path that will upload the files */
 
-    app.post(globals.globvar.rootAPI + '/exceluploads', upload.any(), function(req, res) {
+    app.post(root + '/uploadMultiItems', upload.any(), function(req, res) {
         var exceltojson; //Initialization
 
         var tmp_path = req.files[0].path;
@@ -76,13 +78,16 @@ var appRouter = function(app) {
                     console.log(result);
 
                     if (err) {
-                        return res.json({ error_code: 1, err_desc: err, data: null });
+                        res.json({ error_code: 1, err_desc: err, data: null });
                     } else {
-                        return res.json({ error_code: 0, err_desc: null, data: result });
+                        res.json({ data: result });
                     }
 
-                    items.saveMultiItemInfo(req, res);
+                    rs.resp(res, 200, res.data);
 
+                    items.saveMultiItemInfo(req, res.data);
+
+                    // return result;
 
                     // rs.resp(res, 200, res.data);
                     // rs.resp(res, 200, req.body);
