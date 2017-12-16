@@ -65,8 +65,8 @@ var appRouter = function(app) {
     //##################################### Common ####################################################
 
     app.get(globals.globvar.rootAPI + "/getAutoData", common.getAutoData);
-    app.post(globals.globvar.rootAPI + "/getDropDownData", common.getDropDownData);
 
+    app.post(globals.globvar.rootAPI + "/getDropDownData", common.getDropDownData);
     app.post(globals.globvar.rootAPI + "/getMOM", common.getMOM);
 
     //##################################### Common ####################################################
