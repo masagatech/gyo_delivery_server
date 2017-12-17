@@ -4,8 +4,8 @@ var fs = require('fs');
 
 var fy = require("../appmodule/menuapi/financialyear.js");
 var holiday = require("../appmodule/menuapi/holiday.js");
-var items = require("../appmodule/menuapi/items.js");
 var gst = require("../appmodule/menuapi/gstsetting.js");
+var items = require("../appmodule/menuapi/items.js");
 
 var multer = require('multer');
 
@@ -54,8 +54,8 @@ var appRouter = function(app) {
 
     //##################################### GST Setting #####################################################
 
-    app.post(globals.globvar.rootAPI + "/saveGSTSetting", gst.saveGSTSetting);
-    app.post(globals.globvar.rootAPI + "/getGSTSetting", gst.getGSTSetting);
+    app.post(root + "/saveGSTSetting", gst.saveGSTSetting);
+    app.post(root + "/getGSTSetting", gst.getGSTSetting);
 
     //##################################### GST Setting #####################################################
 
