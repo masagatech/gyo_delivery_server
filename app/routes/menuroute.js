@@ -6,6 +6,7 @@ var fy = require("../appmodule/menuapi/financialyear.js");
 var holiday = require("../appmodule/menuapi/holiday.js");
 var gst = require("../appmodule/menuapi/gstsetting.js");
 var items = require("../appmodule/menuapi/items.js");
+var order = require("../appmodule/menuapi/order.js");
 
 var multer = require('multer');
 
@@ -51,6 +52,13 @@ var appRouter = function(app) {
     app.post(root + "/getItemDetails", items.getItemDetails);
 
     //##################################### Items ###########################################################
+
+    //##################################### Order ###########################################################
+
+    app.post(root + "/saveOrderInfo", order.saveOrderInfo);
+    app.post(root + "/getOrderDetails", order.getOrderDetails);
+
+    //##################################### Order ###########################################################
 
     //##################################### GST Setting #####################################################
 

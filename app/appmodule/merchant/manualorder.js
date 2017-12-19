@@ -15,6 +15,7 @@ mord.getManualOrder = function getManualOrder(req, res, done) {
 mord.saveManualOrder = function saveManualOrder(req, res, done) {
     db.callFunction("select " + globals.merchant("funsave_manualorder") + "($1::json);", [req.body], function(data) {
         rs.resp(res, 200, data.rows);
+        console.log(req.body);
     }, function(err) {
         rs.resp(res, 401, "error : " + err);
     })
