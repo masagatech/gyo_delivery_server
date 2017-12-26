@@ -1,6 +1,7 @@
 var rs = require("../appmodule/util/resp.js");
 var globals = require("../globals.js");
 var fs = require('fs');
+var sha512 = require('js-sha512');
 
 var fy = require("../appmodule/menuapi/financialyear.js");
 var holiday = require("../appmodule/menuapi/holiday.js");
@@ -26,6 +27,20 @@ var appRouter = function(app) {
         console.log(req.body)
         rs.resp(res, 200, APIInfo);
     });
+
+    // Payment Details
+
+    app.post(root + '/createHash', function(req, res) {
+        var salt = 'eCwWELxi';
+        var hash = sha512(req.body.preHashString + salt);
+        console.log(hash);
+        res.send({ success: true, hash: hash });
+    });
+
+    app.post(root + '/PaymentStatus', function(req, res) {
+        console.log(req.body);
+        res.send(req.body.status);
+    })
 
     //##################################### API Details / ###################################################
 
@@ -60,6 +75,13 @@ var appRouter = function(app) {
     app.post(root + "/getOrderDetails", order.getOrderDetails);
 
     //##################################### Order ###########################################################
+
+    //##################################### Order Rating ###########################################################
+
+    app.post(root + "/saveOrderRating", order.saveOrderRating);
+    app.post(root + "/getOrderRating", order.getOrderRating);
+
+    //##################################### Order Rating ###########################################################
 
     //##################################### GST Setting #####################################################
 
