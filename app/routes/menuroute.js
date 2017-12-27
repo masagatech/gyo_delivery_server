@@ -37,7 +37,7 @@ var appRouter = function(app) {
         res.send({ success: true, hash: hash });
     });
 
-    app.post(root + '/PaymentStatus', function(req, res) {
+    app.post(root + '/paymentstatus', function(req, res) {
         console.log(req.body);
         res.send(req.body.status);
     })
