@@ -4,6 +4,7 @@ var dashboard = require("../appmodule/merchant/dashboard.js");
 var hotspot = require('../appmodule/merchant/hotspot.js');
 var rider = require('../appmodule/merchant/rider.js');
 var merchant = require('../appmodule/merchant/merchant.js');
+var ctwisedelvprice = require("../appmodule/merchant/ctwisedelvprice.js");
 var outlet = require('../appmodule/merchant/outlet.js');
 var order = require('../appmodule/merchant/order.js');
 var mnlord = require('../appmodule/merchant/manualorder.js');
@@ -56,14 +57,14 @@ var appRouter = function(app) {
     app.post(root + "/getDashboard", dashboard.getDashboard);
     app.post(root + "/getDashboardNew", dashboard.getDashboard_new);
 
-    //#############################################################################################
+    //############################ Dashboard ######################################################
 
     //############################ Hotspot ########################################################
 
     app.post(root + "/getHotspotDetails", hotspot.getHotspotDetails);
     app.post(root + "/saveHotspotInfo", hotspot.saveHotspotInfo);
 
-    //#############################################################################################
+    //############################ Hotspot ########################################################
 
     //############################ Rider ##########################################################
 
@@ -71,21 +72,28 @@ var appRouter = function(app) {
     app.post(root + "/saveRiderInfo", rider.saveRiderInfo);
     app.post(root + "/updateRdrWkOfDtls", rider.updateRdrWkOfDtls);
 
-    //#############################################################################################
+    //############################ Rider ##########################################################
 
     //############################ Merchant #######################################################
 
     app.post(root + "/getMerchantDetails", merchant.getMerchantDetails);
     app.post(root + "/saveMerchantInfo", merchant.saveMerchantInfo);
 
-    //#############################################################################################
+    //############################ Merchant #######################################################
+
+    //############################ CityWiseDeliveryPrice ##########################################
+
+    app.post(root + "/getCityWiseDeliveryPrice", ctwisedelvprice.getCityWiseDeliveryPrice);
+    app.post(root + "/saveCityWiseDeliveryPrice", ctwisedelvprice.saveCityWiseDeliveryPrice);
+
+    //############################ CityWiseDeliveryPrice ##########################################
 
     //############################ Outlet #########################################################
 
     app.post(root + "/getOutletDetails", outlet.getOutletDetails);
     app.post(root + "/saveOutletInfo", outlet.saveOutletInfo);
 
-    //#############################################################################################
+    //############################ Outlet #########################################################
 
     //############################ Orders / #######################################################
 
@@ -111,14 +119,14 @@ var appRouter = function(app) {
     app.post(root + "/saveDayEndInfo", dayend.saveDayEndInfo);
     app.post(root + "/getDayEndDetails", dayend.getDayEndDetails);
 
-    //#############################################################################################
+    //############################ Day End / ######################################################
 
     //############################ Customer / #####################################################
 
     app.post(root + "/getCustomerDetails", customer.getCustomerDetails);
     app.post(root + "/saveCustomerInfo", customer.saveCustomerInfo);
 
-    //#############################################################################################
+    //############################ Customer / #####################################################
 
     //############################ API TEST / #####################################################
 
@@ -129,41 +137,45 @@ var appRouter = function(app) {
     app.get(root + "/getAvailRider", rider.getAvailable);
     app.post(root + "/pushOrderToRider", ordallocation.sendorder);
 
-    //#############################################################################################
+    //############################ Orders API / ###################################################
 
     //############################ Rider API / ####################################################
 
     app.get(root + "/getDashOrdDetails", orderdash.getOrderDetails);
 
-    //#############################################################################################
+    //############################ Rider API / ####################################################
 
     //############################ Mobile API / ###################################################
 
     app.get(root + "/saveLiveBeat", mobile.savelivebeat);
 
-    //#############################################################################################
+    //############################ Mobile API / ###################################################
 
     //############################ Status / #######################################################
 
     app.get(root + "/getStatus", status.getStatus);
     app.post(root + "/setStatus", status.setStatus);
 
-    //#############################################################################################
+    //############################ Status / #######################################################
 
     //############################ Notify / #######################################################
 
     app.get(root + "/getNotify", notification.getNotify);
     app.post(root + "/createNotify", notification.createNotify);
 
-    //#############################################################################################
+    //############################ Notify / #######################################################
 
     //############################ trip / #########################################################
 
     app.post(root + "/setTripAction", trip.setTripAction);
 
+    //############################ trip / #########################################################
+
     //############################ gmap / #########################################################
 
     app.get(root + "/getgMapData", gmap.getmapData);
+
+    //############################ gmap / #########################################################
 
     //############################ Reports / ######################################################
 
@@ -171,17 +183,19 @@ var appRouter = function(app) {
     app.post(root + "/getInvoiceDetails", reports.getInvoiceDetails);
     app.get(root + "/exportInvoiceDetails", reports.exportInvoiceDetails);
 
-    //#############################################################################################
+    //############################ Reports / ######################################################
+
+    //############################ Integration / ##################################################
 
     app.post(root + "/getIntegration", integrationApi.getIntegration);
     app.post(root + "/generetKey", integrationApi.generetKey);
 
     integration.createIntegration(app);
 
-    //###################################################################################################################
+    //############################ Integration / ##################################################
 
 
-    //##################################### Save Manual Uploads #########################################################
+    //##################################### Save Manual Uploads ###################################
 
     app.post(root + "/saveManualOrderOnMobile", upload.any(), function(req, res) {
         var tmp_path = req.files[0].path;
@@ -208,8 +222,7 @@ var appRouter = function(app) {
         });
     });
 
-    //##################################### File Uploads #########################################################
-
+    //##################################### Save Manual Uploads ###################################
 }
 
 module.exports = appRouter;
