@@ -19,3 +19,11 @@ outlet.getOutletDetails = function getOutletDetails(req, res, done) {
         rs.resp(res, 401, "error : " + err);
     }, 1)
 }
+
+outlet.getOutletAreaWise = function getOutletAreaWise(req, res, done) {
+    db.callProcedure("select " + globals.menuschema("funget_area_wise_outlet") + "($1,$2::json);", ['arol', req.query], function(data) {
+        rs.resp(res, 200, data.rows);
+    }, function(err) {
+        rs.resp(res, 401, "error : " + err);
+    }, 1)
+}

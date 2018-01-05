@@ -9,6 +9,9 @@ var gst = require("../appmodule/menuapi/gstsetting.js");
 var items = require("../appmodule/menuapi/items.js");
 var order = require("../appmodule/menuapi/order.js");
 
+var outlet = require('../appmodule/merchant/outlet.js');
+var addrsearch = require("../appmodule/menuapi/addresssearch.js")
+
 var multer = require('multer');
 
 var root = globals.globvar.rootAPI + "/menu";
@@ -61,6 +64,8 @@ var appRouter = function(app) {
 
     //##################################### Holiday #########################################################
 
+    app.get(root + "/getOutletAreaWise", outlet.getOutletAreaWise);
+
     //##################################### Items ###########################################################
 
     app.post(root + "/saveItemInfo", items.saveItemInfo);
@@ -76,12 +81,12 @@ var appRouter = function(app) {
 
     //##################################### Order ###########################################################
 
-    //##################################### Order Rating ###########################################################
+    //##################################### Order Rating ####################################################
 
     app.post(root + "/saveOrderRating", order.saveOrderRating);
     app.post(root + "/getOrderRating", order.getOrderRating);
 
-    //##################################### Order Rating ###########################################################
+    //##################################### Order Rating ####################################################
 
     //##################################### GST Setting #####################################################
 
@@ -89,6 +94,12 @@ var appRouter = function(app) {
     app.post(root + "/getGSTSetting", gst.getGSTSetting);
 
     //##################################### GST Setting #####################################################
+
+    //##################################### Address Search ##################################################
+
+    app.get(globals.globvar.rootAPI + "/searchAddress", addrsearch.searchAddress);
+
+    //##################################### Address Search ##################################################
 
     //##################################### VIVEK ###########################################################
 }
