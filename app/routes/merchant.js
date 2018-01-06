@@ -9,6 +9,7 @@ var order = require('../appmodule/merchant/order.js');
 var mnlord = require('../appmodule/merchant/manualorder.js');
 var dayend = require('../appmodule/merchant/dayend.js');
 var customer = require('../appmodule/merchant/customer.js');
+var bankpayment = require('../appmodule/merchant/bankpayment.js');
 
 var orderdash = require('../appmodule/merchant/orderdashboard.js');
 var mobile = require('../appmodule/merchant/mobile.js');
@@ -79,6 +80,13 @@ var appRouter = function(app) {
     app.post(root + "/saveMerchantInfo", merchant.saveMerchantInfo);
 
     //#############################################################################################
+      //############################ BankPayment #######################################################
+
+      app.post(root + "/getBankPaymentDetails", bankpayment.getBankPaymentDetails);
+      app.post(root + "/saveBankPaymentInfo", bankpayment.saveBankPaymentInfo);
+  
+      //#############################################################################################
+  
 
     //############################ Outlet #########################################################
 
