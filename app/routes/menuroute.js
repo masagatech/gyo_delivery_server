@@ -69,6 +69,7 @@ var appRouter = function(app) {
     //##################################### Items ###########################################################
 
     app.post(root + "/saveItemInfo", items.saveItemInfo);
+    app.post(root + "/saveAddonInfo", items.saveAddonInfo);
     app.post(root + "/getItemDetails", items.getItemDetails);
 
     //##################################### Items ###########################################################
