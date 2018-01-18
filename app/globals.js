@@ -1,6 +1,6 @@
 var global = module.exports = {};
 
-//database settings
+// database settings
 
 global.prodmode = {
     "local": 1,
@@ -46,20 +46,18 @@ global.monconstr = function constr() {
 };
 
 global.reportTemplatePath = function reportTemplatePath() {
-    //console.log(__dirname + '\\reports\\templates');
     if (global.mode == global.prodmode.prod)
         return __dirname + '/reports/templates';
     else
         return __dirname + '/reports/templates';
-};
-global.reportRootPath = function reportRootPath() {
-    //console.log(__dirname + '\\reports');
-    if (global.mode == global.prodmode.prod)
-        return __dirname + '/reports';
-    else
-        return __dirname + '/reports';
 };
 
+global.reportRootPath = function reportRootPath() {
+    if (global.mode == global.prodmode.prod)
+        return __dirname + '/reports';
+    else
+        return __dirname + '/reports';
+};
 
 global.pgdbconnection = {
     user: 'postgres', //env var: PGUSER

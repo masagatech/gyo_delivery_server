@@ -22,7 +22,7 @@ var upload = multer({
     dest: 'www/uploads/'
 });
 
-var appRouter = function (app) {
+var appRouter = function(app) {
     app.use(bodyParser.json());
 
     // var storage = multer.diskStorage({ //multers disk storage settings
@@ -48,7 +48,7 @@ var appRouter = function (app) {
 
     /** API path that will upload the files */
 
-    app.post(root + '/uploadMultiItems', upload.any(), function (req, res) {
+    app.post(root + '/uploadMultiItems', upload.any(), function(req, res) {
         var exceltojson; //Initialization
 
         var tmp_path = req.files[0].path;
@@ -58,7 +58,7 @@ var appRouter = function (app) {
 
         src.pipe(dest);
 
-        fs.unlink(req.files[0].path, function (err) {
+        fs.unlink(req.files[0].path, function(err) {
             if (err) return console.log(err);
         });
 
@@ -68,27 +68,26 @@ var appRouter = function (app) {
             exceltojson = xlstojson;
         }
 
-        src.on('end', function () {
+        src.on('end', function() {
             try {
                 xlsxtojson({
                     input: target_path, //the same path where we uploaded our file
                     output: null, //since we don't need output.json
                     lowerCaseHeaders: true
-                }, function (err, result) {
+                }, function(err, result) {
                     console.log(result);
 
                     if (err) {
                         res.json({ error_code: 1, err_desc: err, data: null });
                     } else {
-                       
+
                     }
 
-
-
-                    items.saveMultiItemInfo({ "olid": req.body.olid, "multiitems": result }, function (d) {
+                    items.saveMultiItemInfo({ "olid": req.body.olid, "multiitems": result }, function(d) {
                         res.json({ data: d });
 
                     });
+
                     //rs.resp(res, 200, res.data);
                     // return result;
 
@@ -99,7 +98,7 @@ var appRouter = function (app) {
                 res.json({ error_code: 1, err_desc: "Corupted excel file" });
             }
         });
-        src.on('error', function (err) { res.send({ error: "upload failed" }); });
+        src.on('error', function(err) { res.send({ error: "upload failed" }); });
     });
 }
 

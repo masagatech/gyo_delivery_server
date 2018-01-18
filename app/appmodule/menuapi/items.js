@@ -3,19 +3,33 @@ var rs = require("gen").res;
 var globals = require("gen").globals;
 var groupBy = require('json-groupby')
 
-
 var item = module.exports = {};
+
+// Items
+
+item.saveItemInfo = function saveItemInfo(req, res, done) {
+    db.callFunction("select " + globals.menuschema("funsave_iteminfo") + "($1::json);", [req.body], function(data) {
+        rs.resp(res, 200, data.rows);
+    }, function(err) {
+        rs.resp(res, 401, "error : " + err);
+    })
+}
+
+item.saveMultiItemInfo = function saveMultiItemInfo(req, callback) {
+    db.callFunction("select " + globals.menuschema("funsave_multiitems") + "($1::json);", [req], function(data) {
+        callback(data.rows);
+    }, function(err) {
+        callback("error : " + err);
+    })
+}
 
 item.getItemDetails = function getItemDetails(req, res, done) {
     db.callProcedure("select " + globals.menuschema("funget_itemdetails") + "($1,$2::json);", ['item', req.body], function(data) {
         if (req.body.flag === "custmenus") {
             if (req.body.sflag === undefined) {
                 rs.resp(res, 200, getMenuCategories(data.rows));
-
             } else {
-
                 rs.resp(res, 200, getMenuCategoriesSubCategory(data.rows));
-
             }
         } else {
             rs.resp(res, 200, data.rows);
@@ -43,21 +57,7 @@ function getMenuCategoriesSubCategory(rdata) {
     return groupBy(rdata, ['cat', 'scat']);
 }
 
-item.saveItemInfo = function saveItemInfo(req, res, done) {
-    db.callFunction("select " + globals.menuschema("funsave_iteminfo") + "($1::json);", [req.body], function(data) {
-        rs.resp(res, 200, data.rows);
-    }, function(err) {
-        rs.resp(res, 401, "error : " + err);
-    })
-}
-
-item.saveMultiItemInfo = function saveMultiItemInfo(req, callback) {
-    db.callFunction("select " + globals.menuschema("funsave_multiitems") + "($1::json);", [req], function(data) {
-        callback(data.rows);
-    }, function(err) {
-        callback("error : " + err);
-    })
-}
+// Addon
 
 item.saveAddonInfo = function saveAddonInfo(req, res, done) {
     db.callFunction("select " + globals.menuschema("funsave_addoninfo") + "($1::json);", [req.body], function(data) {
@@ -65,4 +65,12 @@ item.saveAddonInfo = function saveAddonInfo(req, res, done) {
     }, function(err) {
         rs.resp(res, 401, "error : " + err);
     })
+}
+
+item.getAddonDetails = function getAddonDetails(req, res, done) {
+    db.callProcedure("select " + globals.menuschema("funget_addondetails") + "($1,$2::json);", ['addon', req.body], function(data) {
+        rs.resp(res, 200, data.rows);
+    }, function(err) {
+        rs.resp(res, 401, "error : " + err);
+    }, 1)
 }
