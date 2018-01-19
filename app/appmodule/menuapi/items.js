@@ -25,7 +25,7 @@ item.saveMultiItemInfo = function saveMultiItemInfo(req, callback) {
 
 item.getItemDetails = function getItemDetails(req, res, done) {
     db.callProcedure("select " + globals.menuschema("funget_itemdetails") + "($1,$2::json);", ['item', req.body], function(data) {
-        if (req.body.flag === "custmenus") {
+        if (req.body.flag === "custmenus" || req.body.flag === "menus") {
             if (req.body.sflag === undefined) {
                 rs.resp(res, 200, getMenuCategories(data.rows));
             } else {
