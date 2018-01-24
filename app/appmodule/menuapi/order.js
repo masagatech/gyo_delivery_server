@@ -22,6 +22,14 @@ order.saveOrderDelivery = function saveOrderDelivery(req, res, done) {
     })
 }
 
+order.saveValidOrder = function saveValidOrder(req, res, done) {
+    db.callProcedure("select " + globals.menuschema("funvalid_saveorder") + "($1,$2::json);", ['validord', req.body], function(data) {
+        rs.resp(res, 200, data.rows);
+    }, function(err) {
+        rs.resp(res, 401, "error : " + err);
+    }, 1)
+}
+
 order.saveOrderInfo = function saveOrderInfo(req, res, done) {
     db.callFunction("select " + globals.menuschema("funsave_orderinfo") + "($1::json);", [req.body], function(data) {
         rs.resp(res, 200, data.rows);

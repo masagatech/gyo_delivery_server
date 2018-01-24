@@ -78,6 +78,7 @@ var appRouter = function(app) {
     //##################################### Order ###########################################################
 
     app.post(root + "/saveOrderDelivery", order.saveOrderDelivery);
+    app.post(root + "/saveValidOrder", order.saveValidOrder);
     app.post(root + "/saveOrderInfo", order.saveOrderInfo);
     app.post(root + "/getOrderDetails", order.getOrderDetails);
 
