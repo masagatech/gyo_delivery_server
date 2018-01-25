@@ -19,7 +19,6 @@ order.getOrderDash = function getOrderDash(req, res, done) {
 
 order.getOrderDetails = function getOrderDetails(req, res, done) {
     if (req.query.flag == undefined) {
-
         rs.resp(res, 401, "invalid input parameters flag");
         return;
     }

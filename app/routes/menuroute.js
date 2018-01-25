@@ -3,6 +3,7 @@ var globals = require("../globals.js");
 var fs = require('fs');
 var sha512 = require('js-sha512');
 
+var cust = require("../appmodule/menuapi/customer.js");
 var fy = require("../appmodule/menuapi/financialyear.js");
 var holiday = require("../appmodule/menuapi/holiday.js");
 var gst = require("../appmodule/menuapi/gstsetting.js");
@@ -49,6 +50,12 @@ var appRouter = function(app) {
 
 
     //##################################### VIVEK ###########################################################
+
+    //##################################### Customer ##################################################
+
+    app.post(root + "/saveCustomerLogin", cust.saveCustomerLogin);
+
+    //##################################### Customer ##################################################
 
     //##################################### Financial Year ##################################################
 

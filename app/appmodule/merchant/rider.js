@@ -11,6 +11,7 @@ rider.saveRiderInfo = function saveRiderInfo(req, res, done) {
         rs.resp(res, 401, "error : " + err);
     })
 }
+
 rider.updateRdrWkOfDtls = function updateRdrWkOfDtls(req, res, done) {
     db.callFunction("select " + globals.merchant("funsave_rdrwkoff") + "($1::json);", [req.body], function(data) {
         rs.resp(res, 200, data.rows);
@@ -29,7 +30,6 @@ rider.getRiderDetails = function getRiderDetails(req, res, done) {
 
 rider.getAvailable = function getAvailable(req, res, done) {
     if (req.query.flag == undefined) {
-
         rs.resp(res, 401, "invalid input parameters flag");
         return;
     }
