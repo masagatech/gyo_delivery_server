@@ -37,7 +37,7 @@ var appRouter = function(app) {
     app.post(root + '/createHash', function(req, res) {
         var salt = 'eCwWELxi';
         var hash = sha512(req.body.preHashString + salt);
-        console.log(hash);
+        console.log("data : " + hash);
         res.send({ success: true, hash: hash });
     });
 
