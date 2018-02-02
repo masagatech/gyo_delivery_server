@@ -1,4 +1,5 @@
 var globals = require("gen").globals;
+var fs = require('fs');
 
 var dashboard = require("../appmodule/merchant/dashboard.js");
 var hotspot = require('../appmodule/merchant/hotspot.js');
@@ -81,13 +82,13 @@ var appRouter = function(app) {
     app.post(root + "/saveMerchantInfo", merchant.saveMerchantInfo);
 
     //#############################################################################################
-      //############################ BankPayment #######################################################
+    //############################ BankPayment #######################################################
 
-      app.post(root + "/getBankPaymentDetails", bankpayment.getBankPaymentDetails);
-      app.post(root + "/saveBankPaymentInfo", bankpayment.saveBankPaymentInfo);
-  
-      //#############################################################################################
-  
+    app.post(root + "/getBankPaymentDetails", bankpayment.getBankPaymentDetails);
+    app.post(root + "/saveBankPaymentInfo", bankpayment.saveBankPaymentInfo);
+
+    //#############################################################################################
+
     //############################ Merchant #######################################################
 
     //############################ CityWiseDeliveryPrice ##########################################
