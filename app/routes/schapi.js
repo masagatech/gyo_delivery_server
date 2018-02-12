@@ -1,5 +1,6 @@
 var globals = require("gen").globals;
 
+
 var tripapi = require("../appmodule/schoolapi/tripapi.js");
 var tripsinfo = require("../appmodule/z_apitrips/tripsinfo.js");
 var parents = require("../appmodule/schoolapi/parents.js");
@@ -23,6 +24,8 @@ var appSchRouter = function(app) {
     app.post(globals.globvar.rootAPI + "/cust/activatekid", parents.activatekid);
     //##################################### FCM notification ###############################################
     app.get(globals.globvar.rootAPI + "/notify", notify.getUserNotification);
+
+ 
 }
 
 module.exports = appSchRouter;

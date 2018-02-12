@@ -27,3 +27,10 @@ common.getMOM = function getMOM(req, res, done) {
         rs.resp(res, 401, "error : " + err);
     }, 1)
 }
+common.saveMOM = function saveMOM(req, res, done) {
+    db.callFunction("select " + globals.schema("funsave_mom") + "($1::json);", [req.body], function(data) {
+        rs.resp(res, 200, data.rows);
+    }, function(err) {
+        rs.resp(res, 401, "error : " + err);
+    })
+}

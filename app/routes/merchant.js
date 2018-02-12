@@ -6,12 +6,15 @@ var hotspot = require('../appmodule/merchant/hotspot.js');
 var rider = require('../appmodule/merchant/rider.js');
 var merchant = require('../appmodule/merchant/merchant.js');
 var ctwisedelvprice = require("../appmodule/merchant/ctwisedelvprice.js");
+var ctwisebank = require("../appmodule/merchant/ctwisebank.js");
 var outlet = require('../appmodule/merchant/outlet.js');
 var order = require('../appmodule/merchant/order.js');
 var mnlord = require('../appmodule/merchant/manualorder.js');
 var dayend = require('../appmodule/merchant/dayend.js');
 var customer = require('../appmodule/merchant/customer.js');
 var bankpayment = require('../appmodule/merchant/bankpayment.js');
+var olbank = require('../appmodule/merchant/reports.js');
+var merchantrpt = require('../appmodule/merchant/reports.js');
 
 var orderdash = require('../appmodule/merchant/orderdashboard.js');
 var mobile = require('../appmodule/merchant/mobile.js');
@@ -97,6 +100,13 @@ var appRouter = function(app) {
     app.post(root + "/saveCityWiseDeliveryPrice", ctwisedelvprice.saveCityWiseDeliveryPrice);
 
     //############################ CityWiseDeliveryPrice ##########################################
+    
+      //############################ CityWiseBankDetail ##########################################
+
+      app.post(root + "/getCityWiseBank", ctwisebank.getCityWiseBank);
+    //   app.post(root + "/saveCityWiseDeliveryPrice", ctwisedelvprice.saveCityWiseDeliveryPrice);
+  
+      //############################ CityWiseBankDetail ##########################################
 
     //############################ Outlet #########################################################
 
@@ -192,7 +202,9 @@ var appRouter = function(app) {
     app.post(root + "/getDayEndReports", reports.getDayEndReports);
     app.post(root + "/getInvoiceDetails", reports.getInvoiceDetails);
     app.get(root + "/exportInvoiceDetails", reports.exportInvoiceDetails);
-
+    app.post(root + "/getOlBankReports", olbank.getOlBankReports);
+    app.post(root + "/getMerchantLedgerReports", merchantrpt.getMerchantLedgerReports);
+    
     //############################ Reports / ######################################################
 
     //############################ Integration / ##################################################
