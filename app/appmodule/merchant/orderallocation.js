@@ -5,40 +5,40 @@ var notification = require("./notification")
 
 var ordallocation = module.exports = {};
 
-ordallocation.sendorder = function (req, res, done) {
-
+ordallocation.sendorder = function(req, res, done) {
     var userIds = req.body.uids;
     var orderdetails = req.body.orddt;
     var status = req.body.status;
-   
-        ordallocation.sendNotification({
+
+    ordallocation.sendNotification({
             "userids": userIds,
             "ordid": orderdetails.ordid,
             "flag": "ordnotify",
             "status": status,
             "sbflg": req.body.sbflg,
             "hsid": req.body.hsid
-
         }, {
-                "ordid": orderdetails.ordid,
-                "type": "ordering",
-                "subtype": "neworder"
-            },
-            orderdetails
-        );
- 
-    if (res)
+            "ordid": orderdetails.ordid,
+            "type": "ordering",
+            "subtype": "neworder"
+        },
+
+        orderdetails
+    );
+
+    if (res) {
         rs.resp(res, 200, "success");
+    }
 }
 
-
-ordallocation.sendNotification = function (_users, _data, _extra, res) {
+ordallocation.sendNotification = function(_users, _data, _extra, res) {
     db.callProcedure("select " + globals.merchant("funget_api_getnotifyids") + "($1,$2,$3::json);", ['tripnotify', 'tripnotify1', _users],
-        function (data) {
+        function(data) {
             var devicetokens = data.rows[0];
             var tokens = [];
-            //    var users = [];
+            // var users = [];
             var msg = data.rows[1][0];
+
             _data["body"] = msg.body;
             _data["title"] = msg.title;
             _extra["expmin"] = msg.conf.notifymin == undefined ? 3 : msg.conf.notifymin;
@@ -46,11 +46,11 @@ ordallocation.sendNotification = function (_users, _data, _extra, res) {
 
             for (var i = 0; i <= devicetokens.length - 1; i++) {
                 tokens.push(devicetokens[i].devtok);
-                //users.push(devicetokens[i].uid);
+                // users.push(devicetokens[i].uid);
                 _data.uid = devicetokens[i].uid;
                 // console.log(_data);
                 ordallocation.sendOrderToManualNotification(_data);
-                //console.log(devicetokens[i].devtok);
+                // console.log(devicetokens[i].devtok);
             }
 
             // if(res){
@@ -61,7 +61,7 @@ ordallocation.sendNotification = function (_users, _data, _extra, res) {
             //             };
             //             rs.resp(res, 200, _d);
             //             return;
-            //         }else{
+            //         } else {
             //              var _d = {
             //                 "status": true
             //             };
@@ -81,6 +81,7 @@ ordallocation.sendNotification = function (_users, _data, _extra, res) {
             //    _data["body"] = msg.body;
             //    _data["title"] = msg.title;
             //    _data["extra"] = _data1;
+
             var message = {
                 "registration_ids": tokens,
                 "notification": {
@@ -92,32 +93,27 @@ ordallocation.sendNotification = function (_users, _data, _extra, res) {
                 "priority": "HIGH",
                 "time_to_live": (60 * 15)
             };
+
             //         for(var i=0;i<=users.length -1;i++){
             //                 _data.uid = users[i];
             //                 ordallocation.sendOrderToManualNotification(_data);
             //         }
 
-            fcm.send(message, function (err, response) {
-
+            fcm.send(message, function(err, response) {
                 if (err) {
-
                     console.log("Something has gone wrong!", err);
-
                 } else {
                     // console.log("Successfully sent with response: ", response);
-
                 }
             });
+        },
 
-        }, function (err) {
+        function(err) {
 
         }, 2);
-
 }
 
-
-
-ordallocation.sendOrderToManualNotification = function (data) {
+ordallocation.sendOrderToManualNotification = function(data) {
     var req = {};
     req.body = data;
 
@@ -125,13 +121,14 @@ ordallocation.sendOrderToManualNotification = function (data) {
 }
 
 // sending FCM notification
+
 var fcm = require("gen").fcm();
 
-ordallocation.sendFCMToRider = function (data) {
+ordallocation.sendFCMToRider = function(data) {
     data["flag"] = "assigned";
-    db.callProcedure("select " + globals.merchant("funget_api_getnotifyids") + "($1,$2,$3::json);", ['tripnotify', 'tripnotify1', { 'rdrid': data.rdid, 'flag': 'assigned' }],
-        function (data) {
 
+    db.callProcedure("select " + globals.merchant("funget_api_getnotifyids") + "($1,$2,$3::json);", ['tripnotify', 'tripnotify1', { 'rdrid': data.rdid, 'flag': 'assigned' }],
+        function(data) {
             var devicetokens = data.rows[0][0];
             var msg = data.rows[1][0];
 
@@ -143,33 +140,23 @@ ordallocation.sendFCMToRider = function (data) {
                         "body": msg.body,
                         "title": msg.title,
                     },
+
                     "priority": "HIGH",
                     "time_to_live": (60 * 60 * 24)
                 };
 
-
-                fcm.send(message, function (err, response) {
-
+                fcm.send(message, function(err, response) {
                     if (err) {
-
                         console.log("Something has gone wrong!", err);
-
                     } else {
                         console.log("Successfully sent with response: ", response);
-
                     }
                 });
-
             }
-
-        }, function (err) {
+        },
+        function(err) {
 
         }, 2);
-
 }
 
-
-ordallocation.sendorderResp = function () {
-
-
-}
+ordallocation.sendorderResp = function() {}
