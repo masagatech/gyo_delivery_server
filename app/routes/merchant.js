@@ -100,13 +100,13 @@ var appRouter = function(app) {
     app.post(root + "/saveCityWiseDeliveryPrice", ctwisedelvprice.saveCityWiseDeliveryPrice);
 
     //############################ CityWiseDeliveryPrice ##########################################
-    
-      //############################ CityWiseBankDetail ##########################################
 
-      app.post(root + "/getCityWiseBank", ctwisebank.getCityWiseBank);
+    //############################ CityWiseBankDetail ##########################################
+
+    app.post(root + "/getCityWiseBank", ctwisebank.getCityWiseBank);
     //   app.post(root + "/saveCityWiseDeliveryPrice", ctwisedelvprice.saveCityWiseDeliveryPrice);
-  
-      //############################ CityWiseBankDetail ##########################################
+
+    //############################ CityWiseBankDetail ##########################################
 
     //############################ Outlet #########################################################
 
@@ -201,10 +201,12 @@ var appRouter = function(app) {
 
     app.post(root + "/getDayEndReports", reports.getDayEndReports);
     app.post(root + "/getInvoiceDetails", reports.getInvoiceDetails);
+    app.get(root + "/getInvoiceDetailsExport", reports.getInvoiceDetailsExport);
+
     app.get(root + "/exportInvoiceDetails", reports.exportInvoiceDetails);
     app.post(root + "/getOlBankReports", olbank.getOlBankReports);
     app.post(root + "/getMerchantLedgerReports", merchantrpt.getMerchantLedgerReports);
-    
+
     //############################ Reports / ######################################################
 
     //############################ Integration / ##################################################
