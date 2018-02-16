@@ -130,6 +130,7 @@ var appRouter = function(app) {
     app.get(root + "/getOrdersCount", order.getapiOrdersCounts);
 
     app.post(root + "/getManualOrder", mnlord.getManualOrder);
+    app.post(root + "/getManualOrderReport", mnlord.getManualOrderReport);
     app.post(root + "/saveManualOrder", mnlord.saveManualOrder);
 
     //############################ Orders / #######################################################
