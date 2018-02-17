@@ -23,7 +23,7 @@ dayend.getInvoiceDetails = function getInvoiceDetails(req, res, done) {
     }, 1)
 }
 
-//template api name
+// template api name
 
 var invoicereportapi = require("../../reports/apis/invoice.js");
 

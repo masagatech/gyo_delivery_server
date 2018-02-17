@@ -1,6 +1,9 @@
 var db = require("db");
-var rs = require("gen").res;
-var globals = require("gen").globals;
+const gen = require("gen");
+var rs = gen.res;
+var globals = gen.globals;
+var download = gen.download;
+var Email = require("sendmail");
 
 var order = module.exports = {};
 
@@ -33,6 +36,32 @@ order.saveValidOrder = function saveValidOrder(req, res, done) {
 order.saveOrderInfo = function saveOrderInfo(req, res, done) {
     db.callFunction("select " + globals.menuschema("funsave_orderinfo") + "($1::json);", [req.body], function(data) {
         rs.resp(res, 200, data.rows);
+
+        /*
+        // Send SMS
+
+        SMS.send({
+            _to: "8879961590",
+            _lang: "_lang",
+            _key: 'send_order',
+            _keywords: {
+                '[user_name]': "Vivek Pandey",
+                '[desc]': "Your order has been send",
+            },
+        }, function(error_mail, error_info) {});
+
+        // Send Email
+
+        Email.send({
+            _to: "vivek.pandey5188@gmail.com",
+            _lang: "_lang",
+            _key: 'send_order',
+            _keywords: {
+                '[user_name]': "Vivek Pandey",
+                '[desc]': "Your order has been send",
+            },
+        }, function(error_mail, error_info) {});
+        */
     }, function(err) {
         rs.resp(res, 401, "error : " + err);
     })
@@ -54,4 +83,20 @@ order.getOrderRating = function getOrderRating(req, res, done) {
     }, function(err) {
         rs.resp(res, 401, "error : " + err);
     }, 1)
+}
+
+// Export
+
+var invoicereportapi = require("../../reports/apis/invoice.js");
+
+order.getOrderDetailsExport = function getOrderDetailsExport(req, res, done) {
+    db.callProcedure("select " + globals.menuschema("funget_orderdetails_export") + "($1,$2,$3::json);", ['ord1', 'ord2', req.query], function(data) {
+        download(req, res, {
+            data: data.rows[0],
+            data1: data.rows[1],
+            params: req.query
+        }, { 'all': 'invoice/menuinvoicerpt.html' }, invoicereportapi.invoiceDetails);
+    }, function(err) {
+        rs.resp(res, 401, "error : " + err);
+    }, 2)
 }

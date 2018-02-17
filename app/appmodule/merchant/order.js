@@ -450,7 +450,6 @@ order.getapiOrders = function getapiOrders(req, res, done) {
     }, 1)
 }
 
-
 order.getapiOrdersCounts = function getapiOrdersCounts(req, res, done) {
     db.callProcedure("select " + globals.merchant("api_funget_ordcount") + "($1,$2::json);", ['ordcount', req.query], function(data) {
         if (data.rows.length > 0 && data.rows[0].status != undefined && !data.rows[0].status) {

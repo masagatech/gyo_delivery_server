@@ -34,6 +34,7 @@ app.all('/*', function(req, res, next) {
 
 app.use('/images', express.static(path.join(__dirname.replace(/\\app\\bin/gi, ""), '\\www\\uploads')));
 app.use('/mordimg', express.static(path.join(__dirname.replace(/\\app\\bin/gi, ""), '\\www\\mobile\\mord')));
+app.use('/logo', express.static(path.join(__dirname.replace(/\\app\\bin/gi, ""), '\\www\\logo')));
 
 app.get('/chat', function(req, res) {
     res.sendFile(__dirname.replace("\\bin", "") + '\\httpdocs\\index.html');
