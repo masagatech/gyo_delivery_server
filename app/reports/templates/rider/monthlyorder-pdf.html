@@ -1,75 +1,39 @@
-<!-- <style>
-	table#rpttable {
-		border-collapse: collapse;
-		font-size: 12px;
-		width:100%;
-	}
-
-
-	
-	table#rpttable,
-	#rpttable tr th,
-	#rpttable tr td {
-		min-width: 16px!important;
-		border: 1px solid black!important;
-	}
-	
-	.text-center#rpttable {
-		text-align: center!important;
-	}
-	
-	#rpttable .bold {
-		font-weight: bold!important;
-	}
-	#header_row th{
-		color:#FFF;
-		background: #5e9ca0!important;
-	}
-</style> -->
-
 <div class="entry">
-	{{> rptheader}}
+    {{> rptheader}}
 
-		
-	<h4 style="color: #085256; text-align: center;">  {{#if params.cityid}} {{city}}	{{/if}}Rider Order Count <span style="font-size:13px;">({{params.start_date}} - {{params.end_date}}) </span></h4>
+    <h4 style="color: #085256; text-align: center;">
+        {{#if params.cityid}} {{city}} {{/if}}Rider Order Count <span style="font-size:13px;">({{params.start_date}} - {{params.end_date}}) </span>
+    </h4>
 
-	<div class="body">
-		<table  border="1" id="rpttable" style="border-collapse: collapse;font-size: 12px;width:100%;border: 1px solid black!important;" cellspacing=0 cellpadding=5>
-			<tr style="background:#085256!important;font-size:10px;" id="header_row" >
-			
-				<th rowspan="2" style="background:white!important;color:black!important;">City</th>
-				<th rowspan="2" style="background:white!important;color:black!important;">Rider</th>
-				<th rowspan="2" style="background:white!important;color:black!important;">Workshift</th>
-				{{#if firstset}}
-					<th colspan="{{firstset}}"  style="background:white!important;color:black!important;text-align:center"> {{firstset_month}} </td>
-				{{/if}}	
-				{{#if lastset}}
-					<th colspan="{{lastset}}" style="background:white!important;color:black!important;text-align:center"> {{lastset_month}} </th>
-				{{/if}}
-				<th rowspan="2" style="background:white!important;color:black!important;text-align:center"> Total </th>
-			</tr>
-			<tr style="background:white!important;color:black!important;font-size:10px;" id="header_row" >
-			
-				
-				{{#data2}} <th style="background:white!important;color:black!important;text-align:center">{{this.date}} <br> {{this.day}}</th> {{/data2 }}
-			
-				
-				<!-- <th> Time </th> -->
-			</tr>
-			{{#data}}
-			<tr>
-				<td>{{locname}}</td>
-				<td>{{rider_name}}</td>
-				<td>{{workshift}}</td>
-				{{{date_cols this}}}
-				
-			</tr>
-			{{/data}}
-			<tr>
-				<td colspan="3" class="bold" >Total</td>
-				{{{col_total}}}
-			
-			</tr>
-		</table>
-	</div>
+    <div class="body">
+        <table border="1" id="rpttable" style="border-collapse: collapse;font-size: 12px;width:100%;border: 1px solid black!important;" cellspacing="0" cellpadding=5>
+            <tr style="background:#085256!important;font-size:10px;" id="header_row">
+                <th rowspan="2" style="background:white!important;color:black!important;">City</th>
+                <th rowspan="2" style="background:white!important;color:black!important;">Rider</th>
+                <th rowspan="2" style="background:white!important;color:black!important;">Workshift</th>
+                {{#if firstset}}
+                <th colspan="{{firstset}}" style="background:white!important;color:black!important;text-align:center"> {{firstset_month}} </th>
+                {{/if}} {{#if lastset}}
+                <th colspan="{{lastset}}" style="background:white!important;color:black!important;text-align:center"> {{lastset_month}} </th>
+                {{/if}}
+                <th rowspan="2" style="background:white!important;color:black!important;text-align:center"> Total </th>
+            </tr>
+            <tr style="background:white!important;color:black!important;font-size:10px;" id="header_row">
+                {{#data2}}
+                <th style="background:white!important;color:black!important;text-align:center">{{this.date}} <br> {{this.day}}</th> {{/data2}}
+            </tr>
+            {{#data}}
+            <tr>
+                <td>{{locname}}</td>
+                <td>{{rider_name}}</td>
+                <td>{{workshift}}</td>
+                {{{date_cols this}}}
+            </tr>
+            {{/data}}
+            <tr>
+                <td colspan="3" class="bold">Total</td>
+                {{{col_total}}}
+            </tr>
+        </table>
+    </div>
 </div>

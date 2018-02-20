@@ -91,62 +91,94 @@
 <body>
     <div class="card">
         <div class="header">
-            {{#data2}}
-            <h4>{{olnm}} - Invoice Reports</h4>
-            <h5>Date : {{invdate}}</h5>
-            {{/data2}}
+            {{#data1}}
+            <h4>{{merchant}} - Day End ({{countde}})</h4>
+            {{/data1}}
         </div>
 
         <div class="body">
-            <table border="1" id="rpttable" class="table" cellspacing="0" cellpadding="5">
+            <table border="1" id="rptorder" class="table" cellspacing="0" cellpadding="5">
                 <tr id="header_row">
                     <th>
-                        From Date
+                        Merchant
                     </th>
                     <th>
-                        To Date
+                        Order No
                     </th>
                     <th>
-                        Week
+                        Punch Time
                     </th>
-                    <th align="right">
-                        Order
+                    <th>
+                        Pick Up Time
                     </th>
-                    <th align="right">
-                        Rate
+                    <th>
+                        Orders
                     </th>
-                    <th align="right">
-                        Amount
+                    <th>
+                        Stops
                     </th>
-                    <th align="right">
-                        Count Week
+                    <th>
+                        Order Amount
+                    </th>
+                    <th>
+                        Collection Amount
+                    </th>
+                    <th>
+                        Receivable Amount
                     </th>
                 </tr>
                 {{#data}}
                 <tr>
-                    <td width="120px">
-                        {{frmdt}}
-                    </td>
-                    <td width="120px">
-                        {{todt}}
-                    </td>
                     <td>
-                        {{week}}
+                        {{merchant}}
+                    </td>
+                    <td width="100px">
+                        {{ordno}}
+                    </td>
+                    <td width="100px">
+                        {{punchtime}}
+                    </td>
+                    <td width="150px">
+                        {{picktime}}
                     </td>
                     <td width="100px" align="right">
                         {{orders}}
                     </td>
                     <td width="100px" align="right">
-                        {{rate}}
+                        {{stops}}
                     </td>
                     <td width="100px" align="right">
-                        {{amt}}
+                        {{ordamt}}
                     </td>
                     <td width="100px" align="right">
-                        {{countwk}}
+                        {{colamt}}
+                    </td>
+                    <td width="100px" align="right">
+                        {{recamt}}
                     </td>
                 </tr>
-                {{/data}}
+                {{/data}} {{#data1}}
+                <tr class="tr-foot">
+                    <td colspan="4">
+                        {{picktime}}
+                    </td>
+                    <td width="100px" align="right">
+                        {{orders}}
+                    </td>
+                    <td width="100px" align="right">
+                        {{stops}}
+                    </td>
+                    <td width="100px" align="right">
+                        {{ordamt}}
+                    </td>
+                    <td width="100px" align="right">
+                        {{colamt}}
+                    </td>
+                    <td width="100px" align="right">
+                        {{recamt}}
+                    </td>
+                </tr>
+                {{/data1}}
             </table>
         </div>
     </div>

@@ -2,9 +2,7 @@
 
 <head>
     <meta charset="utf-8" />
-</head>
 
-<body>
     <style>
         .card {
             background: #fff;
@@ -24,7 +22,7 @@
             border-collapse: collapse;
             font-size: 12px;
             width: 60%;
-            border: 1px solid black;
+            border: 1px solid rgba(204, 204, 204, 0.35);
         }
         
         .table th {
@@ -33,8 +31,43 @@
             padding: 5px;
         }
         
+        .tr-foot {
+            background: #ffc106;
+            color: #000000;
+            padding: 5px;
+        }
+        
         .table td {
             padding: 5px;
+        }
+        
+        .col-md-12 {
+            width: 100%;
+        }
+        
+        .col-md-6 {
+            float: left;
+            width: 50%;
+        }
+        
+        hr {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border: 0;
+            border-top: 1px solid #ffc106;
+        }
+        
+        .hr {
+            margin: 8px 0;
+            border-top: 1px solid rgba(0, 0, 0, .1);
+        }
+        
+        .no-line {
+            border: none;
+        }
+        
+        .uppercase {
+            text-transform: uppercase;
         }
         
         h4 {
@@ -53,7 +86,9 @@
             padding: 5px;
         }
     </style>
+</head>
 
+<body>
     <div class="card">
         <div class="header">
             {{#data2}}
@@ -68,13 +103,13 @@
                     <th>
                         Order Date
                     </th>
-                    <th>
+                    <th align="right">
                         Orders
                     </th>
-                    <th>
+                    <th align="right">
                         Rate
                     </th>
-                    <th>
+                    <th align="right">
                         Amount
                     </th>
                 </tr>
@@ -83,13 +118,13 @@
                     <td width="150px">
                         {{orddate}}
                     </td>
-                    <td width="150px">
+                    <td width="150px" align="right">
                         {{orders}}
                     </td>
-                    <td width="100px">
+                    <td width="100px" align="right">
                         {{rate}}
                     </td>
-                    <td width="100px">
+                    <td width="100px" align="right">
                         {{amt}}
                     </td>
                 </tr>

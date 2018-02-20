@@ -13,8 +13,7 @@ var mnlord = require('../appmodule/merchant/manualorder.js');
 var dayend = require('../appmodule/merchant/dayend.js');
 var customer = require('../appmodule/merchant/customer.js');
 var bankpayment = require('../appmodule/merchant/bankpayment.js');
-var olbank = require('../appmodule/merchant/reports.js');
-var merchantrpt = require('../appmodule/merchant/reports.js');
+var reports = require('../appmodule/merchant/reports.js');
 
 var orderdash = require('../appmodule/merchant/orderdashboard.js');
 var mobile = require('../appmodule/merchant/mobile.js');
@@ -23,7 +22,6 @@ var status = require('../appmodule/merchant/status.js');
 
 var notification = require('../appmodule/merchant/notification.js');
 var trip = require('../appmodule/merchant/trip.js');
-var reports = require('../appmodule/merchant/reports.js');
 
 var gmap = require('../appmodule/merchant/gmap.js');
 
@@ -104,7 +102,6 @@ var appRouter = function(app) {
     //############################ CityWiseBankDetail ##########################################
 
     app.post(root + "/getCityWiseBank", ctwisebank.getCityWiseBank);
-    //   app.post(root + "/saveCityWiseDeliveryPrice", ctwisedelvprice.saveCityWiseDeliveryPrice);
 
     //############################ CityWiseBankDetail ##########################################
 
@@ -202,11 +199,11 @@ var appRouter = function(app) {
 
     app.post(root + "/getDayEndReports", reports.getDayEndReports);
     app.post(root + "/getInvoiceDetails", reports.getInvoiceDetails);
-    app.get(root + "/getInvoiceDetailsExport", reports.getInvoiceDetailsExport);
 
-    app.get(root + "/exportInvoiceDetails", reports.exportInvoiceDetails);
-    app.post(root + "/getOlBankReports", olbank.getOlBankReports);
-    app.post(root + "/getMerchantLedgerReports", merchantrpt.getMerchantLedgerReports);
+    app.get(root + "/exportDayEndReports", reports.exportDayEndReports);
+
+    app.post(root + "/getBankReports", reports.getBankReports);
+    app.post(root + "/getMerchantLedgerReports", reports.getMerchantLedgerReports);
 
     //############################ Reports / ######################################################
 

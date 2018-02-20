@@ -1,74 +1,53 @@
-<style>
-	/* table#rpttable {
-		border-collapse: collapse;
-		font-size: 12px;
-		width: 100%;
-	} */
-
-
-
-	/* table#rpttable,
-	#rpttable tr th,
-	#rpttable tr td {
-		min-width: 16px!important;
-		border: 1px solid black!important;
-		padding-left: 5px;
-	}
-
-	#rpttable .text-center  {
-		text-align: center!important;
-	}
-
-	#rpttable .bold {
-		font-weight: bold!important;
-	}
-
-	#header_row th {
-		color: #FFF;
-		background: #085256!important;
-	} */
-</style>
-
 <div class="entry">
-	{{> rptheader}}
-	<h4 style="color: #085256; text-align: center;">  {{#if params.cityid}} {{city}}	{{/if}}  Rider  Attendence Summary  <span style="font-size:13px;">({{params.start_date}} - {{params.end_date}}) </span> </h4>
+    {{> rptheader}}
+    <h4 style="color: #085256; text-align: center;">
+        {{#if params.cityid}} {{city}} {{/if}} Rider Attendence Summary <span style="font-size:13px;">({{params.start_date}} - {{params.end_date}}) </span>
+    </h4>
 
-	<div class="body">
-		<table border="1" id="rpttable" style="border-collapse: collapse;font-size: 12px;width:100%;border: 1px solid black!important;"
-		 cellspacing=0 cellpadding=5>
-			<tr style="background:#085256!important;font-size:10px;" id="header_row" >
-			
-				<th rowspan="2" style="background-color:white!important;padding-left:5px;color:black!important;">Hotspot</th>
-				<th rowspan="2" style="background:white!important;padding-left:5px;color:black!important;">Rider Name</th>
-				{{#if firstset}}
-					<th colspan="{{firstset}}"  style="color:black!important;text-align:center;background:white!important;"> {{firstset_month}} </td>
-				{{/if}}	
-				{{#if lastset}}
-					<th colspan="{{lastset}}" style="color:black!important;text-align:center;background:white!important;"> {{lastset_month}} </th>
-				{{/if}}
-				<th colspan="4" style=color:black!important;text-align:center;background:white!important;"> Summary </th>
-			</tr>
-			<tr style="background:white!important;color:black!important;font-size:10px;" id="header_row" >
-			
-				
-				{{#data2}} <th  style="background:white!important;color:black!important;text-align:center">{{this.date}} <br> {{this.day}}</th> {{/data2 }}
-				<th  style="background:white!important;color:black!important;text-align:center">P</th>
-				<th  style="background:white!important;color:black!important;text-align:center">A</th>
-				<th  style="background:white!important;color:black!important;text-align:center">W</th>
-				<th style="background:white!important;color:black!important;text-align:center">T</th>
-				<!-- <th> Time </th> -->
-			</tr>
-
-			{{#data}}
-			<tr>
-				<td> <b>{{htspnm}} </b><br> <span style="color:#e65703;font-size:10px;">({{locname}}) </span></td>
-				
-				<td><b>{{rider_name}} </b><br> <span style="color:#e65703;font-size:10px;">({{workshift}})</span></td>
-				
-				{{{date_cols this}}}
-				<!-- <td >{{cr_ar}}</td> -->
-			</tr>
-			{{/data}}
-		</table>
-	</div>
+    <div class="body">
+        <table border="1" id="rpttable" style="border-collapse: collapse;font-size: 12px;width:100%;border: 1px solid black!important;" cellspacing="0" cellpadding="5">
+            <tr style="background:#085256!important;font-size:10px;" id="header_row">
+                <th rowspan="2" style="background-color:white!important;padding-left:5px;color:black!important;">
+                    Hotspot
+                </th>
+                <th rowspan="2" style="background-color:white!important;padding-left:5px;color:black!important;">
+                    Rider Name
+                </th>
+                {{#if firstset}}
+                <th colspan="{{firstset}}" style="color:black!important;text-align:center;background-color:white!important;">
+                    {{firstset_month}}
+                </th>
+                {{/if}} {{#if lastset}}
+                <th colspan="{{lastset}}" style="color:black!important;text-align:center;background-color:white!important;">
+                    {{lastset_month}}
+                </th>
+                {{/if}}
+                <th colspan="4" style="color:black!important;text-align:center;background-color:white!important;">
+                    Summary
+                </th>
+            </tr>
+            <tr style="background:white!important;color:black!important;font-size:10px;" id="header_row ">
+                {{#data2}}
+                <th style="background:white!important;color:black!important;text-align:center ">
+                    {{this.date}} <br> {{this.day}}
+                </th>
+                {{/data2 }}
+                <th style="background:white!important;color:black!important;text-align:center ">P</th>
+                <th style="background:white!important;color:black!important;text-align:center ">A</th>
+                <th style="background:white!important;color:black!important;text-align:center ">W</th>
+                <th style="background:white!important;color:black!important;text-align:center ">T</th>
+            </tr>
+            {{#data}}
+            <tr>
+                <td>
+                    <b>{{htspnm}} </b><br> <span style="color:#e65703;font-size:10px; ">({{locname}}) </span>
+                </td>
+                <td>
+                    <b>{{rider_name}} </b><br> <span style="color:#e65703;font-size:10px; ">({{workshift}})</span>
+                </td>
+                {{{date_cols this}}}
+            </tr>
+            {{/data}}
+        </table>
+    </div>
 </div>

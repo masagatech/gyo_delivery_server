@@ -15,9 +15,12 @@ var menuorder = require(menuapiPath + "order.js");
 
 module.exports = function(app) {
     app.get("/test", testRpt.getrep);
-    app.get("/exportInvoiceDetails", reports.exportInvoiceDetails);
+    app.get("/exportDayEndReports", reports.exportDayEndReports);
+    app.get("/exportMerchantLedgerReports", reports.exportMerchantLedgerReports);
+    app.get("/exportBankReports", reports.exportBankReports);
 
-    app.get("/getInvoiceDetailsExport", reports.getInvoiceDetailsExport);
+    app.get("/exportInvoiceReports", reports.exportInvoiceReports);
+
     app.get("/riderreports", order.downloadOrderDetails);
     app.get("/getOrderReport", orderreport.getOrderReport);
 
