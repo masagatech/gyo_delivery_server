@@ -3,7 +3,7 @@ const gen = require("gen");
 var rs = gen.res;
 var globals = gen.globals;
 var download = gen.download;
-var Email = require("sendmail");
+var http = require('http');
 
 var order = module.exports = {};
 
@@ -36,32 +36,6 @@ order.saveValidOrder = function saveValidOrder(req, res, done) {
 order.saveOrderInfo = function saveOrderInfo(req, res, done) {
     db.callFunction("select " + globals.menuschema("funsave_orderinfo") + "($1::json);", [req.body], function(data) {
         rs.resp(res, 200, data.rows);
-
-        /*
-        // Send SMS
-
-        SMS.send({
-            _to: "8879961590",
-            _lang: "_lang",
-            _key: 'send_order',
-            _keywords: {
-                '[user_name]': "Vivek Pandey",
-                '[desc]': "Your order has been send",
-            },
-        }, function(error_mail, error_info) {});
-
-        // Send Email
-
-        Email.send({
-            _to: "vivek.pandey5188@gmail.com",
-            _lang: "_lang",
-            _key: 'send_order',
-            _keywords: {
-                '[user_name]': "Vivek Pandey",
-                '[desc]': "Your order has been send",
-            },
-        }, function(error_mail, error_info) {});
-        */
     }, function(err) {
         rs.resp(res, 401, "error : " + err);
     })
