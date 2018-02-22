@@ -25,7 +25,7 @@ var gmap = require('../appmodule/merchant/gmap.js');
 
 var integration = require('../routes/integration.js');
 var integrationApi = require('../appmodule/integration/api.js');
-
+var fs = require('fs');
 var root = globals.globvar.rootAPI + "/mrcht";
 
 var multer = require('multer');
