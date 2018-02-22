@@ -10,25 +10,19 @@ var sms_email = module.exports = {};
 sms_email.sendSMS = function sendSMS(req, res, done) {
     var url = 'http://sms.cell24x7.com:1111/mspProducerM/sendSMS';
 
-    // var _result = {
-    //     sms: { "sms_username": "Goyo", "sms_password": "goyo123", "sms_sendername": "GoYooo", "j_sms": "Hellooo Vivek" },
-    //     template: {},
-    // };
-
     var _sms_username = req.query.sms_username ? req.query.sms_username : '';
     var _sms_password = req.query.sms_password ? req.query.sms_password : '';
     var _sms_sendername = req.query.sms_sendername ? req.query.sms_sendername : '';
 
-    var j_sms = "Hellooo Vivek";
-
     var _to = req.query._to ? req.query._to : '';
+    var _msg = req.query._msg ? req.query._msg : '';
 
     url += '?user=' + _sms_username;
     url += '&pwd=' + _sms_password;
     url += '&sender=' + _sms_sendername;
     url += '&mt=2';
     url += '&mobile=' + _to;
-    url += '&msg=' + j_sms;
+    url += '&msg=' + _msg;
     url = url.replace(/ /g, "%20");
 
     var req = http.get(url, function(res) {
@@ -52,6 +46,11 @@ sms_email.sendEmail = function sendEmail(req, res, done) {
     // var _mail_from_name = "GoYo";
     // var _mail_from_email = "noreply@goyo.in";
 
+    // var _result = {
+    //     email: { "j_title": "Hello" },
+    //     template: {},
+    // };
+
     var _mail_via = req.query.mail_via ? req.query.mail_via : '';
     var _mail_smtp_host = req.query.mail_smtp_host ? req.query.mail_smtp_host : '';
     var _mail_smtp_port = req.query.mail_smtp_port ? req.query.mail_smtp_port : '';
@@ -62,11 +61,9 @@ sms_email.sendEmail = function sendEmail(req, res, done) {
     var _mail_from_email = req.query.mail_from_email ? req.query.mail_from_email : '';
 
     var _to = req.query._to ? req.query._to : '';
+    var _subject = req.query._subject ? req.query._subject : '';
+    var _msg = req.query._msg ? req.query._msg : '';
 
-    var _result = {
-        email: { "j_title": "Hello" },
-        template: {},
-    };
 
     let transporter = nodemailer.createTransport({
         service: _mail_via,
@@ -83,8 +80,8 @@ sms_email.sendEmail = function sendEmail(req, res, done) {
     let mailOptions = {
         to: _to,
         from: '"' + _mail_from_name + ' " <' + _mail_from_email + '>',
-        subject: _result.email.j_title,
-        html: "How r u ???",
+        subject: _subject,
+        html: _msg,
         text: '',
     };
 
