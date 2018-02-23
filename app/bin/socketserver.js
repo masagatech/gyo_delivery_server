@@ -3,60 +3,58 @@ socketserver.io = null;
 
 socketserver.start = function() {
     socketserver.io.on('connection', function(client) {
-     
-        client.on('disconnect', function() {
-            //client.emit('msg', "client disconnected!");
 
+        client.on('disconnect', function() {
+            // client.emit('msg', "client disconnected!");
         });
-     
+
         client.on('regord', function(msg) {
             // client.
+
             var olids = JSON.parse(msg);
             var olidss = olids.ids;
-            //console.log(olidss.length);
+
             for (var index = 0; index < olidss.length; index++) {
-              //  console.log(olidss[index].toString());
-              client.join(olidss[index].toString());
-              
+                client.join(olidss[index]);
             }
-            //console.log(olids.ids);    
-            //client.join(msg.regname);
+
+            // client.join(msg.regname);
+
             client.emit("ordmsg", { "evt": "registered", "msg": msg.regname });
-            
         });
 
-         client.on('unregord', function(msg) {
+        client.on('unregord', function(msg) {
             // client.
+
             client.leave(msg);
             client.emit("ordmsg", { "evt": "unregistered", "msg": msg });
-
         });
 
         client.on('room', function(msg) {
             socketserver.io.sockets.in(msg.room).emit("data", { "evt": "unregistered", "msg": msg.data });
         });
 
+        // notification registration 
 
-
-        ///notification registration 
-        client.on('regnotify', function(msg) {     
-            console.log(msg);       
+        client.on('regnotify', function(msg) {
+            console.log(msg);
             client.join(msg);
         });
-        console.log("connected ne client");
-        //console.log("olids");    
-        client.emit("ordmsg", { "evt": "regreq" });
 
+        console.log("connected ne client");
+
+        client.emit("ordmsg", { "evt": "regreq" });
     });
+
     console.log("socket server started");
 }
 
-    socketserver.sendOrder= function(channel, data){
-        channel.forEach(function(room){
+socketserver.sendOrder = function(channel, data) {
+    channel.forEach(function(room) {
         socketserver.io.sockets.in(room).emit('ordmsg', { "evt": "data", "data": data });
-        });        
-    }
+    });
+}
 
-socketserver.sendNotify= function(channel, data){        
-        socketserver.io.sockets.in("notify_" +channel).emit('ordmsg', { "evt": "data", "data": data });                
+socketserver.sendNotify = function(channel, data) {
+    socketserver.io.sockets.in("notify_" + channel).emit('ordmsg', { "evt": "data", "data": data });
 }

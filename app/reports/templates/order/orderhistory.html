@@ -1,0 +1,135 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+
+    <style>
+        .card {
+            background: #fff;
+            min-height: 50px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .card .body {
+            font-size: 12px;
+            color: #555;
+            padding: 10px;
+        }
+        
+        .table {
+            border-collapse: collapse;
+            font-size: 12px;
+            width: 100%;
+            border: 1px solid rgba(204, 204, 204, 0.35);
+        }
+        
+        .table th {
+            background: #2196F3;
+            color: #ffffff;
+            padding: 5px;
+        }
+        
+        .tr-foot {
+            background: #ffc106;
+            color: #000000;
+            padding: 5px;
+        }
+        
+        .table td {
+            padding: 5px;
+        }
+        
+        .col-md-12 {
+            width: 100%;
+        }
+        
+        .col-md-6 {
+            float: left;
+            width: 50%;
+        }
+        
+        hr {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border: 0;
+            border-top: 1px solid #ffc106;
+        }
+        
+        .hr {
+            margin: 8px 0;
+            border-top: 1px solid rgba(0, 0, 0, .1);
+        }
+        
+        .no-line {
+            border: none;
+        }
+        
+        .uppercase {
+            text-transform: uppercase;
+        }
+        
+        h4 {
+            color: #085256;
+            text-align: center;
+            padding: 5px;
+        }
+        
+        h4 span {
+            font-size: 13px;
+        }
+        
+        h5 {
+            color: #085256;
+            text-align: center;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h4>
+            {{#if params.cityid}} {{city}} {{/if}} Rider Attendence
+            <span> ({{params.start_date}} - {{params.end_date}}) </span>
+        </h4>
+
+        <div class="body">
+            <table border="1" id="rpttable" class="table" cellspacing="0" cellpadding="5">
+                <tr id="header_row">
+                    <th width="120px">Date</th>
+                    <th>Order No</th>
+                    <th>Order Type </th>
+                    <th>Order Amt</th>
+                    <th>GST amt</th>
+                    <th>Container Amt</th>
+                    <th>Commission Amt</th>
+                    <th>Delivery Charges</th>
+                    <th>Other Charges</th>
+                    <th>Settlement Amt</th>
+                    <th>Settled Amt</th>
+                    <th>Remark </th>
+                </tr>
+                {{#data}}
+                <tr>
+                    <td>{{orddate}}</td>
+                    <td>{{ordno}}</td>
+                    <td>{{ordtype}}</td>
+                    <td align="right">{{amt}}</td>
+                    <td align="right">0</td>
+                    <td align="right">0</td>
+                    <td align="right">0</td>
+                    <td align="right">0</td>
+                    <td align="right">0</td>
+                    <td align="right">0</td>
+                    <td align="right">0</td>
+                    <td>{{remark}}</td>
+                </tr>
+                {{/data}}
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

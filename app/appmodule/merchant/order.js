@@ -303,6 +303,8 @@ order.saveOrderInfo_post = function saveOrderInfo(req, res, done, api_callback) 
 
                     req.body["ordid"] = ordresponse.ordid
                     order.sendAuto(req.body);
+
+                    socket.io.sockets.in(room).emit('ordmsg', { "evt": "data", "data": data });
                 }
             } catch (error) {
                 console.log(error);
@@ -447,7 +449,6 @@ order.getapiOrders = function getapiOrders(req, res, done) {
         rs.resp(res, 401, "error : " + err);
     }, 1)
 }
-
 
 order.getapiOrdersCounts = function getapiOrdersCounts(req, res, done) {
     db.callProcedure("select " + globals.merchant("api_funget_ordcount") + "($1,$2::json);", ['ordcount', req.query], function(data) {

@@ -1,0 +1,224 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+
+    <style>
+        .card {
+            background: #fff;
+            min-height: 50px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .card .body {
+            font-size: 12px;
+            color: #555;
+            padding: 10px;
+        }
+        
+        .table {
+            border-collapse: collapse;
+            font-size: 12px;
+            width: 60%;
+            border: 1px solid rgba(204, 204, 204, 0.35);
+        }
+        
+        .table th {
+            background: #2196F3;
+            color: #ffffff;
+            padding: 5px;
+        }
+        
+        .tr-foot {
+            background: #ffc106;
+            color: #000000;
+            padding: 5px;
+        }
+        
+        .table td {
+            padding: 5px;
+        }
+        
+        .col-md-12 {
+            width: 100%;
+        }
+        
+        .col-md-6 {
+            float: left;
+            width: 50%;
+        }
+        
+        hr {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border: 0;
+            border-top: 1px solid #ffc106;
+        }
+        
+        .hr {
+            margin: 8px 0;
+            border-top: 1px solid rgba(0, 0, 0, .1);
+        }
+        
+        .no-line {
+            border: none;
+        }
+        
+        .uppercase {
+            text-transform: uppercase;
+        }
+        
+        h4 {
+            color: #085256;
+            text-align: center;
+            padding: 5px;
+        }
+        
+        h4 span {
+            font-size: 13px;
+        }
+        
+        h5 {
+            color: #085256;
+            text-align: center;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div class="header">
+            <img src="http://localhost:8092/logo/goyo_logo.png" height="100">
+        </div>
+
+        {{#data}} Thanks for choosing Goyo, {{custname}} ! Here are your order details:
+
+        <hr class="no-line" />
+
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <span>Order No : </span> {{ordno}}
+
+                <hr class="hr no-line" />
+
+                <span>Order placed at : </span> {{orddate}}
+
+                <hr class="hr no-line" />
+
+                <span>Order Status : </span> <span class="uppercase">{{statusdesc}}</span>
+
+                <hr class="hr no-line" />
+
+                <span>Order {{status}} at : </span> {{statusdate}}
+
+                <hr class="hr no-line" />
+
+                <h3>Ordered From</h3>
+
+                <span>Order No : </span> {{olnm}}
+
+                <hr class="hr no-line" />
+
+                <span>Address : </span> {{oladdr}}, {{state}}
+            </div>
+            <div class="col-md-6">
+                <span>Delivery To</span>
+
+                <hr class="hr no-line" />
+
+                <span>{{custname}}</span>
+
+                <hr class="hr no-line" />
+
+                <span>{{delvaddr}}</span>
+            </div>
+        </div>
+
+        {{/data}}
+
+        <hr />
+
+        <div class="col-md-12">
+            <div class="body">
+                <table border="1" id="rpttable" class="table" cellspacing="0" cellpadding="5">
+                    <tr id="header_row">
+                        <th>
+                            Item Name
+                        </th>
+                        <th>
+                            Item Price
+                        </th>
+                        <th>
+                            Quantity
+                        </th>
+                        <th>
+                            Price
+                        </th>
+                    </tr>
+                    {{#data1}}
+                    <tr>
+                        <td>
+                            {{itemname}} ({{foodtyp}})
+                        </td>
+                        <td width="100px" align="right">
+                            {{itemprice}}
+                        </td>
+                        <td width="100px" align="right">
+                            {{itemqty}}
+                        </td>
+                        <td width="100px" align="right">
+                            {{totprice}}
+                        </td>
+                    </tr>
+                    {{/data1}} {{#data}}
+                    <tr>
+                        <td colspan="3" align="right">
+                            Total Item Price :
+                        </td>
+                        <td width="100px" align="right">
+                            {{totitemamt}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" align="right">
+                            GST Price :
+                        </td>
+                        <td width="100px" align="right">
+                            {{totgstamt}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" align="right">
+                            Delivery Price :
+                        </td>
+                        <td width="100px" align="right">
+                            {{delvprice}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" align="right">
+                            Container Price :
+                        </td>
+                        <td width="100px" align="right">
+                            {{containerprice}}
+                        </td>
+                    </tr>
+                    <tr class="tr-foot">
+                        <td colspan="3" align="right">
+                            Grand Total :
+                        </td>
+                        <td width="100px" align="right">
+                            {{totpayamt}}
+                        </td>
+                    </tr>
+                    {{/data}}
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,16 +1,19 @@
 var globals = require("gen").globals;
+var fs = require('fs');
 
 var dashboard = require("../appmodule/merchant/dashboard.js");
 var hotspot = require('../appmodule/merchant/hotspot.js');
 var rider = require('../appmodule/merchant/rider.js');
 var merchant = require('../appmodule/merchant/merchant.js');
 var ctwisedelvprice = require("../appmodule/merchant/ctwisedelvprice.js");
+var ctwisebank = require("../appmodule/merchant/ctwisebank.js");
 var outlet = require('../appmodule/merchant/outlet.js');
 var order = require('../appmodule/merchant/order.js');
 var mnlord = require('../appmodule/merchant/manualorder.js');
 var dayend = require('../appmodule/merchant/dayend.js');
 var customer = require('../appmodule/merchant/customer.js');
 var bankpayment = require('../appmodule/merchant/bankpayment.js');
+var reports = require('../appmodule/merchant/reports.js');
 
 var orderdash = require('../appmodule/merchant/orderdashboard.js');
 var mobile = require('../appmodule/merchant/mobile.js');
@@ -19,7 +22,6 @@ var status = require('../appmodule/merchant/status.js');
 
 var notification = require('../appmodule/merchant/notification.js');
 var trip = require('../appmodule/merchant/trip.js');
-var reports = require('../appmodule/merchant/reports.js');
 
 var gmap = require('../appmodule/merchant/gmap.js');
 
@@ -81,13 +83,13 @@ var appRouter = function(app) {
     app.post(root + "/saveMerchantInfo", merchant.saveMerchantInfo);
 
     //#############################################################################################
-      //############################ BankPayment #######################################################
+    //############################ BankPayment #######################################################
 
-      app.post(root + "/getBankPaymentDetails", bankpayment.getBankPaymentDetails);
-      app.post(root + "/saveBankPaymentInfo", bankpayment.saveBankPaymentInfo);
-  
-      //#############################################################################################
-  
+    app.post(root + "/getBankPaymentDetails", bankpayment.getBankPaymentDetails);
+    app.post(root + "/saveBankPaymentInfo", bankpayment.saveBankPaymentInfo);
+
+    //#############################################################################################
+
     //############################ Merchant #######################################################
 
     //############################ CityWiseDeliveryPrice ##########################################
@@ -96,6 +98,12 @@ var appRouter = function(app) {
     app.post(root + "/saveCityWiseDeliveryPrice", ctwisedelvprice.saveCityWiseDeliveryPrice);
 
     //############################ CityWiseDeliveryPrice ##########################################
+
+    //############################ CityWiseBankDetail ##########################################
+
+    app.post(root + "/getCityWiseBank", ctwisebank.getCityWiseBank);
+
+    //############################ CityWiseBankDetail ##########################################
 
     //############################ Outlet #########################################################
 
@@ -119,6 +127,7 @@ var appRouter = function(app) {
     app.get(root + "/getOrdersCount", order.getapiOrdersCounts);
 
     app.post(root + "/getManualOrder", mnlord.getManualOrder);
+    app.post(root + "/getManualOrderReport", mnlord.getManualOrderReport);
     app.post(root + "/saveManualOrder", mnlord.saveManualOrder);
 
     //############################ Orders / #######################################################
@@ -190,7 +199,11 @@ var appRouter = function(app) {
 
     app.post(root + "/getDayEndReports", reports.getDayEndReports);
     app.post(root + "/getInvoiceDetails", reports.getInvoiceDetails);
-    app.get(root + "/exportInvoiceDetails", reports.exportInvoiceDetails);
+
+    app.get(root + "/exportDayEndReports", reports.exportDayEndReports);
+
+    app.post(root + "/getBankReports", reports.getBankReports);
+    app.post(root + "/getMerchantLedgerReports", reports.getMerchantLedgerReports);
 
     //############################ Reports / ######################################################
 
@@ -233,5 +246,6 @@ var appRouter = function(app) {
 
     //##################################### Save Manual Uploads ###################################
 }
+
 
 module.exports = appRouter;

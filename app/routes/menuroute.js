@@ -9,6 +9,7 @@ var holiday = require("../appmodule/menuapi/holiday.js");
 var gst = require("../appmodule/menuapi/gstsetting.js");
 var items = require("../appmodule/menuapi/items.js");
 var order = require("../appmodule/menuapi/order.js");
+var sms_email = require("../appmodule/menuapi/sendsms_email.js");
 
 var outlet = require('../appmodule/merchant/outlet.js');
 var addrsearch = require("../appmodule/menuapi/addresssearch.js")
@@ -88,6 +89,10 @@ var appRouter = function(app) {
     app.post(root + "/saveValidOrder", order.saveValidOrder);
     app.post(root + "/saveOrderInfo", order.saveOrderInfo);
     app.post(root + "/getOrderDetails", order.getOrderDetails);
+
+    app.get(root + "/sendSMS", sms_email.sendSMS);
+    app.get(root + "/sendEmail", sms_email.sendEmail);
+
 
     //##################################### Order ###########################################################
 
