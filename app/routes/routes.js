@@ -9,6 +9,7 @@ var common = require("../appmodule/schoolapi/common.js");
 var location = require("../appmodule/schoolapi/location.js");
 var vehicle = require("../appmodule/schoolapi/vehicle.js");
 var user = require("../appmodule/schoolapi/user.js");
+var sms_email = require("../appmodule/schoolapi/sendsms_email.js");
 
 var multer = require('multer');
 
@@ -40,27 +41,27 @@ var appRouter = function(app) {
 
     //##################################### VIVEK #####################################################
 
-    //##################################### Login ####################################################
+    //##################################### Login #####################################################
 
     app.post(globals.globvar.rootAPI + "/getLogin", login.getLogin);
     app.post(globals.globvar.rootAPI + "/getLogout", login.getLogout);
     app.post(globals.globvar.rootAPI + "/savePassword", login.savePassword);
 
-    //##################################### Login ####################################################
+    //##################################### Login #####################################################
 
-    //##################################### File Upload ####################################################
+    //##################################### File Upload ###############################################
 
     app.post(globals.globvar.rootAPI + "/uploads", fileupload.uploadFile);
     // app.get(globals.globvar.rootAPI + "/getFilePath", fileupload.getFilePath);
 
-    //##################################### File Upload ####################################################
+    //##################################### File Upload ###############################################
 
-    //##################################### Menu ####################################################
+    //##################################### Menu ######################################################
 
     app.post(globals.globvar.rootAPI + "/getMenuDetails", menu.getMenuDetails);
     app.post(globals.globvar.rootAPI + "/getMenuAccess", menu.getMenuAccess);
 
-    //##################################### Menu ####################################################
+    //##################################### Menu ######################################################
 
     //##################################### Common ####################################################
 
@@ -73,19 +74,19 @@ var appRouter = function(app) {
 
     //##################################### Common ####################################################
 
-    //##################################### Location ####################################################
+    //##################################### Location ##################################################
 
     app.post(globals.globvar.rootAPI + "/saveLocationInfo", location.saveLocationInfo);
     app.post(globals.globvar.rootAPI + "/getLocationDetails", location.getLocationDetails);
 
-    //##################################### Location ###################################################
+    //##################################### Location ##################################################
 
-    //##################################### Vehicle ####################################################
+    //##################################### Vehicle ###################################################
 
     app.post(globals.globvar.rootAPI + "/saveVehicleInfo", vehicle.saveVehicleInfo);
     app.post(globals.globvar.rootAPI + "/getVehicleDetails", vehicle.getVehicleDetails);
 
-    //##################################### User #####################################################
+    //##################################### User ######################################################
 
     app.post(globals.globvar.rootAPI + "/saveUserInfo", user.saveUserInfo);
     app.post(globals.globvar.rootAPI + "/getUserDetails", user.getUserDetails);
@@ -94,9 +95,17 @@ var appRouter = function(app) {
     app.post(globals.globvar.rootAPI + "/saveUserRights", user.saveUserRights);
     app.post(globals.globvar.rootAPI + "/getUserRights", user.getUserRights);
 
-    //##################################### User #####################################################
+    //##################################### User ######################################################
 
-    //##################################### File Uploads ###############################################
+    //##################################### Email / SMS ###############################################
+
+    app.get(globals.globvar.rootAPI + "/getEmailSMS_Setting", sms_email.getEmailSMS_Setting);
+    app.get(globals.globvar.rootAPI + "/sendSMS", sms_email.sendSMS);
+    app.get(globals.globvar.rootAPI + "/sendEmail", sms_email.sendEmail);
+
+    //##################################### Email / SMS ###############################################
+
+    //##################################### File Uploads ##############################################
 
     app.post(globals.globvar.rootAPI + "/uploads", upload.any(), function(req, res) {
         var tmp_path = req.files[0].path;
@@ -114,9 +123,9 @@ var appRouter = function(app) {
         src.on('error', function(err) { res.send({ error: "upload failed" }); });
     });
 
-    //##################################### File Uploads ###############################################
+    //##################################### File Uploads ##############################################
 
-    //##################################### VIVEK ######################################################
+    //##################################### VIVEK #####################################################
 }
 
 module.exports = appRouter;

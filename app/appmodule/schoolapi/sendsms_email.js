@@ -1,11 +1,24 @@
 var db = require("db");
 const gen = require("gen");
+var globals = gen.globals;
 var rs = gen.res;
 
 var http = require('http');
 var nodemailer = require('nodemailer');
 
 var sms_email = module.exports = {};
+
+// SMS / Email
+
+sms_email.getEmailSMS_Setting = function getEmailSMS_Setting(req, res, done) {
+    db.callProcedure("select " + globals.schema("funget_emailsms_setting") + "($1,$2::json);", ['es', req.query], function(data) {
+        rs.resp(res, 200, data.rows);
+    }, function(err) {
+        rs.resp(res, 401, "error : " + err);
+    }, 1)
+}
+
+// Send SMS
 
 sms_email.sendSMS = function sendSMS(req, res, done) {
     var url = 'http://sms.cell24x7.com:1111/mspProducerM/sendSMS';
@@ -34,7 +47,7 @@ sms_email.sendSMS = function sendSMS(req, res, done) {
     }).end();
 }
 
-// Email
+// Send Email 
 
 sms_email.sendEmail = function sendEmail(req, res, done) {
     // var _mail_via = "smtp";
