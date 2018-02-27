@@ -1,5 +1,8 @@
 var global = module.exports = {};
 
+global.apiurl = "http://localhost:8092/goyoapi/";
+//  global.apiurl = "http://order.goyo.in:8082/goyoapi/";
+
 // database settings
 
 global.prodmode = {
@@ -7,9 +10,6 @@ global.prodmode = {
     "localprod": 2,
     "prod": 3
 }
-
-global.apiurl = "http://localhost:8092/goyoapi/";
-//  global.apiurl = "http://order.goyo.in:8082/goyoapi/";
 
 global.mode = global.prodmode.prod;
 

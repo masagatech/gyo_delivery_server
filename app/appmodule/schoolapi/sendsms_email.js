@@ -8,27 +8,10 @@ var nodemailer = require('nodemailer');
 
 var sms_email = module.exports = {};
 
-// SMS / Email
-
-sms_email.getEmailSMS_Setting = function getEmailSMS_Setting(req, res, done) {
-    db.callProcedure("select " + globals.schema("funget_emailsms_setting") + "($1,$2::json);", ['es', req.query], function(data) {
-        rs.resp(res, 200, data.rows);
-    }, function(err) {
-        rs.resp(res, 401, "error : " + err);
-    }, 1)
-}
-
 // Send SMS
 
-sms_email.sendSMS = function sendSMS(req, res, done) {
+function sendSMS(_sms_username, _sms_password, _sms_sendername, _to, _msg) {
     var url = 'http://sms.cell24x7.com:1111/mspProducerM/sendSMS';
-
-    var _sms_username = req.query.sms_username ? req.query.sms_username : '';
-    var _sms_password = req.query.sms_password ? req.query.sms_password : '';
-    var _sms_sendername = req.query.sms_sendername ? req.query.sms_sendername : '';
-
-    var _to = req.query._to ? req.query._to : '';
-    var _msg = req.query._msg ? req.query._msg : '';
 
     url += '?user=' + _sms_username;
     url += '&pwd=' + _sms_password;
@@ -47,37 +30,9 @@ sms_email.sendSMS = function sendSMS(req, res, done) {
     }).end();
 }
 
-// Send Email 
+// Send Email
 
-sms_email.sendEmail = function sendEmail(req, res, done) {
-    // var _mail_via = "smtp";
-    // var _mail_smtp_host = "md-in-50.webhostbox.net";
-    // var _mail_smtp_port = "465";
-    // var _mail_smtp_username = "noreply@goyo.in";
-    // var _mail_smtp_password = "noreply@123";
-
-    // var _mail_from_name = "GoYo";
-    // var _mail_from_email = "noreply@goyo.in";
-
-    // var _result = {
-    //     email: { "j_title": "Hello" },
-    //     template: {},
-    // };
-
-    var _mail_via = req.query.mail_via ? req.query.mail_via : '';
-    var _mail_smtp_host = req.query.mail_smtp_host ? req.query.mail_smtp_host : '';
-    var _mail_smtp_port = req.query.mail_smtp_port ? req.query.mail_smtp_port : '';
-    var _mail_smtp_username = req.query.mail_smtp_username ? req.query.mail_smtp_username : '';
-    var _mail_smtp_password = req.query.mail_smtp_password ? req.query.mail_smtp_password : '';
-
-    var _mail_from_name = req.query.mail_from_name ? req.query.mail_from_name : '';
-    var _mail_from_email = req.query.mail_from_email ? req.query.mail_from_email : '';
-
-    var _to = req.query._to ? req.query._to : '';
-    var _subject = req.query._subject ? req.query._subject : '';
-    var _msg = req.query._msg ? req.query._msg : '';
-
-
+function sendEmail(_mail_via, _mail_smtp_host, _mail_smtp_port, _mail_smtp_username, _mail_smtp_password, _mail_from_name, _mail_from_email, _to, _subject, _msg) {
     let transporter = nodemailer.createTransport({
         service: _mail_via,
         host: _mail_smtp_host,
@@ -107,4 +62,39 @@ sms_email.sendEmail = function sendEmail(req, res, done) {
             console.log(info);
         }
     });
+}
+
+// Send SMS / Email
+
+sms_email.sendEmailAndSMS = function sendEmailAndSMS(_data, _sms_to, _mail_to, res) {
+    db.callProcedure("select " + globals.schema("funget_emailsms_setting") + "($1,$2::json);", ['es', _data], function(data) {
+        var dstr = JSON.stringify(data.rows[0]);
+        var d = JSON.parse(dstr);
+
+        // Send SMS
+
+        var _sms_username = d.sms_username;
+        var _sms_password = d.sms_password;
+        var _sms_sendername = d.sms_sendername;
+        var _sms_body = d.sms_body;
+
+        sendSMS(_sms_username, _sms_password, _sms_sendername, _sms_to, _sms_body);
+
+        // Send Email
+
+        var _mail_via = d.mail_via;
+        var _mail_smtp_host = d.mail_smtp_host;
+        var _mail_smtp_port = d.mail_smtp_port;
+        var _mail_smtp_username = d.mail_smtp_username;
+        var _mail_smtp_password = d.mail_smtp_password;
+        var _mail_from_name = d.mail_from_name;
+        var _mail_from_email = d.mail_from_email;
+
+        var _mail_subject = d.subject;
+        var _mail_body = d.mail_body;
+
+        sendEmail(_mail_via, _mail_smtp_host, _mail_smtp_port, _mail_smtp_username, _mail_smtp_password, _mail_from_name, _mail_from_email, _mail_to, _mail_subject, _mail_body);
+    }, function(err) {
+        rs.resp(res, 401, "error : " + err);
+    }, 1)
 }

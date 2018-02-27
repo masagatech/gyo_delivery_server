@@ -97,14 +97,6 @@ var appRouter = function(app) {
 
     //##################################### User ######################################################
 
-    //##################################### Email / SMS ###############################################
-
-    app.get(globals.globvar.rootAPI + "/getEmailSMS_Setting", sms_email.getEmailSMS_Setting);
-    app.get(globals.globvar.rootAPI + "/sendSMS", sms_email.sendSMS);
-    app.get(globals.globvar.rootAPI + "/sendEmail", sms_email.sendEmail);
-
-    //##################################### Email / SMS ###############################################
-
     //##################################### File Uploads ##############################################
 
     app.post(globals.globvar.rootAPI + "/uploads", upload.any(), function(req, res) {
