@@ -5,6 +5,7 @@ var dashboard = require("../appmodule/merchant/dashboard.js");
 var hotspot = require('../appmodule/merchant/hotspot.js');
 var rider = require('../appmodule/merchant/rider.js');
 var merchant = require('../appmodule/merchant/merchant.js');
+var payment = require('../appmodule/merchant/payment.js');
 var ctwisedelvprice = require("../appmodule/merchant/ctwisedelvprice.js");
 var ctwisebank = require("../appmodule/merchant/ctwisebank.js");
 var outlet = require('../appmodule/merchant/outlet.js');
@@ -82,8 +83,19 @@ var appRouter = function(app) {
     app.post(root + "/getMerchantDetails", merchant.getMerchantDetails);
     app.post(root + "/saveMerchantInfo", merchant.saveMerchantInfo);
 
-    //#############################################################################################
-    //############################ BankPayment #######################################################
+    //############################ Merchant #######################################################
+
+    //############################ Payment ########################################################
+
+    app.post(root + "/getPaymentDetails", payment.getPaymentDetails);
+    app.post(root + "/savePaymentDetails", payment.savePaymentDetails);
+
+    app.post(root + "/getUserCards", payment.getUserCards);
+    app.post(root + "/saveUserCards", payment.saveUserCards);
+
+    //############################ Merchant #######################################################
+
+    //############################ Payment ########################################################
 
     app.post(root + "/getBankPaymentDetails", bankpayment.getBankPaymentDetails);
     app.post(root + "/saveBankPaymentInfo", bankpayment.saveBankPaymentInfo);
