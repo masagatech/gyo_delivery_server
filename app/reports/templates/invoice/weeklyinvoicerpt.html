@@ -92,7 +92,7 @@
     <div class="card">
         <div class="header">
             {{#data2}}
-            <h4>{{olnm}} - Invoice Reports</h4>
+            <h4>{{olnm}} - {{header}}</h4>
             <h5>Date : {{invdate}}</h5>
             {{/data2}}
         </div>
@@ -118,9 +118,6 @@
                     <th align="right">
                         Amount
                     </th>
-                    <th align="right">
-                        Count Week
-                    </th>
                 </tr>
                 {{#data}}
                 <tr>
@@ -141,9 +138,6 @@
                     </td>
                     <td width="100px" align="right">
                         {{amt}}
-                    </td>
-                    <td width="100px" align="right">
-                        {{countwk}}
                     </td>
                 </tr>
                 {{/data}}
