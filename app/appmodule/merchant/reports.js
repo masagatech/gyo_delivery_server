@@ -109,3 +109,29 @@ reports.exportMerchantLedgerReports = function exportMerchantLedgerReports(req, 
         rs.resp(res, 401, "error : " + err);
     }, 2)
 }
+
+// Order
+
+reports.getManualOrderReport = function getManualOrderReport(req, res, done) {
+    db.callProcedure("select " + globals.merchant("funget_rpt_manualorder") + "($1,$2,$3::json);", ['mnlord1', 'mnlord2', req.body], function(data) {
+        rs.resp(res, 200, data.rows);
+    }, function(err) {
+        rs.resp(res, 401, "error : " + err);
+    }, 2)
+}
+
+reports.getMerchantOrderReports = function getMerchantOrderReports(req, res, done) {
+    db.callProcedure("select " + globals.merchant("funget_rpt_merchantorder") + "($1,$2,$3::json);", ['mrchtord1', 'mrchtord2', req.query], function(data) {
+        if (req.query["flag"] == 'report') {
+            download(req, res, {
+                data: data.rows[0],
+                data1: data.rows[1],
+                params: req.query
+            }, { 'all': 'order/mrchtorder.html' }, reportsapi.getReports);
+        } else {
+            rs.resp(res, 200, data.rows);
+        }
+    }, function(err) {
+        rs.resp(res, 401, "error : " + err);
+    }, 2)
+}

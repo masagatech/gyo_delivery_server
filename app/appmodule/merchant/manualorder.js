@@ -12,14 +12,6 @@ mord.getManualOrder = function getManualOrder(req, res, done) {
     }, 1)
 }
 
-mord.getManualOrderReport = function getManualOrderReport(req, res, done) {
-    db.callProcedure("select " + globals.merchant("funget_manualorder_reports") + "($1,$2::json);", ['mordrpt', req.body], function(data) {
-        rs.resp(res, 200, data.rows);
-    }, function(err) {
-        rs.resp(res, 401, "error : " + err);
-    }, 1)
-}
-
 mord.saveManualOrder = function saveManualOrder(req, res, done) {
     db.callFunction("select " + globals.merchant("funsave_manualorder") + "($1::json);", [req.body], function(data) {
         rs.resp(res, 200, data.rows);

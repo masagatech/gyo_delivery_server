@@ -20,9 +20,11 @@ module.exports = function(app) {
     app.get("/exportBankReports", reports.exportBankReports);
 
     app.get("/exportInvoiceReports", reports.exportInvoiceReports);
+    app.get("/getMerchantOrderReports", reports.getMerchantOrderReports);
 
     app.get("/riderreports", order.downloadOrderDetails);
     app.get("/getOrderReport", orderreport.getOrderReport);
 
     app.get("/getOrderDetailsExport", menuorder.getOrderDetailsExport);
+
 }

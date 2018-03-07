@@ -29,7 +29,8 @@ function responseData(_status, _code, _msg, _ordid, res) {
 }
 
 order.validate = function(req, res, done) {
-    var _data = req.body
+    var _data = req.body;
+
     var olid = _data.ol_id,
         prcd = (_data.partner_code || '').toString().trim(),
         tok = _data.token || req.headers['x-access-token'] || '';
@@ -51,7 +52,7 @@ order.validate = function(req, res, done) {
         olid: olid
     }
 
-    //validation
+    // Validation
 
     if (tok.trim() === "") {
         resdata.status = false;
@@ -75,7 +76,7 @@ order.validate = function(req, res, done) {
         decrypt_token = encr.decrypt(tok)
         var splittok = decrypt_token.split('$');
 
-        //validate token
+        // Validate Token
 
         if (parseInt(splittok[0]) !== parseInt(olid)) {
             resdata.status = false;
@@ -127,7 +128,6 @@ order.apiPreSave = function(req, res, done) {
     if (cust_addr.trim() === "") { responseData(false, "er-021", "'cust_addr' is required!", 0, res); return; }
     if (ordamt.trim() === "" || isNaN(ordamt)) { responseData(false, "er-021", "'ordamt' is required or invalid!", 0, res); return; }
     if (colamt.trim() === "" || isNaN(colamt)) { responseData(false, "er-021", "'collect_amt' is required or invalid!", 0, res); return; }
-
 
     var _orddtlsDT = {
         "orddid": 0,
@@ -187,11 +187,12 @@ order.apiPreSave = function(req, res, done) {
     })
 }
 
-//cancel order api funtion
+// cancel order api funtion
 
 order.apiPreCancel = function(req, res, done) {
     let _data = req.body;
     let _ol_data = order.validate(req, res, done);
+
     if (!_ol_data.status) return;
 
     let ordid = _data.ord_id || '0',
@@ -207,18 +208,18 @@ order.apiPreCancel = function(req, res, done) {
         "reason": reason,
         "cuid": _ol_data.ucode
     };
+
     order.CancelOrder(_dparams, function(err, data) {
         if (err != null) {
-
             rs.resp_api(res, {
                 "status": false,
                 "msg": err.message,
                 "error_code": "CNCL008"
             });
-            //rs.resp_api(res, "error : " + err); return;
         }
 
         let _respData = data;
+
         rs.resp_api(res, {
             "status": _respData.status,
             "msg": _respData.msg,
@@ -227,11 +228,12 @@ order.apiPreCancel = function(req, res, done) {
     });
 }
 
-//cancel order api funtion
+// cancel order api funtion
 
 order.apiPreStatus = function(req, res, done) {
     let _data = req.body;
     let _ol_data = order.validate(req, res, done);
+
     if (!_ol_data.status) return;
 
     let ordid = _data.ord_id || '0';
@@ -244,30 +246,28 @@ order.apiPreStatus = function(req, res, done) {
         "olid": _ol_data.olid,
         "uid": _ol_data.ucode
     };
+
     order.getOrderStatus(_dparams, function(err, data) {
         if (err != null) {
-
             rs.resp_api(res, {
                 "status": false,
                 "msg": err.message,
                 "error_code": "STS008"
             });
-            //rs.resp_api(res, "error : " + err); return;
         }
 
         let _respData = data[0];
-        console.log(_respData);
+
         rs.resp_api(res, {
             "status": data.length > 0 ? true : false,
             "msg": data.length > 0 ? "" : "No Data found!",
             "error_code": data.length > 0 ? "" : "STS009",
             "data": _respData
         });
-
     });
 }
 
-//api functions end
+// api functions end
 
 // nomral order info
 
@@ -353,6 +353,7 @@ order.sendAuto = function auto(_req) {
 }
 
 // download details
+
 var rider = require("../../reports/apis/rider.js");
 
 order.downloadOrderDetails = function downloadOrderDetails(req, res, done) {

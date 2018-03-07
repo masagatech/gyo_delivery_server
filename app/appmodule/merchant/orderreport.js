@@ -21,7 +21,6 @@ orderreport.getOrderReport = function getOrderReport(req, res, done) {
         }, function(err) {
             rs.resp(res, 401, "error : " + err);
         }, 3)
-
     } catch (error) {
         console.log(error);
     }

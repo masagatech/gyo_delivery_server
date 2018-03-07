@@ -1,0 +1,224 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+
+    <style>
+        .card {
+            background: #fff;
+            min-height: 50px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .card .body {
+            font-size: 12px;
+            color: #555;
+            padding: 10px;
+        }
+        
+        .table {
+            border-collapse: collapse;
+            font-size: 12px;
+            width: 100%;
+            border: 1px solid rgba(204, 204, 204, 0.35);
+        }
+        
+        .table th {
+            background: #2196F3;
+            color: #ffffff;
+            padding: 5px;
+        }
+        
+        .tr-foot {
+            background: #bdb8a9;
+            color: #ffffff;
+            padding: 5px;
+        }
+        
+        .table td {
+            padding: 5px;
+        }
+        
+        .col-md-12 {
+            width: 100%;
+        }
+        
+        .col-md-6 {
+            float: left;
+            width: 50%;
+        }
+        
+        hr {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border: 0;
+            border-top: 1px solid #bdb8a9;
+        }
+        
+        .hr {
+            margin: 8px 0;
+            border-top: 1px solid rgba(0, 0, 0, .1);
+        }
+        
+        .no-line {
+            border: none;
+        }
+        
+        .uppercase {
+            text-transform: uppercase;
+        }
+        
+        h4 {
+            color: #085256;
+            text-align: center;
+            padding: 5px;
+        }
+        
+        h4 span {
+            font-size: 13px;
+        }
+        
+        h5 {
+            color: #085256;
+            text-align: center;
+            padding: 5px;
+        }
+        
+        .success {
+            display: none;
+        }
+        
+        .errmsg {
+            display: inline;
+        }
+        
+        .nodata {
+            display: none;
+        }
+        
+        .data {
+            display: table-row;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div class="header">
+            {{#data1}}
+            <h4>{{olnm}} - Order Details</h4>
+            <h5>Date : {{orddate}}</h5>
+            {{/data1}}
+        </div>
+
+        <div class="body">
+            {{#data1}}
+            <div class="{{class}}">
+                <h4>{{statusdesc}}</h4>
+            </div>
+            {{/data1}}
+
+            <table border="1" id="rptorder" class="table" cellspacing="0" cellpadding="5">
+                <thead>
+                    {{#data1}}
+                    <tr class="tr-foot {{showtable}}">
+                        <td colspan="3">
+                            <b>Total Order : </b>{{countord}}
+                        </td>
+                        <td align="right" colspan="2">
+                            <b>Total Amount</b>
+                        </td>
+                        <td align="right" width="150px">
+                            {{totamt}}
+                        </td>
+                        <td align="right" width="100px">
+                            {{totamtcollect}}
+                        </td>
+                        <td width="100px">
+
+                        </td>
+                    </tr>
+                    <tr class="{{showtable}}">
+                        <th width="120px">
+                            Order Date
+                        </th>
+                        <th width="80px">
+                            Order No
+                        </th>
+                        <th width="160px">
+                            Customer Name
+                        </th>
+                        <th width="120px">
+                            Mobile No
+                        </th>
+                        <th>
+                            Address
+                        </th>
+                        <th width="120px">
+                            Amount
+                        </th>
+                        <th width="160px">
+                            Amount Collected
+                        </th>
+                        <th width="80px">
+                            Status
+                        </th>
+                    </tr>
+                    {{/data1}}
+                </thead>
+                <tbody>
+                    {{#data}}
+                    <tr>
+                        <td width="100px">
+                            {{orddate}}
+                        </td>
+                        <td width="150px">
+                            {{ordno}}
+                        </td>
+                        <td width="100px">
+                            {{custname}}
+                        </td>
+                        <td width="100px">
+                            {{custmobile}}
+                        </td>
+                        <td width="100px">
+                            {{custaddr}}
+                        </td>
+                        <td align="right" width="150px">
+                            {{amt}}
+                        </td>
+                        <td align="right" width="100px">
+                            {{amtcollect}}
+                        </td>
+                        <td width="100px">
+                            {{statusdesc}}
+                        </td>
+                    </tr>
+                    {{/data}}
+                </tbody>
+                <tfoot>
+                    {{#data1}}
+                    <tr class="tr-foot {{showtable}}">
+                        <td align="right" colspan="5">
+                            <b>Total Amount</b>
+                        </td>
+                        <td align="right" width="150px">
+                            {{totamt}}
+                        </td>
+                        <td align="right" width="100px">
+                            {{totamtcollect}}
+                        </td>
+                        <td width="100px">
+
+                        </td>
+                    </tr>
+                    {{/data1}}
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
