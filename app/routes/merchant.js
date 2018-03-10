@@ -1,3 +1,4 @@
+var rs = require("../appmodule/util/resp.js");
 var globals = require("gen").globals;
 var fs = require('fs');
 
@@ -246,11 +247,10 @@ var appRouter = function(app) {
             if (err) return console.log(err);
         });
 
-        // src.on('end', function() { status: "true" });
         src.on('end', function() {
-            mnlord.saveManualOrder(req, res)
-                // tripapi.saveTripStops(req, res);
-                // res.send({ status: "true" });
+            // mnlord.saveManualOrder(req, res);
+
+            rs.resp(res, 200, req.body.id);
         });
         src.on('error', function(err) {
             res.send({ error: "upload failed" });
