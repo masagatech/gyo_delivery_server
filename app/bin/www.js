@@ -32,9 +32,13 @@ app.all('/*', function(req, res, next) {
     }
 });
 
-app.use('/images', express.static(path.join(__dirname.replace(/\\app\\bin/gi, ""), '\\www\\uploads')));
-app.use('/mordimg', express.static(path.join(__dirname.replace(/\\app\\bin/gi, ""), '\\www\\mobile\\mord')));
-app.use('/logo', express.static(path.join(__dirname.replace(/\\app\\bin/gi, ""), '\\www\\logo')));
+// app.use('/images', express.static(path.join(__dirname.replace(/\\app\\bin/gi, ""), '\\www\\uploads')));
+// app.use('/mordimg', express.static(path.join(__dirname.replace(/\\app\\bin/gi, ""), '//www//mobile//mord')));
+// app.use('/logo', express.static(path.join(__dirname.replace(/\\app\\bin/gi, ""), '\\www\\logo')));
+
+app.use('/images', express.static(__dirname.replace('app', "www").replace('bin', 'uploads')));
+app.use('/mordimg', express.static(__dirname.replace('app', "www").replace('bin', 'mobile//mord')));
+app.use('/logo', express.static(__dirname.replace('app', "www").replace('bin', 'logo')));
 
 app.get('/chat', function(req, res) {
     res.sendFile(__dirname.replace("\\bin", "") + '\\httpdocs\\index.html');

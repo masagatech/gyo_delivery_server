@@ -10,6 +10,8 @@ var location = require("../appmodule/schoolapi/location.js");
 var vehicle = require("../appmodule/schoolapi/vehicle.js");
 var user = require("../appmodule/schoolapi/user.js");
 var sms_email = require("../appmodule/schoolapi/sendsms_email.js");
+var uniqid = require('uniqid');
+var path = require('path')
 
 var multer = require('multer');
 
@@ -104,19 +106,30 @@ var appRouter = function(app) {
         var target_path = 'www/uploads/' + req.files[0].originalname;
         var src = fs.createReadStream(tmp_path);
         var dest = fs.createWriteStream(target_path);
-
         src.pipe(dest);
-
         fs.unlink(req.files[0].path, function(err) {
             if (err) return console.log(err);
         });
-
         src.on('end', function() { rs.resp(res, 200, req.body.id); });
         src.on('error', function(err) { res.send({ error: "upload failed" }); });
     });
 
-    //##################################### File Uploads ##############################################
+    app.post(globals.globvar.rootAPI + "/uploadmanual", upload.any(), function(req, res) {
+        var img = uniqid();
+        var tmp_path = req.files[0].path;
+        var ext = path.extname(req.files[0].originalname)
+        var target_path = 'www/mobile/mord/' + img + ext; // req.files[0].originalname;
+        var src = fs.createReadStream(tmp_path);
+        var dest = fs.createWriteStream(target_path);
+        src.pipe(dest);
+        fs.unlink(req.files[0].path, function(err) {
+            if (err) return console.log(err);
+        });
+        src.on('end', function() { rs.resp(res, 200, { "file": img + ext, "path": target_path }) });
+        src.on('error', function(err) { res.send({ error: "upload failed" }); });
+    });
 
+    //##################################### File Uploads ##############################################
     //##################################### VIVEK #####################################################
 }
 
