@@ -12,7 +12,7 @@ var order = require("../appmodule/menuapi/order.js");
 
 var outlet = require('../appmodule/merchant/outlet.js');
 var addrsearch = require("../appmodule/menuapi/addresssearch.js")
-
+var paygetway = require("../appmodule/menuapi/paygetway.js")
 var multer = require('multer');
 
 var root = globals.globvar.rootAPI + "/menu";
@@ -41,7 +41,15 @@ var appRouter = function(app) {
         res.send({ success: true, hash: hash });
     });
 
-    app.post(root + '/payment_success', function(req, res) {
+
+    app.post("/goyoGetway", paygetway.postGetwayForm);
+
+    app.post('/payment_success', function(req, res) {
+        console.log(req.body);
+        res.send(req.body.status);
+    })
+
+    app.post('/payment_failed', function(req, res) {
         console.log(req.body);
         res.send(req.body.status);
     })

@@ -1,0 +1,78 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+
+    <style>
+        .card {
+            background: #fff;
+            min-height: 50px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .card .body {
+            font-size: 12px;
+            color: #555;
+            padding: 10px;
+        }
+        
+        .table {
+            border-collapse: collapse;
+            font-size: 12px;
+            width: 100%;
+            border: 1px solid rgba(204, 204, 204, 0.35);
+        }
+        
+        .table th {
+            background: #2196F3;
+            color: #ffffff;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="body text-center hide">
+        <h1>Payumoney Payment Gateway</h1>
+        <h3>Rs {{totpayamt}}</h3>
+
+        <form id="paymentForm" action="{{payumoneyurl}}" method="post">
+            <input type="text" name="payuid" value="{{payuid}}" />
+            <input type="text" name="key" value="{{payukey}}" />
+            <input type="text" name="txnid" value="{{txnid}}" />
+            <input type="text" name="amount" value="{{totpayamt}}" />
+            <input type="text" name="productinfo" value="{{productinfo}}" />
+            <input type="text" name="firstname" value="{{firstname}}" />
+            <input type="text" name="lastname" value="{{lastname}}" />
+            <input type="text" name="email" value="{{email}}" />
+            <input type="text" name="phone" value="{{phone}}" />
+            <input type="text" name="furl" value="{{furl}}" />
+            <input type="text" name="surl" value="{{surl}}" />
+            <input type="text" name="hash" value="{{hash}}" />
+
+            <input type="text" name="pg" value="{{pg}}" />
+
+            <!-- credit debit card -->
+
+            <input type="text" name="ccnum" value="{{ccnum}}" />
+            <input type="text" name="ccname" value="{{ccname}}" />
+            <input type="text" name="ccvv" value="{{ccvv}}" />
+            <input type="text" name="ccexpmon" value="{{ccexpmon}}" />
+            <input type="text" name="ccexpyr" value="{{ccexpyr}}" />
+
+            <!-- netbanking -->
+
+            <input type="text" name="bankcode" value="{{bankcode}}" />
+
+            <button id="btnSubmit" type="submit"></button>
+        </form>
+    </div>
+</body>
+
+<script>
+    document.getElementById("paymentForm").submit();
+</script>
+
+</html>

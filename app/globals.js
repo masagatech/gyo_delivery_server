@@ -1,7 +1,7 @@
 var global = module.exports = {};
 
-global.apiurl = "http://localhost:8092/goyoapi/";
-//  global.apiurl = "http://order.goyo.in:8082/goyoapi/";
+// global.mainapiurl = "http://localhost:3000/api/";
+global.mainapiurl = "http://admin.goyo.in:8081/api/";
 
 // database settings
 
@@ -53,6 +53,13 @@ global.reportTemplatePath = function reportTemplatePath() {
         return __dirname + '/reports/templates';
     else
         return __dirname + '/reports/templates';
+};
+
+global.getDir = function getDir() {
+    if (global.mode == global.prodmode.prod)
+        return __dirname;
+    else
+        return __dirname;
 };
 
 global.reportRootPath = function reportRootPath() {

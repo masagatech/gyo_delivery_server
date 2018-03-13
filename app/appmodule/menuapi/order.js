@@ -38,26 +38,28 @@ order.saveOrderInfo = function saveOrderInfo(req, res, done) {
     db.callFunction("select " + globals.menuschema("funsave_orderinfo") + "($1::json);", [req.body], function(data) {
         rs.resp(res, 200, data.rows);
 
-        var _d = data.rows[0].funsave_orderinfo;
+        if (req.body.status == 0) {
+            var _d = data.rows[0].funsave_orderinfo;
 
-        var _uname = _d.uname;
-        var _uphone = _d.uphone;
-        var _uemail = _d.uemail;
-        var _ordno = _d.ordno;
-        var _ordkey = _d.ordkey;
-        var _totpayamt = _d.totpayamt;
-        var _delvminute = _d.delvminute;
+            var _uname = _d.uname;
+            var _uphone = _d.uphone;
+            var _uemail = _d.uemail;
+            var _ordno = _d.ordno;
+            var _ordkey = _d.ordkey;
+            var _totpayamt = _d.totpayamt;
+            var _delvminute = _d.delvminute;
 
-        var params = {
-            "flag": "sendorder",
-            "username": _uname,
-            "ordno": _ordno,
-            "totpayamt": _totpayamt,
-            "delv_minute": _delvminute,
-            "ordkey": _ordkey
-        };
+            var params = {
+                "flag": "sendorder",
+                "username": _uname,
+                "ordno": _ordno,
+                "totpayamt": _totpayamt,
+                "delv_minute": _delvminute,
+                "ordkey": _ordkey
+            };
 
-        sms_email.sendEmailAndSMS(params, _uphone, _uemail);
+            sms_email.sendEmailAndSMS(params, _uphone, _uemail);
+        }
     }, function(err) {
         rs.resp(res, 401, "error : " + err);
     })
