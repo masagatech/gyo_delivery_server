@@ -1,10 +1,10 @@
 var global = module.exports = {};
 
-// global.mainapiurl = "http://localhost:3000/api/";
-// global.fronturl = "http://localhost:3005/#/";
+global.mainapiurl = "http://localhost:3000/api/";
+global.fronturl = "http://localhost:3005/#/";
 
-global.mainapiurl = "http://admin.goyo.in:8081/api/";
-global.fronturl = "http://menu.goyo.in/#/";
+// global.mainapiurl = "http://admin.goyo.in:8081/api/";
+// global.fronturl = "http://menu.goyo.in/#/";
 
 
 // database settings
@@ -83,6 +83,16 @@ global.pgdbconnection = {
     max: 10, // max number of clients in the pool
     idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
 };
+
+// global.pgdbconnection = {
+//     user: 'postgres', //env var: PGUSER
+//     database: 'goyo_ordering', //env var: PGDATABASE
+//     password: 'sa@123', //env var: PGPASSWORD
+//     host: 'order.goyo.in', // Server hosting the postgres database
+//     port: 5432, //env var: PGPORT
+//     max: 10, // max number of clients in the pool
+//     idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
+// };
 
 
 // if (global.mode == global.prodmode.localprod) {

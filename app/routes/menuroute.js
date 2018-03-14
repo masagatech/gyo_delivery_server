@@ -34,14 +34,6 @@ var appRouter = function(app) {
 
     // Payment Details
 
-    app.post(root + '/createHash', function(req, res) {
-        var salt = 'eCwWELxi';
-        var hash = sha512(req.body.preHashString + salt);
-        console.log("data : " + hash);
-        res.send({ success: true, hash: hash });
-    });
-
-
     app.post("/goyoGetway", paygetway.postGetwayForm);
 
     app.post('/payment_success', function(req, res) {

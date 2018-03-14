@@ -22,10 +22,10 @@ payment.saveTransaction = function saveTransaction(req, res) {
     db.callFunction("select " + globals.menuschema("funsave_transaction") + "($1::json);", [req.body], function(data) {
         var _d = data.rows[0].funsave_transaction
 
-        if (req.body.status == "failure") {
-            res.redirect(globals.fronturl + 'mycart/' + _d.autoid);
-        } else {
+        if (req.body.status == "success") {
             res.redirect(globals.fronturl + 'trackorder/' + req.body.txnid);
+        } else {
+            res.redirect(globals.fronturl + 'mycart/' + _d.autoid);
         }
     }, function(err) {
         rs.resp(res, 401, "error : " + err);
