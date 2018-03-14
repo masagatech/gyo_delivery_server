@@ -1,7 +1,11 @@
 var global = module.exports = {};
 
 // global.mainapiurl = "http://localhost:3000/api/";
+// global.fronturl = "http://localhost:3005/#/";
+
 global.mainapiurl = "http://admin.goyo.in:8081/api/";
+global.fronturl = "http://menu.goyo.in/#/";
+
 
 // database settings
 

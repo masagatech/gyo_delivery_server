@@ -18,6 +18,21 @@
             padding: 10px;
         }
         
+        .form-control {
+            display: block;
+            width: 100%;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-image: none;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        }
+        
         .table {
             border-collapse: collapse;
             font-size: 12px;
@@ -34,40 +49,46 @@
 </head>
 
 <body>
-    <div class="body text-center hide">
-        <h1>Payumoney Payment Gateway</h1>
-        <h3>Rs {{totpayamt}}</h3>
+    <div class="card">
+        <div class="header">
+            <img src="{{payulogourl}}" height="100">
+        </div>
 
-        <form id="paymentForm" action="{{payumoneyurl}}" method="post">
-            <input type="text" name="payuid" value="{{payuid}}" />
-            <input type="text" name="key" value="{{payukey}}" />
-            <input type="text" name="txnid" value="{{txnid}}" />
-            <input type="text" name="amount" value="{{totpayamt}}" />
-            <input type="text" name="productinfo" value="{{productinfo}}" />
-            <input type="text" name="firstname" value="{{firstname}}" />
-            <input type="text" name="lastname" value="{{lastname}}" />
-            <input type="text" name="email" value="{{email}}" />
-            <input type="text" name="phone" value="{{phone}}" />
-            <input type="text" name="furl" value="{{furl}}" />
-            <input type="text" name="surl" value="{{surl}}" />
-            <input type="text" name="hash" value="{{hash}}" />
+        <div class="body">
+            <h1>Payumoney Payment Gateway</h1>
+            <h3>Rs {{totpayamt}}</h3>
 
-            <input type="text" name="pg" value="{{pg}}" />
+            <form id="paymentForm" action="{{payumoneyurl}}" method="post">
+                <input type="text" name="payuid" value="{{payuid}}" class="form-control" />
+                <input type="text" name="key" value="{{payukey}}" class="form-control" />
+                <input type="text" name="txnid" value="{{txnid}}" class="form-control" />
+                <input type="text" name="amount" value="{{totpayamt}}" class="form-control" />
+                <input type="text" name="productinfo" value="{{productinfo}}" class="form-control" />
+                <input type="text" name="firstname" value="{{firstname}}" class="form-control" />
+                <input type="text" name="lastname" value="{{lastname}}" class="form-control" />
+                <input type="text" name="email" value="{{email}}" class="form-control" />
+                <input type="text" name="phone" value="{{phone}}" class="form-control" />
+                <input type="text" name="furl" value="{{furl}}" class="form-control" />
+                <input type="text" name="surl" value="{{surl}}" class="form-control" />
+                <input type="text" name="hash" value="{{hash}}" class="form-control" />
 
-            <!-- credit debit card -->
+                <input type="text" name="pg" value="{{pg}}" class="form-control" />
 
-            <input type="text" name="ccnum" value="{{ccnum}}" />
-            <input type="text" name="ccname" value="{{ccname}}" />
-            <input type="text" name="ccvv" value="{{ccvv}}" />
-            <input type="text" name="ccexpmon" value="{{ccexpmon}}" />
-            <input type="text" name="ccexpyr" value="{{ccexpyr}}" />
+                <!-- credit debit card -->
 
-            <!-- netbanking -->
+                <input type="text" name="ccnum" value="{{ccnum}}" class="form-control" />
+                <input type="text" name="ccname" value="{{ccname}}" class="form-control" />
+                <input type="text" name="ccvv" value="{{ccvv}}" class="form-control" />
+                <input type="text" name="ccexpmon" value="{{ccexpmon}}" class="form-control" />
+                <input type="text" name="ccexpyr" value="{{ccexpyr}}" class="form-control" />
 
-            <input type="text" name="bankcode" value="{{bankcode}}" />
+                <!-- netbanking -->
 
-            <button id="btnSubmit" type="submit"></button>
-        </form>
+                <input type="text" name="bankcode" value="{{bankcode}}" class="form-control" />
+
+                <button id="btnSubmit" type="submit">Submit</button>
+            </form>
+        </div>
     </div>
 </body>
 

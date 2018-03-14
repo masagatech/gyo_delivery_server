@@ -13,7 +13,26 @@ var order = require("../menuapi/order.js");
 
 var paymentapi = require("../../paymentgetway/helper.js");
 
-// Day End
+// Transaction
+
+payment.saveTransaction = function saveTransaction(req, res) {
+    req.body.autoid = 0;
+    req.body.txndetails = JSON.stringify(req.body);
+
+    db.callFunction("select " + globals.menuschema("funsave_transaction") + "($1::json);", [req.body], function(data) {
+        var _d = data.rows[0].funsave_transaction
+
+        if (req.body.status == "failure") {
+            res.redirect(globals.fronturl + 'mycart/' + _d.autoid);
+        } else {
+            res.redirect(globals.fronturl + 'trackorder/' + req.body.txnid);
+        }
+    }, function(err) {
+        rs.resp(res, 401, "error : " + err);
+    })
+}
+
+// Payment Getway
 
 payment.postGetwayForm = function postGetwayForm(req, res, done) {
     req.body.flag = "getway";
@@ -43,8 +62,6 @@ function getPayuBizHashes(_data, preq, pres) {
     url += '&user_credentials=' + _data.payukey + ":" + _data.email;
     url += '&flag=web';
 
-    console.log(url);
-
     var req = http.get(url, function(res) {
         var data = '';
 
@@ -60,9 +77,6 @@ function getPayuBizHashes(_data, preq, pres) {
             _data.ccexpmon = preq.body.ccexpmon;
             _data.ccexpyr = preq.body.ccexpyr;
             _data.bankcode = preq.body.bankcode;
-
-            console.log(_data.ccnum);
-            console.log(_data.bankcode);
 
             var html = paymentapi.getPaymentModule(_data, globals);
 

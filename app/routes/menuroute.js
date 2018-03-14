@@ -46,12 +46,12 @@ var appRouter = function(app) {
 
     app.post('/payment_success', function(req, res) {
         console.log(req.body);
-        res.send(req.body.status);
+        paygetway.saveTransaction(req, res);
     })
 
     app.post('/payment_failed', function(req, res) {
         console.log(req.body);
-        res.send(req.body.status);
+        paygetway.saveTransaction(req, res);
     })
 
     //##################################### API Details / ###################################################
