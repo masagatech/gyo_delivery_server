@@ -304,7 +304,7 @@ order.saveOrderInfo_post = function saveOrderInfo(req, res, done, api_callback) 
                     req.body["ordid"] = ordresponse.ordid
                     order.sendAuto(req.body);
 
-                    socket.io.sockets.in(room).emit('ordmsg', { "evt": "data", "data": data });
+                    socket.io.sockets.in(req.body.olid).emit('ordmsg', { "evt": "data", "data": data });
                 }
             } catch (error) {
                 console.log(error);
