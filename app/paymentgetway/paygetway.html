@@ -4,10 +4,16 @@
     <meta charset="utf-8" />
 
     <style>
+        .body {
+            margin-right: auto;
+            margin-left: auto;
+        }
+        
         .form-control {
             display: block;
             width: 100%;
             padding: .375rem .75rem;
+            margin: 8px 0;
             font-size: 1rem;
             line-height: 1.5;
             color: #495057;
@@ -19,19 +25,6 @@
             transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
         }
         
-        .table {
-            border-collapse: collapse;
-            font-size: 12px;
-            width: 100%;
-            border: 1px solid rgba(204, 204, 204, 0.35);
-        }
-        
-        .table th {
-            background: #2196F3;
-            color: #ffffff;
-            padding: 5px;
-        }
-        
         .hide {
             display: none;
         }
@@ -39,44 +32,49 @@
 </head>
 
 <body>
-    <div class="card">
-        <div class="header" align="center">
-            <img src="{{payulogourl}}" height="150px">
-            <h4>Please wait.... </h4>
-        </div>
+    <div align="center">
+        <img src="{{payulogourl}}" height="150px">
+        <h4>Please wait.... </h4>
+    </div>
 
-        <div class="body">
-            <form id="paymentForm" action="{{payumoneyurl}}" method="post">
-                <input type="hidden" name="payuid" value="{{payuid}}" class="form-control" />
-                <input type="hidden" name="key" value="{{payukey}}" class="form-control" />
-                <input type="hidden" name="txnid" value="{{txnid}}" class="form-control" />
-                <input type="hidden" name="amount" value="{{totpayamt}}" class="form-control" />
-                <input type="hidden" name="productinfo" value="{{productinfo}}" class="form-control" />
-                <input type="hidden" name="firstname" value="{{firstname}}" class="form-control" />
-                <input type="hidden" name="lastname" value="{{lastname}}" class="form-control" />
-                <input type="hidden" name="email" value="{{email}}" class="form-control" />
-                <input type="hidden" name="phone" value="{{phone}}" class="form-control" />
-                <input type="hidden" name="furl" value="{{furl}}" class="form-control" />
-                <input type="hidden" name="surl" value="{{surl}}" class="form-control" />
-                <input type="hidden" name="hash" value="{{hash}}" class="form-control" />
+    <div class="body">
+        <form id="paymentForm" action="{{payumoneyurl}}" method="post">
+            <input type="hidden" name="payuid" value="{{payuid}}" class="form-control" />
+            <input type="hidden" name="key" value="{{payukey}}" class="form-control" />
+            <input type="hidden" name="txnid" value="{{txnid}}" class="form-control" />
+            <input type="hidden" name="amount" value="{{totpayamt}}" class="form-control" />
+            <input type="hidden" name="productinfo" value="{{productinfo}}" class="form-control" />
 
-                <input type="hidden" name="pg" value="{{pg}}" class="form-control" />
+            <input type="hidden" name="uid" value="{{uid}}" class="form-control" />
+            <input type="hidden" name="utype" value="{{utype}}" class="form-control" />
+            <input type="hidden" name="firstname" value="{{firstname}}" class="form-control" />
+            <input type="hidden" name="lastname" value="{{lastname}}" class="form-control" />
+            <input type="hidden" name="address1" value="{{address1}}" class="form-control" />
+            <input type="hidden" name="address2" value="{{address2}}" class="form-control" />
+            <input type="hidden" name="addrtype" value="{{addrtype}}" class="form-control" />
+            <input type="hidden" name="email" value="{{email}}" class="form-control" />
+            <input type="hidden" name="phone" value="{{phone}}" class="form-control" />
 
-                <!-- credit debit card -->
+            <input type="hidden" name="furl" value="{{furl}}" class="form-control" />
+            <input type="hidden" name="surl" value="{{surl}}" class="form-control" />
+            <input type="hidden" name="hash" value="{{hash}}" class="form-control" />
 
-                <input type="hidden" name="ccnum" value="{{ccnum}}" class="form-control" />
-                <input type="hidden" name="ccname" value="{{ccname}}" class="form-control" />
-                <input type="hidden" name="ccvv" value="{{ccvv}}" class="form-control" />
-                <input type="hidden" name="ccexpmon" value="{{ccexpmon}}" class="form-control" />
-                <input type="hidden" name="ccexpyr" value="{{ccexpyr}}" class="form-control" />
+            <input type="hidden" name="pg" value="{{pg}}" class="form-control" />
 
-                <!-- netbanking -->
+            <!-- credit debit card -->
 
-                <input type="hidden" name="bankcode" value="{{bankcode}}" class="form-control" />
+            <input type="hidden" name="ccnum" value="{{ccnum}}" class="form-control" />
+            <input type="hidden" name="ccname" value="{{ccname}}" class="form-control" />
+            <input type="hidden" name="ccvv" value="{{ccvv}}" class="form-control" />
+            <input type="hidden" name="ccexpmon" value="{{ccexpmon}}" class="form-control" />
+            <input type="hidden" name="ccexpyr" value="{{ccexpyr}}" class="form-control" />
 
-                <button id="btnSubmit" class="hide" type="submit"></button>
-            </form>
-        </div>
+            <!-- netbanking -->
+
+            <input type="hidden" name="bankcode" value="{{bankcode}}" class="form-control" />
+
+            <button id="btnSubmit" class="hide" type="submit"></button>
+        </form>
     </div>
 </body>
 

@@ -15,17 +15,32 @@ var paymentapi = require("../../paymentgetway/helper.js");
 
 // Transaction
 
+var _uid, _utype, _ordid, _cardtype, _bankcode;
+
 payment.saveTransaction = function saveTransaction(req, res) {
     req.body.autoid = 0;
     req.body.txndetails = JSON.stringify(req.body);
+    req.body.uid = _uid;
+    req.body.utype = _utype;
+    req.body.ordid = _ordid;
+    req.body.cardtype = _cardtype;
+    req.body.bankcode = _bankcode;
 
     db.callFunction("select " + globals.menuschema("funsave_transaction") + "($1::json);", [req.body], function(data) {
         var _d = data.rows[0].funsave_transaction
 
-        if (req.body.status == "success") {
-            res.redirect(globals.fronturl + 'trackorder/' + req.body.txnid);
+        if (req.body.utype == "customer") {
+            if (req.body.status == "success") {
+                res.redirect(globals.menuurl + 'trackorder/' + req.body.txnid);
+            } else {
+                res.redirect(globals.menuurl + 'mycart/' + _d.autoid);
+            }
         } else {
-            res.redirect(globals.fronturl + 'mycart/' + _d.autoid);
+            if (req.body.status == "success") {
+                res.redirect(globals.adminurl + 'order/paymentdetails/' + req.body.txnid);
+            } else {
+                res.redirect(globals.adminurl + 'order/makepayment/' + _d.autoid);
+            }
         }
     }, function(err) {
         rs.resp(res, 401, "error : " + err);
@@ -37,11 +52,19 @@ payment.saveTransaction = function saveTransaction(req, res) {
 payment.postGetwayForm = function postGetwayForm(req, res, done) {
     req.body.flag = "getway";
 
-    if (req.body.ordkey === undefined) { res.status(200).send("ordkey is resuired!"); return };
-    if (req.body.uid === undefined) { res.status(200).send("uid is resuired!"); return };
+    console.log(req.body);
+
+    if (req.body.ordkey === undefined || req.body.ordkey === '') { res.status(200).send("ordkey is required!"); return };
+    if (req.body.uid === undefined || req.body.uid === 0) { res.status(200).send("uid is required!"); return };
+    if (req.body.utype === undefined || req.body.utype === '') { res.status(200).send("utype is required!"); return };
 
     db.callProcedure("select " + globals.menuschema("funget_orderdetails") + "($1,$2::json);", ['payment1', req.body], function(data) {
         var _data = data.rows[0];
+
+        _ordid = _data.ordid;
+        _uid = _data.uid;
+        _utype = _data.utype;
+
         getPayuBizHashes(_data, req, res);
     }, function(err) {
         rs.resp(res, 401, "error : " + err);
@@ -70,6 +93,10 @@ function getPayuBizHashes(_data, preq, pres) {
             var _d = JSON.parse(data);
 
             _data.hash = _d.data.payment_hash;
+
+            _cardtype = preq.body.pg;
+            _bankcode = preq.body.bankcode;
+
             _data.pg = preq.body.pg;
             _data.ccnum = preq.body.ccnum;
             _data.ccname = preq.body.ccname;

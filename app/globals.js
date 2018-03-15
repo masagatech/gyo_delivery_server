@@ -1,10 +1,12 @@
 var global = module.exports = {};
 
 global.mainapiurl = "http://localhost:3000/api/";
-global.fronturl = "http://localhost:3005/#/";
+global.menuurl = "http://localhost:3005/#/";
+global.adminurl = "http://localhost:3003/#/";
 
 // global.mainapiurl = "http://admin.goyo.in:8081/api/";
-// global.fronturl = "http://menu.goyo.in/#/";
+// global.menuurl = "http://menu.goyo.in/#/";
+// global.adminurl = "http://order.goyo.in/#/";
 
 
 // database settings
