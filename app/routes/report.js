@@ -11,8 +11,6 @@ var orderreport = require(appmodulePath + "orderreport.js");
 
 var menuorder = require(menuapiPath + "order.js");
 
-// var bbRpt = require(reportPath + "bankbook/bbrpt.js");;
-
 module.exports = function(app) {
     app.get("/test", testRpt.getrep);
     app.get("/exportDayEndReports", reports.exportDayEndReports);
@@ -26,5 +24,4 @@ module.exports = function(app) {
     app.get("/getOrderReport", orderreport.getOrderReport);
 
     app.get("/getOrderDetailsExport", menuorder.getOrderDetailsExport);
-
 }
