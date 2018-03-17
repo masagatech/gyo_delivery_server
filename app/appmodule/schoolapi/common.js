@@ -2,6 +2,8 @@ var db = require("db");
 var rs = require("gen").res;
 var globals = require("gen").globals;
 
+var swal = require("sweetalert");
+
 var common = module.exports = {};
 
 common.getAutoData = function getAutoData(req, res, done) {
@@ -43,5 +45,15 @@ common.saveMultiMOM = function saveMultiMOM(req, res, done) {
         rs.resp(res, 200, data.rows);
     }, function(err) {
         rs.resp(res, 401, "error : " + err);
+    })
+}
+
+common.showSuccessmsg = function showSuccessmsg(title1, message1) {
+    swal({
+        title: title1,
+        text: message1,
+        type: "success",
+        showConfirmButton: false,
+        timer: 2000
     })
 }

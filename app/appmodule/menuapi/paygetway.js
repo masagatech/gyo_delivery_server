@@ -12,6 +12,7 @@ var payment = module.exports = {};
 var order = require("../menuapi/order.js");
 
 var paymentapi = require("../../paymentgetway/helper.js");
+var sms_email = require("../schoolapi/sendsms_email.js");
 
 // Transaction
 
@@ -30,9 +31,40 @@ payment.saveTransaction = function saveTransaction(req, res) {
         var _d = data.rows[0].funsave_transaction
 
         if (req.body.utype == "customer") {
+            var _d = data.rows[0].funsave_transaction;
+
+            var _trnid = _d.trnid;
+            var _uname = _d.uname;
+            var _uphone = _d.uphone;
+            var _uemail = _d.uemail;
+            var _ordno = _d.ordno;
+            var _ordkey = _d.ordkey;
+            var _totpayamt = _d.totpayamt;
+            var _delvminute = _d.delvminute;
+
             if (req.body.status == "success") {
+                var params = {
+                    "flag": "sendorder",
+                    "username": _uname,
+                    "ordno": _ordno,
+                    "totpayamt": _totpayamt,
+                    "delv_minute": _delvminute,
+                    "ordkey": _ordkey
+                };
+
+                sms_email.sendEmailAndSMS(params, _uphone, _uemail);
+
                 res.redirect(globals.menuurl + 'trackorder/' + req.body.txnid);
             } else {
+                var params = {
+                    "flag": "failedorder",
+                    "username": _uname,
+                    "ordno": _ordno,
+                    "trnid": _trnid
+                };
+
+                sms_email.sendEmailAndSMS(params, _uphone, _uemail);
+
                 res.redirect(globals.menuurl + 'mycart/' + _d.autoid);
             }
         } else {
