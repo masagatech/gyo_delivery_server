@@ -7,11 +7,9 @@ var http = require('http');
 
 var socket = require("socket");
 var uniqid = require('uniqid');
-var swal = require("sweetalert");
 
 var order = module.exports = {};
 var sms_email = require("../schoolapi/sendsms_email.js");
-var common = require("../schoolapi/common.js");
 
 // Order
 

@@ -65,7 +65,7 @@ payment.saveTransaction = function saveTransaction(req, res) {
 
                 sms_email.sendEmailAndSMS(params, _uphone, _uemail);
 
-                res.redirect(globals.menuurl + 'mycart/' + _d.autoid);
+                res.redirect(globals.menuurl + 'mycart');
             }
         } else {
             if (req.body.status == "success") {
