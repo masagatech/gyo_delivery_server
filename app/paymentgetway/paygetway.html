@@ -38,7 +38,7 @@
     </div>
 
     <div class="body">
-        <form id="paymentForm" action="{{payumoneyurl}}" method="post">
+        <form id="paymentDetails" action="{{payumoneyurl}}" method="post">
             <input type="hidden" name="payuid" value="{{payuid}}" class="form-control" />
             <input type="hidden" name="key" value="{{payukey}}" class="form-control" />
             <input type="hidden" name="txnid" value="{{txnid}}" class="form-control" />
@@ -79,7 +79,7 @@
 </body>
 
 <script>
-    document.getElementById("paymentForm").submit();
+    document.getElementById("paymentDetails").submit();
 </script>
 
 </html>

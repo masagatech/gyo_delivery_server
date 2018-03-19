@@ -28,7 +28,6 @@ var appRouter = function(app) {
     }
 
     app.post(globals.globvar.rootAPI + "/", function(req, res, done) {
-        console.log(req.body)
         rs.resp(res, 200, APIInfo);
     });
 
@@ -37,12 +36,10 @@ var appRouter = function(app) {
     app.post("/goyoGetway", paygetway.postGetwayForm);
 
     app.post('/payment_success', function(req, res) {
-        console.log(req.body);
         paygetway.saveTransaction(req, res);
     })
 
     app.post('/payment_failed', function(req, res) {
-        console.log(req.body);
         paygetway.saveTransaction(req, res);
     })
 

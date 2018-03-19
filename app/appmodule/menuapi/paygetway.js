@@ -84,8 +84,6 @@ payment.saveTransaction = function saveTransaction(req, res) {
 payment.postGetwayForm = function postGetwayForm(req, res, done) {
     req.body.flag = "getway";
 
-    console.log(req.body);
-
     if (req.body.ordkey === undefined || req.body.ordkey === '') { res.status(200).send("ordkey is required!"); return };
     if (req.body.uid === undefined || req.body.uid === 0) { res.status(200).send("uid is required!"); return };
     if (req.body.utype === undefined || req.body.utype === '') { res.status(200).send("utype is required!"); return };
