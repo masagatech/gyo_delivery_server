@@ -105,14 +105,14 @@ function getPayuBizHashes(_data, preq, pres) {
     var url = globals.mainapiurl + 'getPayuBizHashes';
 
     url += '?login_id=' + preq.body.uid;
-    url += '&key=' + _data.payukey;
-    url += '&txnid=' + _data.txnid;
-    url += '&amount=' + _data.totpayamt;
-    url += '&productinfo=' + _data.productinfo;
-    url += '&firstname=' + _data.firstname;
-    url += '&email=' + _data.email;
-    url += '&phone=' + _data.phone;
-    url += '&user_credentials=' + _data.payukey + ":" + _data.email;
+    url += '&key=' + _data.payukey == null ? "" : _data.payukey;
+    url += '&txnid=' + _data.txnid == null ? "" : _data.txnid;
+    url += '&amount=' + _data.totpayamt == null ? "" : _data.totpayamt;
+    url += '&productinfo=' + _data.productinfo == null ? "" : _data.productinfo;
+    url += '&firstname=' + _data.firstname == null ? "" : _data.firstname;
+    url += '&email=' + _data.email == null ? "" : _data.email;
+    url += '&phone=' + _data.phone == null ? "" : _data.phone;
+    url += '&user_credentials=' + _data.payukey == null ? "" : _data.email + ":" + _data.email == null ? "" : _data.email;
     url += '&flag=web';
 
     var req = http.get(url, function(res) {
@@ -122,23 +122,29 @@ function getPayuBizHashes(_data, preq, pres) {
             data += chunk;
             var _d = JSON.parse(data);
 
-            _data.hash = _d.data.payment_hash;
+            if (_d.status == 1) {
+                _data.hash = _d.data.payment_hash;
 
-            _cardtype = preq.body.pg;
-            _bankcode = preq.body.bankcode;
+                _cardtype = preq.body.pg;
+                _bankcode = preq.body.bankcode;
 
-            _data.pg = preq.body.pg;
-            _data.ccnum = preq.body.ccnum;
-            _data.ccname = preq.body.ccname;
-            _data.ccvv = preq.body.ccvv;
-            _data.ccexpmon = preq.body.ccexpmon;
-            _data.ccexpyr = preq.body.ccexpyr;
-            _data.bankcode = preq.body.bankcode;
+                _data.pg = preq.body.pg;
+                _data.ccnum = preq.body.ccnum;
+                _data.ccname = preq.body.ccname;
+                _data.ccvv = preq.body.ccvv;
+                _data.ccexpmon = preq.body.ccexpmon;
+                _data.ccexpyr = preq.body.ccexpyr;
+                _data.bankcode = preq.body.bankcode;
 
-            var html = paymentapi.getPaymentModule(_data, globals);
+                var html = paymentapi.getPaymentModule(_data, globals);
 
-            pres.set('Content-Type', 'text/html');
-            pres.status(200).send(html);
+                pres.set('Content-Type', 'text/html');
+                pres.status(200).send(html);
+            } else {
+                rs.resp(pres, 401, null);
+            }
+
+            console.log(_data);
         });
     }).end();
 }
