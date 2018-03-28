@@ -122,26 +122,26 @@ function getPayuBizHashes(_data, preq, pres) {
             data += chunk;
             var _d = JSON.parse(data);
 
+            _data.hash = _d.data.payment_hash;
+
+            _cardtype = preq.body.pg;
+            _bankcode = preq.body.bankcode;
+
+            _data.pg = preq.body.pg;
+            _data.ccnum = preq.body.ccnum;
+            _data.ccname = preq.body.ccname;
+            _data.ccvv = preq.body.ccvv;
+            _data.ccexpmon = preq.body.ccexpmon;
+            _data.ccexpyr = preq.body.ccexpyr;
+            _data.bankcode = preq.body.bankcode;
+
             if (_d.status == 1) {
-                _data.hash = _d.data.payment_hash;
-
-                _cardtype = preq.body.pg;
-                _bankcode = preq.body.bankcode;
-
-                _data.pg = preq.body.pg;
-                _data.ccnum = preq.body.ccnum;
-                _data.ccname = preq.body.ccname;
-                _data.ccvv = preq.body.ccvv;
-                _data.ccexpmon = preq.body.ccexpmon;
-                _data.ccexpyr = preq.body.ccexpyr;
-                _data.bankcode = preq.body.bankcode;
-
                 var html = paymentapi.getPaymentModule(_data, globals);
 
                 pres.set('Content-Type', 'text/html');
                 pres.status(200).send(html);
             } else {
-                rs.resp(pres, 401, null);
+                rs.resp(pres, 401, _d);
             }
 
             console.log(_data);
