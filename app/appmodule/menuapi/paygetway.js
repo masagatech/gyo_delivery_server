@@ -141,7 +141,7 @@ function getPayuBizHashes(_data, preq, pres) {
                 pres.set('Content-Type', 'text/html');
                 pres.status(200).send(html);
             } else {
-                rs.resp(pres, 401, _d);
+                rs.resp(pres, 200, _d);
             }
 
             console.log(_data);
