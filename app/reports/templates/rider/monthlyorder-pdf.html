@@ -1,39 +1,122 @@
-<div class="entry">
-    {{> rptheader}}
+<html>
 
-    <h4 style="color: #085256; text-align: center;">
-        {{#if params.cityid}} {{city}} {{/if}}Rider Order Count <span style="font-size:13px;">({{params.start_date}} - {{params.end_date}}) </span>
-    </h4>
+<head>
+    <meta charset="utf-8" />
 
-    <div class="body">
-        <table border="1" id="rpttable" style="border-collapse: collapse;font-size: 12px;width:100%;border: 1px solid black!important;" cellspacing="0" cellpadding=5>
-            <tr style="background:#085256!important;font-size:10px;" id="header_row">
-                <th rowspan="2" style="background:white!important;color:black!important;">City</th>
-                <th rowspan="2" style="background:white!important;color:black!important;">Rider</th>
-                <th rowspan="2" style="background:white!important;color:black!important;">Workshift</th>
-                {{#if firstset}}
-                <th colspan="{{firstset}}" style="background:white!important;color:black!important;text-align:center"> {{firstset_month}} </th>
-                {{/if}} {{#if lastset}}
-                <th colspan="{{lastset}}" style="background:white!important;color:black!important;text-align:center"> {{lastset_month}} </th>
-                {{/if}}
-                <th rowspan="2" style="background:white!important;color:black!important;text-align:center"> Total </th>
-            </tr>
-            <tr style="background:white!important;color:black!important;font-size:10px;" id="header_row">
-                {{#data2}}
-                <th style="background:white!important;color:black!important;text-align:center">{{this.date}} <br> {{this.day}}</th> {{/data2}}
-            </tr>
-            {{#data}}
-            <tr>
-                <td>{{locname}}</td>
-                <td>{{rider_name}}</td>
-                <td>{{workshift}}</td>
-                {{{date_cols this}}}
-            </tr>
-            {{/data}}
-            <tr>
-                <td colspan="3" class="bold">Total</td>
-                {{{col_total}}}
-            </tr>
-        </table>
+    <style>
+        .card {
+            background: #fff;
+            min-height: 50px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .card .body {
+            font-size: 12px;
+            color: #555;
+            padding: 10px;
+        }
+        
+        table {
+            border-collapse: collapse;
+            font-size: 12px;
+            width: 100%;
+            border: 1px solid rgba(204, 204, 204, 0.35);
+        }
+        
+        table thead th {
+            background: #2196F3;
+            color: #ffffff;
+            padding: 5px;
+        }
+        
+        table tbody th {
+            background: #eeeeee!important;
+            color: #000000!important;
+            padding: 5px;
+        }
+        
+        table tbody td {
+            padding: 5px;
+        }
+        
+        table tfoot td {
+            background: #eeeeee!important;
+            color: #000000!important;
+            padding: 5px;
+        }
+        
+        hr {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border: 0;
+            border-top: 1px solid #bdb8a9;
+        }
+        
+        h2,
+        h4,
+        h6 {
+            padding: 5px;
+            text-align: center;
+        }
+        
+        h5 {
+            color: #085256;
+            text-align: center;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        {{#data1}}
+        <h2 align="center">{{title}}</h2>
+        <h6>{{subtitle}}</h6>
+
+        <h5>{{ctname}} - Rider Order Count ({{dateheader}})</h5>
+        {{/data1}}
+
+        <div class="body">
+            <table border="1" cellspacing="0" cellpadding="5">
+                <thead>
+                    <tr>
+                        <th rowspan="2">City</th>
+                        <th rowspan="2">Rider</th>
+                        <th rowspan="2">Workshift</th>
+                        {{#if firstset}}
+                        <th colspan="{{firstset}}"> {{firstset_month}} </th>
+                        {{/if}} {{#if lastset}}
+                        <th colspan="{{lastset}}"> {{lastset_month}} </th>
+                        {{/if}}
+                        <th rowspan="2"> Total </th>
+                    </tr>
+                    <tr>
+                        {{#data2}}
+                        <th>{{this.date}} <br> {{this.day}}</th>
+                        {{/data2}}
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#data}}
+                    <tr>
+                        <td>{{locname}}</td>
+                        <td>{{rider_name}}</td>
+                        <td>{{workshift}}</td>
+                        {{{date_cols this}}}
+                    </tr>
+                    {{/data}}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="bold">Total</td>
+                        {{{col_total}}}
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
-</div>
+</body>
+
+</html>

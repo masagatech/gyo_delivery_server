@@ -15,7 +15,8 @@ orderreport.getOrderReport = function getOrderReport(req, res, done) {
         db.callProcedure("select " + globals.merchant("funget_rpt_orderreports") + "($1,$2,$3,$4::json);", ['ord1', 'ord2', 'ord3', req.query], function(data) {
             download(req, res, {
                 data: data.rows[0],
-                data1: data.rows[1][0],
+                data1: data.rows[1],
+                data2: data.rows[2],
                 params: req.query
             }, { 'all': 'order/orderhistory.html' }, orderreportapi.ordhistory);
         }, function(err) {

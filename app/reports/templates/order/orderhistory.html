@@ -57,27 +57,15 @@
             border-top: 1px solid #bdb8a9;
         }
         
-        .hr {
-            margin: 8px 0;
-            border-top: 1px solid rgba(0, 0, 0, .1);
-        }
-        
-        .no-line {
-            border: none;
-        }
-        
         .uppercase {
             text-transform: uppercase;
         }
         
-        h4 {
-            color: #085256;
-            text-align: center;
+        h2,
+        h4,
+        h6 {
             padding: 5px;
-        }
-        
-        h4 span {
-            font-size: 13px;
+            text-align: center;
         }
         
         h5 {
@@ -90,10 +78,14 @@
 
 <body>
     <div class="card">
-        <h4>
-            {{#if params.cityid}} {{city}} {{/if}} Rider Attendence
-            <span> ({{params.start_date}} - {{params.end_date}}) </span>
-        </h4>
+        {{#data1}}
+        <h2 align="center">{{title}}</h2>
+        <h6>{{subtitle}}</h6>
+
+        <span innerHtml="{{hrfld}}"></span>
+
+        <h5>{{ctname}} - Rider Order History ({{dateheader}})</h5>
+        {{/data1}}
 
         <div class="body">
             <table border="1" id="rpttable" class="table" cellspacing="0" cellpadding="5">

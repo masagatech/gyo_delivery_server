@@ -56,10 +56,10 @@ riderReports.monthlyOrders = function resolveTemplate(data) {
             data = row[columnorder[i]];
             col_total[i] += data;
             total = total + data;
-            columns = columns + '<td  class="text-center"><b>' + (data == null ? '-' : data) + '</b></td>'
+            columns = columns + '<td class="text-center">' + (data == null ? '-' : data) + '</td>'
         }
 
-        columns += '<td class="text-center" >' + total + '</td>';
+        columns += '<th class="text-center" >' + total + '</th>';
 
         return columns;
     });
@@ -71,9 +71,9 @@ riderReports.monthlyOrders = function resolveTemplate(data) {
         for (var i = 0; i < col_total.length; i++) {
             sum += col_total[i];
             data = col_total[i];
-            columns = columns + '<td  class="text-center"><b>' + (data == null ? '-' : data) + '</b></td>'
+            columns = columns + '<td class="text-center"><b>' + (data == null ? '-' : data) + '</b></td>'
         }
-        columns += '<td  class="text-center"><b>' + (sum == null ? '-' : sum) + '</b></td>'
+        columns += '<td class="text-center"><b>' + (sum == null ? '-' : sum) + '</b></td>'
 
         return columns;
     });
