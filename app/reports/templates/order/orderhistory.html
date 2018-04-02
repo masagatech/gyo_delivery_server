@@ -18,47 +18,21 @@
             padding: 10px;
         }
         
-        .table {
+        table {
             border-collapse: collapse;
             font-size: 12px;
             width: 100%;
             border: 1px solid rgba(204, 204, 204, 0.35);
         }
         
-        .table th {
+        table th {
             background: #2196F3;
             color: #ffffff;
             padding: 5px;
         }
         
-        .tr-foot {
-            background: #bdb8a9;
-            color: #ffffff;
+        table td {
             padding: 5px;
-        }
-        
-        .table td {
-            padding: 5px;
-        }
-        
-        .col-md-12 {
-            width: 100%;
-        }
-        
-        .col-md-6 {
-            float: left;
-            width: 50%;
-        }
-        
-        hr {
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-            border: 0;
-            border-top: 1px solid #bdb8a9;
-        }
-        
-        .uppercase {
-            text-transform: uppercase;
         }
         
         h2,
@@ -82,14 +56,13 @@
         <h2 align="center">{{title}}</h2>
         <h6>{{subtitle}}</h6>
 
-        <span innerHtml="{{hrfld}}"></span>
-
         <h5>{{ctname}} - Rider Order History ({{dateheader}})</h5>
         {{/data1}}
 
         <div class="body">
-            <table border="1" id="rpttable" class="table" cellspacing="0" cellpadding="5">
+            <table border="1" cellspacing="0" cellpadding="5">
                 <tr id="header_row">
+                    <th>Rider</th>
                     <th width="120px">Date</th>
                     <th>Order No</th>
                     <th>Order Type </th>
@@ -105,6 +78,7 @@
                 </tr>
                 {{#data}}
                 <tr>
+                    <td>{{rdrname}}</td>
                     <td>{{orddate}}</td>
                     <td>{{ordno}}</td>
                     <td>{{ordtype}}</td>
