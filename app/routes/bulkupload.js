@@ -11,6 +11,8 @@ var fs = require('fs');
 var items = require("../appmodule/menuapi/items.js");
 var bankpayment = require('../appmodule/merchant/bankpayment.js');
 
+var root = globals.globvar.rootAPI + "/menu";
+
 var multer = require('multer');
 
 var upload = multer({
@@ -28,11 +30,11 @@ var appRouter = function(app) {
 
     // Item Upload
 
-    app.post(globals.globvar.rootAPI + '/uploadMultiItems', upload.any(), function(req, res) {
+    app.post(root + '/uploadMultiItems', upload.any(), function(req, res) {
         var exceltojson; // Initialization
 
         var tmp_path = req.files[0].path;
-        var target_path = 'www/uploads/exceluploads/' + req.files[0].originalname;
+        var target_path = 'www/exceluploads/' + req.files[0].originalname;
         var src = fs.createReadStream(tmp_path);
         var dest = fs.createWriteStream(target_path);
 
@@ -60,6 +62,8 @@ var appRouter = function(app) {
                     } else {
 
                     }
+
+                    console.log(result);
 
                     items.saveMultiItemInfo({ "olid": req.body.olid, "multiitems": result }, function(d) {
                         res.json({ data: d });
