@@ -63,9 +63,9 @@ var appRouter = function(app) {
 
                     }
 
-                    console.log(result);
+                    var dataparam = { "olid": req.body.olid, "multiitems": result };
 
-                    items.saveMultiItemInfo({ "olid": req.body.olid, "multiitems": result }, function(d) {
+                    items.saveMultiItemInfo(dataparam, function(d) {
                         res.json({ data: d });
                     });
                 });

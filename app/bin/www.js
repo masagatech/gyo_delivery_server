@@ -70,6 +70,5 @@ var expserver = server.listen(conf.server.port, conf.server.ip, function() {
 
 var reportServer = require("./report-server.js");
 
-
-var job = require("../appmodule/job/jobschedule.js");
-job.StartJob();
+// var job = require("../appmodule/job/jobschedule.js");
+// job.StartJob();

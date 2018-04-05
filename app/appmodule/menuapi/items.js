@@ -17,9 +17,10 @@ item.saveItemInfo = function saveItemInfo(req, res, done) {
 
 item.saveMultiItemInfo = function saveMultiItemInfo(req, callback) {
     db.callFunction("select " + globals.menuschema("funsave_multiitems") + "($1::json);", [req], function(data) {
-        callback(data.rows);
+        callback(data.rows[0]);
     }, function(err) {
-        callback("error : " + err);
+        var errdt = { funsave_multiitems: { msg: "Invalid Data Format - " + err, msgid: 401 } }
+        callback(errdt);
     })
 }
 
