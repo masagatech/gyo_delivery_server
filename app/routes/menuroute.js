@@ -51,6 +51,7 @@ var appRouter = function(app) {
     //##################################### Customer ##################################################
 
     app.post(root + "/saveCustomerLogin", cust.saveCustomerLogin);
+    app.post(root + "/getCustomerProfile", cust.getCustomerProfile);
 
     //##################################### Customer ##################################################
 
