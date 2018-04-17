@@ -70,15 +70,7 @@
                     <th width="120px">Date</th>
                     <th>Order No</th>
                     <th>Order Type </th>
-                    <th>Order Amt</th>
-                    <th>GST amt</th>
-                    <th>Container Amt</th>
-                    <th>Commission Amt</th>
-                    <th>Delivery Charges</th>
-                    <th>Other Charges</th>
-                    <th>Settlement Amt</th>
-                    <th>Settled Amt</th>
-                    <th>Remark </th>
+                    <th>Outlet / Merchant</th>
                 </tr>
                 {{#data}}
                 <tr>
@@ -86,15 +78,7 @@
                     <td>{{orddate}}</td>
                     <td>{{ordno}}</td>
                     <td>{{ordtype}}</td>
-                    <td align="right">{{amt}}</td>
-                    <td align="right">0</td>
-                    <td align="right">0</td>
-                    <td align="right">0</td>
-                    <td align="right">0</td>
-                    <td align="right">0</td>
-                    <td align="right">0</td>
-                    <td align="right">0</td>
-                    <td>{{remark}}</td>
+                    <td>{{olnm}}</td>
                 </tr>
                 {{/data}}
             </table>

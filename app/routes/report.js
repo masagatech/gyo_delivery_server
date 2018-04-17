@@ -1,27 +1,36 @@
-var reportPath = "../reports/apis/";
-var appmodulePath = "../appmodule/merchant/";
-var menuapiPath = "../appmodule/menuapi/";
+// Report Modules
 
-// report modules
+var testRpt = require("../reports/apis/testrep.js");
 
-var testRpt = require(reportPath + "testrep.js");
-var reports = require(appmodulePath + "reports.js");
-var order = require(appmodulePath + "order.js");
-var orderreport = require(appmodulePath + "orderreport.js");
-
-var menuorder = require(menuapiPath + "order.js");
+var bankrpt = require('../appmodule/reportsapi/bank.js');
+var orderrpt = require('../appmodule/reportsapi/order.js');
+var dayendrpt = require('../appmodule/reportsapi/dayend.js');
+var riderrpt = require('../appmodule/reportsapi/rider.js');
+var merchantrpt = require('../appmodule/reportsapi/merchant.js');
 
 module.exports = function(app) {
     app.get("/test", testRpt.getrep);
-    app.get("/exportDayEndReports", reports.exportDayEndReports);
-    app.get("/exportMerchantLedgerReports", reports.exportMerchantLedgerReports);
-    app.get("/exportBankReports", reports.exportBankReports);
 
-    app.get("/exportInvoiceReports", reports.exportInvoiceReports);
-    app.get("/getMerchantOrderReports", reports.getMerchantOrderReports);
+    // Bank
 
-    app.get("/getRiderReports", order.downloadOrderDetails);
-    app.get("/getOrderReport", orderreport.getOrderReport);
+    app.get("/exportBankReports", bankrpt.exportBankReports);
 
-    app.get("/getOrderDetailsExport", menuorder.getOrderDetailsExport);
+    // Order
+
+    app.get("/getOrderDetailsExport", orderrpt.getOrderDetailsExport);
+    app.get("/exportInvoiceReports", orderrpt.exportInvoiceReports);
+
+    // Day End
+
+    app.get("/exportDayEndReports", dayendrpt.exportDayEndReports);
+
+    // Merchant
+
+    app.get("/exportMerchantLedgerReports", merchantrpt.exportMerchantLedgerReports);
+    app.get("/getMerchantOrderReports", merchantrpt.getMerchantOrderReports);
+
+    // Rider
+
+    app.get("/getRiderAttendance", riderrpt.getRiderAttendance);
+    app.get("/getRiderOrderHistory", riderrpt.getRiderOrderHistory);
 }

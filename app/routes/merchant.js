@@ -15,7 +15,11 @@ var mnlord = require('../appmodule/merchant/manualorder.js');
 var dayend = require('../appmodule/merchant/dayend.js');
 var customer = require('../appmodule/merchant/customer.js');
 var bankpayment = require('../appmodule/merchant/bankpayment.js');
-var reports = require('../appmodule/merchant/reports.js');
+
+var bankrpt = require('../appmodule/reportsapi/bank.js');
+var orderrpt = require('../appmodule/reportsapi/order.js');
+var dayendrpt = require('../appmodule/reportsapi/dayend.js');
+var merchantrpt = require('../appmodule/reportsapi/merchant.js');
 
 var orderdash = require('../appmodule/merchant/orderdashboard.js');
 var mobile = require('../appmodule/merchant/mobile.js');
@@ -128,11 +132,9 @@ var appRouter = function(app) {
     //############################ Orders / #######################################################
 
     app.post(root + "/saveOrderInfo", order.saveOrderInfo);
-    app.post(root + "/getOrderDetails", order.getOrderDetails);
-
-    app.get(root + "/downloadOrderDetails", order.downloadOrderDetails);
     app.post(root + "/updateOrderDetails", order.updateOrderDetails);
 
+    app.post(root + "/getOrderDetails", order.getOrderDetails);
     app.get(root + "/getDailyOrderDetails", order.getDailyOrderDetails);
     app.get(root + "/getFullOrderDetails", order.getFullOrderDetails);
 
@@ -209,16 +211,16 @@ var appRouter = function(app) {
 
     //############################ Reports / ######################################################
 
-    app.post(root + "/getDayEndReports", reports.getDayEndReports);
-    app.post(root + "/getInvoiceDetails", reports.getInvoiceDetails);
+    app.post(root + "/getBankReports", bankrpt.getBankReports);
 
-    app.get(root + "/exportDayEndReports", reports.exportDayEndReports);
+    app.post(root + "/getMerchantLedgerReports", merchantrpt.getMerchantLedgerReports);
+    app.get(root + "/getMerchantOrderReports", merchantrpt.getMerchantOrderReports);
 
-    app.post(root + "/getBankReports", reports.getBankReports);
-    app.post(root + "/getMerchantLedgerReports", reports.getMerchantLedgerReports);
+    app.post(root + "/getManualOrderReport", orderrpt.getManualOrderReport);
+    app.post(root + "/getInvoiceDetails", orderrpt.getInvoiceDetails);
 
-    app.post(root + "/getManualOrderReport", reports.getManualOrderReport);
-    app.get(root + "/getMerchantOrderReports", reports.getMerchantOrderReports);
+    app.post(root + "/getDayEndReports", dayendrpt.getDayEndReports);
+    app.get(root + "/exportDayEndReports", dayendrpt.exportDayEndReports);
 
     //############################ Reports / ######################################################
 
