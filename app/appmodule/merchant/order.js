@@ -183,7 +183,7 @@ order.apiPreSave = function(req, res, done) {
     }
 
     order.saveOrderInfo_post({ body: saveord }, false, null, function(_d) {
-        responseData(_d.status, _d.code, _d.msg, _d.ordid, res);
+        responseData(ordresponse.status, ordresponse.code, ordresponse.msg, ordresponse.ordid, res);
     })
 }
 
@@ -275,10 +275,38 @@ order.saveOrderInfo = function saveOrderInfo(req, res, done) {
     order.saveOrderInfo_post(req, res, done, false)
 }
 
+var sms_email = require("../schoolapi/sendsms_email.js");
+
 order.saveOrderInfo_post = function saveOrderInfo(req, res, done, api_callback) {
     db.callFunction("select " + globals.merchant("funsave_orderinfo") + "($1::json);", [req.body], function(data) {
         if (res) {
             rs.resp(res, 200, data.rows);
+            var _d = data.rows[0].funsave_orderinfo;
+
+            console.log(req.body.ordtype);
+
+            if (req.body.ordtype !== "manual") {
+                var _uname = _d.uname;
+                var _uphone = _d.uphone;
+                var _uemail = _d.uemail;
+                var _ordno = _d.ordno;
+                var _ordkey = _d.ordkey;
+                var _totpayamt = _d.totpayamt;
+                var _delvminute = _d.delvminute;
+
+                var params = {
+                    "flag": "acceptorder",
+                    "username": _uname,
+                    "ordno": _ordno,
+                    "totpayamt": _totpayamt,
+                    "delv_minute": _delvminute,
+                    "ordkey": _ordkey
+                };
+
+                console.log(params);
+
+                sms_email.sendEmailAndSMS(params, _uphone, _uemail);
+            }
         } else {
             try {
                 var ordresponse = data.rows[0].funsave_orderinfo;

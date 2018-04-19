@@ -44,40 +44,67 @@ order.saveOrderInfo = function saveOrderInfo(req, res, done) {
 
     db.callFunction("select " + globals.menuschema("funsave_orderinfo") + "($1::json);", [req.body], function(data) {
         rs.resp(res, 200, data.rows);
+        var _d = data.rows[0].funsave_orderinfo;
 
-        if (req.body.status == 0) {
-            var _d = data.rows[0].funsave_orderinfo;
-
-            var _uname = _d.uname;
-            var _uphone = _d.uphone;
-            var _uemail = _d.uemail;
-            var _ordno = _d.ordno;
-            var _ordkey = _d.ordkey;
-            var _totpayamt = _d.totpayamt;
-            var _delvminute = _d.delvminute;
-
-            var params = {
-                "flag": "sendorder",
-                "username": _uname,
-                "ordno": _ordno,
-                "totpayamt": _totpayamt,
-                "delv_minute": _delvminute,
-                "ordkey": _ordkey
-            };
-
-            sms_email.sendEmailAndSMS(params, _uphone, _uemail);
-
-            socket.io.sockets.in(req.body.olid).emit('ordmsg', {
-                "evt": "neword",
-                "data": {
-                    "ordno": _ordno,
-                    "ordkey": _ordkey
-                }
-            });
+        if (req.body.ordstatus == "cancel") {
+            sendOrderCanceledMessage(req, _d);
+        } else {
+            if (req.body.status == 0) {
+                sendOrderMessage(req, _d);
+            }
         }
     }, function(err) {
         rs.resp(res, 401, "error : " + err);
     })
+}
+
+// Send Order Message
+
+function sendOrderMessage(req, _d) {
+    var _uname = _d.uname;
+    var _uphone = _d.uphone;
+    var _uemail = _d.uemail;
+    var _ordno = _d.ordno;
+    var _ordkey = _d.ordkey;
+    var _totpayamt = _d.totpayamt;
+
+    var params = {
+        "flag": "sendorder",
+        "username": _uname,
+        "ordno": _ordno,
+        "totpayamt": _totpayamt,
+        "ordkey": _ordkey
+    };
+
+    sms_email.sendEmailAndSMS(params, _uphone, _uemail);
+
+    socket.io.sockets.in(req.body.olid).emit('ordmsg', {
+        "evt": "neword",
+        "data": {
+            "ordno": _ordno,
+            "ordkey": _ordkey
+        }
+    });
+}
+
+// Send Order Canceled Message
+
+function sendOrderCanceledMessage(req, _d) {
+    var _uname = _d.uname;
+    var _uphone = _d.uphone;
+    var _uemail = _d.uemail;
+    var _ordno = _d.ordno;
+    var _totpayamt = _d.totpayamt;
+
+    var params = {
+        "flag": "cancelorder",
+        "username": _uname,
+        "ordno": _ordno,
+        "totpayamt": _totpayamt,
+        "reason": req.body.cancelreason
+    };
+
+    sms_email.sendEmailAndSMS(params, _uphone, _uemail);
 }
 
 // Rating
