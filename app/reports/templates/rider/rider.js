@@ -319,3 +319,26 @@ riderReports.attendence = function resolveTemplate(data) {
 
     return _hndlbar;
 }
+
+riderReports.salaryDetails = function salaryDetails(data) {
+    var _hndlbar = Handlebars;
+
+    var data_header = data.data2;
+    var params = data.params;
+
+    _hndlbar.registerHelper('salary_cols', function(row) {
+        var columns = '';
+        let data = '';
+
+        if (params.format !== "html") {
+            for (var i = 0; i < data_header.length; i++) {
+                data = row[data_header[i].key];
+                columns = columns + '<td width="70px">' + (data == null ? '-' : data) + '</td>'
+            }
+        }
+
+        return columns;
+    });
+
+    return _hndlbar
+}

@@ -31,6 +31,5 @@ module.exports = function(app) {
 
     // Rider
 
-    app.get("/getRiderAttendance", riderrpt.getRiderAttendance);
-    app.get("/getRiderOrderHistory", riderrpt.getRiderOrderHistory);
+    app.get("/getRiderReports", riderrpt.getRiderReports);
 }
