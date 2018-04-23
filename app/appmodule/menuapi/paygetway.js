@@ -16,7 +16,7 @@ var sms_email = require("../schoolapi/sendsms_email.js");
 
 // Transaction
 
-var _uid, _utype, _ordid, _cardtype, _bankcode;
+var _uid, _utype, _ordid, _cardtype, _bankcode, _isemailsms, _typ;
 
 payment.saveTransaction = function saveTransaction(req, res) {
     req.body.autoid = 0;
@@ -26,6 +26,8 @@ payment.saveTransaction = function saveTransaction(req, res) {
     req.body.ordid = _ordid;
     req.body.cardtype = _cardtype;
     req.body.bankcode = _bankcode;
+    req.body.isemailsms = _isemailsms;
+    req.body.typ = _typ;
 
     db.callFunction("select " + globals.menuschema("funsave_transaction") + "($1::json);", [req.body], function(data) {
         var _d = data.rows[0].funsave_transaction
@@ -52,9 +54,13 @@ payment.saveTransaction = function saveTransaction(req, res) {
                     "ordkey": _ordkey
                 };
 
-                sms_email.sendEmailAndSMS(params, _uphone, _uemail);
+                if (req.body.isemailsms == true) {
+                    sms_email.sendEmailAndSMS(params, _uphone, _uemail);
+                }
 
-                res.redirect(globals.menuurl + 'trackorder/' + req.body.txnid);
+                if (req.body.typ == "web") {
+                    res.redirect(globals.menuurl + 'trackorder/' + req.body.txnid);
+                }
             } else {
                 var params = {
                     "flag": "failedorder",
@@ -63,9 +69,13 @@ payment.saveTransaction = function saveTransaction(req, res) {
                     "trnid": _trnid
                 };
 
-                sms_email.sendEmailAndSMS(params, _uphone, _uemail);
+                if (req.body.isemailsms == true) {
+                    sms_email.sendEmailAndSMS(params, _uphone, _uemail);
+                }
 
-                res.redirect(globals.menuurl + 'mycart');
+                if (req.body.typ == "web") {
+                    res.redirect(globals.menuurl + 'mycart');
+                }
             }
         } else {
             if (req.body.status == "success") {
@@ -105,14 +115,14 @@ function getPayuBizHashes(_data, preq, pres) {
     var url = globals.mainapiurl + 'getPayuBizHashes';
 
     url += '?login_id=' + preq.body.uid;
-    url += '&key=' + _data.payukey == null ? "" : _data.payukey;
-    url += '&txnid=' + _data.txnid == null ? "" : _data.txnid;
-    url += '&amount=' + _data.totpayamt == null ? "" : _data.totpayamt;
-    url += '&productinfo=' + _data.productinfo == null ? "" : _data.productinfo;
-    url += '&firstname=' + _data.firstname == null ? "" : _data.firstname;
-    url += '&email=' + _data.email == null ? "" : _data.email;
-    url += '&phone=' + _data.phone == null ? "" : _data.phone;
-    url += '&user_credentials=' + _data.payukey == null ? "" : _data.email + ":" + _data.email == null ? "" : _data.email;
+    url += '&key=' + (_data.payukey == null ? "" : _data.payukey);
+    url += '&txnid=' + (_data.txnid == null ? "" : _data.txnid);
+    url += '&amount=' + (_data.totpayamt == null ? "" : _data.totpayamt);
+    url += '&productinfo=' + (_data.productinfo == null ? "" : _data.productinfo);
+    url += '&firstname=' + (_data.firstname == null ? "" : _data.firstname);
+    url += '&email=' + (_data.email == null ? "" : _data.email);
+    url += '&phone=' + (_data.phone == null ? "" : _data.phone);
+    url += '&user_credentials=' + (_data.payukey == null ? "" : _data.email + ":" + _data.email == null ? "" : _data.email);
     url += '&flag=web';
 
     var req = http.get(url, function(res) {
@@ -126,8 +136,11 @@ function getPayuBizHashes(_data, preq, pres) {
 
             _cardtype = preq.body.pg;
             _bankcode = preq.body.bankcode;
+            _isemailsms = preq.body.isemailsms;
+            _typ = preq.body.typ;
 
             _data.pg = preq.body.pg;
+
             _data.ccnum = preq.body.ccnum;
             _data.ccname = preq.body.ccname;
             _data.ccvv = preq.body.ccvv;
@@ -143,8 +156,6 @@ function getPayuBizHashes(_data, preq, pres) {
             } else {
                 rs.resp(pres, 200, _d);
             }
-
-            console.log(_data);
         });
     }).end();
 }
