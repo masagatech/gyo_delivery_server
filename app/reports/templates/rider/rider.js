@@ -323,7 +323,7 @@ riderReports.attendence = function resolveTemplate(data) {
 riderReports.salaryDetails = function salaryDetails(data) {
     var _hndlbar = Handlebars;
 
-    var data_header = data.data2;
+    var data_header = data.data1;
     var params = data.params;
 
     _hndlbar.registerHelper('salary_cols', function(row) {
