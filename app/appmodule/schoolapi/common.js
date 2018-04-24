@@ -1,8 +1,26 @@
 var db = require("db");
 var rs = require("gen").res;
 var globals = require("gen").globals;
+var http = require('http');
+var download = require('image-downloader');
+
+var fs = require('fs');
+var request = require('request');
 
 var common = module.exports = {};
+
+common.downloadImage = function downloadImage(req, res, done) {
+    const options = {
+        url: req.query.imageUrl,
+        dest: req.query.destination
+    }
+
+    download.image(options).then(({ filename, image }) => {
+        rs.resp(res, 200, "success");
+    }).catch((err) => {
+        rs.resp(res, 401, "error : " + err);
+    })
+}
 
 common.getAutoData = function getAutoData(req, res, done) {
     db.callProcedure("select " + globals.schema("funget_auto") + "($1,$2::json);", ['auto', req.query], function(data) {
