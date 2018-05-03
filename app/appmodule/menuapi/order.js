@@ -124,3 +124,24 @@ order.getOrderRating = function getOrderRating(req, res, done) {
         rs.resp(res, 401, "error : " + err);
     }, 1)
 }
+
+// Order Remark
+
+order.saveOrderRemark = function saveOrderRemark(req, res, done) {
+    var newordkey = uniqid();
+    req.body.ordkey = newordkey;
+
+    db.callFunction("select " + globals.menuschema("funsave_orderremark") + "($1::json);", [req.body], function(data) {
+        rs.resp(res, 200, data.rows);
+    }, function(err) {
+        rs.resp(res, 401, "error : " + err);
+    })
+}
+
+order.getOrderRemark = function getOrderRemark(req, res, done) {
+    db.callProcedure("select " + globals.menuschema("funget_orderremark") + "($1,$2::json);", ['ordrem', req.body], function(data) {
+        rs.resp(res, 200, data.rows);
+    }, function(err) {
+        rs.resp(res, 401, "error : " + err);
+    }, 1)
+}

@@ -87,8 +87,14 @@ var appRouter = function(app) {
     app.post(root + "/saveOrderInfo", order.saveOrderInfo);
     app.post(root + "/getOrderDetails", order.getOrderDetails);
 
-
     //##################################### Order ###########################################################
+
+    //##################################### Order Reamrk ####################################################
+
+    app.post(root + "/saveOrderRemark", order.saveOrderRemark);
+    app.post(root + "/getOrderRemark", order.getOrderRemark);
+
+    //##################################### Order Reamrk ####################################################
 
     //##################################### Order Rating ####################################################
 
