@@ -101,6 +101,24 @@
         .data {
             display: table-row;
         }
+        
+        .online,
+        .Online {
+            background-color: #4CAF50 !important;
+            border-radius: 50%;
+            color: #fff;
+            height: 10px;
+            width: 10px;
+        }
+        
+        .manual,
+        Manual {
+            background-color: #2196F3 !important;
+            border-radius: 50%;
+            color: #fff;
+            height: 10px;
+            width: 10px;
+        }
     </style>
 </head>
 
@@ -124,7 +142,7 @@
                 <thead>
                     {{#data1}}
                     <tr class="tr-foot {{showtable}}">
-                        <td colspan="3">
+                        <td colspan="4">
                             <b>Total Order : </b>{{countord}}
                         </td>
                         <td align="right" colspan="2">
@@ -139,6 +157,7 @@
                         <td></td>
                     </tr>
                     <tr class="{{showtable}}">
+                        <th width="10px"></th>
                         <th width="120px">
                             Order Date
                         </th>
@@ -169,6 +188,9 @@
                 <tbody>
                     {{#data}}
                     <tr>
+                        <td>
+                            {{{getOrderType this}}}
+                        </td>
                         <td>
                             {{orddate}}
                         </td>

@@ -6,7 +6,9 @@ var globals = gen.globals;
 var download = gen.download;
 
 var reports = module.exports = {};
-var reportsapi = require("../../reports/apis/reports.js");
+
+var mrchtldrrptapi = require("../../reports/templates/merchant/mrchtldr.js");
+var mrchtordrptapi = require("../../reports/templates/order/mrchtorder.js");
 
 // Merchant Ledger Reports
 
@@ -24,7 +26,7 @@ reports.exportMerchantLedgerReports = function exportMerchantLedgerReports(req, 
             data: data.rows[0],
             data1: data.rows[1],
             params: req.query
-        }, { 'all': 'merchant/mrchtldr.html' }, reportsapi.getReports);
+        }, { 'all': 'merchant/mrchtldr.html' }, mrchtldrrptapi.getMerchantLadgerReports);
     }, function(err) {
         rs.resp(res, 401, "error : " + err);
     }, 2)
@@ -40,7 +42,7 @@ reports.getMerchantOrderReports = function getMerchantOrderReports(req, res, don
                     data: data.rows[0],
                     data1: data.rows[1],
                     params: req.query
-                }, { 'all': 'order/mrchtorder.html' }, reportsapi.getReports);
+                }, { 'all': 'order/mrchtorder.html' }, mrchtordrptapi.getMerchantOrderReports);
             }
         } else {
             rs.resp(res, 200, data.rows);

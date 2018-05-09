@@ -85,6 +85,24 @@
             text-align: center;
             padding: 5px;
         }
+        
+        .online,
+        .Online {
+            background-color: #4CAF50 !important;
+            border-radius: 50%;
+            color: #fff;
+            height: 10px;
+            width: 10px;
+        }
+        
+        .manual,
+        .Manual {
+            background-color: #2196F3 !important;
+            border-radius: 50%;
+            color: #fff;
+            height: 10px;
+            width: 10px;
+        }
     </style>
 </head>
 
@@ -100,6 +118,7 @@
         <div class="body">
             <table border="1" id="rptorder" class="table" cellspacing="0" cellpadding="5">
                 <tr id="header_row">
+                    <th></th>
                     <th>
                         Transaction Date
                     </th>
@@ -110,9 +129,6 @@
                         Outlet Name
                     </th>
                     <th>
-                        Order Type
-                    </th>
-                    <th>
                         Doc No
                     </th>
                     <th>
@@ -121,22 +137,22 @@
                 </tr>
                 {{#data}}
                 <tr>
-                    <td width="150px">
+                    <td width="10px">
+                        {{{getOrderType this}}}
+                    </td>
+                    <td width="100px">
                         {{trxdt}}
                     </td>
-                    <td width="100px">
+                    <td width="250px">
                         {{mrchtnm}}
                     </td>
-                    <td width="100px">
+                    <td width="250px">
                         {{olnm}}
                     </td>
-                    <td width="150px">
-                        {{ordtype}}
-                    </td>
-                    <td width="100px">
+                    <td width="500px">
                         {{docno}}
                     </td>
-                    <td width="100px">
+                    <td width="75px" align="right">
                         {{amt}}
                     </td>
                 </tr>

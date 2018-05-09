@@ -51,6 +51,24 @@
         h5 {
             color: #085256;
         }
+        
+        .online,
+        .Online {
+            background-color: #4CAF50 !important;
+            border-radius: 50%;
+            color: #fff;
+            height: 10px;
+            width: 10px;
+        }
+        
+        .manual,
+        .Manual {
+            background-color: #2196F3 !important;
+            border-radius: 50%;
+            color: #fff;
+            height: 10px;
+            width: 10px;
+        }
     </style>
 </head>
 
@@ -66,18 +84,20 @@
         <div class="body">
             <table border="1" cellspacing="0" cellpadding="5">
                 <tr>
+                    <th></th>
                     <th>Rider</th>
                     <th width="120px">Date</th>
                     <th>Order No</th>
-                    <th>Order Type </th>
                     <th>Outlet / Merchant</th>
                 </tr>
                 {{#data}}
                 <tr>
+                    <td width="10px">
+                        {{{getOrderType this}}}
+                    </td>
                     <td>{{rdrname}}</td>
                     <td>{{orddate}}</td>
                     <td>{{ordno}}</td>
-                    <td>{{ordtype}}</td>
                     <td>{{olnm}}</td>
                 </tr>
                 {{/data}}

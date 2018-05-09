@@ -9,7 +9,6 @@ var download = gen.download;
 
 var rider = module.exports = {};
 var riderapi = require("../../reports/templates/rider/rider.js");
-var reportsapi = require("../../reports/apis/reports.js");
 
 // Rider Reports
 
@@ -42,7 +41,7 @@ rider.getRiderReports = function getRiderReports(req, res, done) {
                     data1: data.rows[1],
                     data2: data.rows[2],
                     params: req.query
-                }, { 'all': 'rider/orderhistory.html' }, reportsapi.getReports);
+                }, { 'all': 'rider/orderhistory.html' }, riderapi.getOrderHistory);
             } else if (req.query["flag"] == 'salary') {
                 download(req, res, {
                     data: data.rows[0],

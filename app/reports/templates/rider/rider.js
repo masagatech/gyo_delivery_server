@@ -3,8 +3,9 @@ var riderReports = module.exports = {};
 
 riderReports.monthlyOrders = function resolveTemplate(data) {
     var _hndlbar = Handlebars;
-    data_header = data.data2;
-    data_cols = data.data;
+
+    var rider_data = data.data;
+    var data_header = data.data2;
 
     if (data.data.length > 0) {
         data.city = data.data[0]['locname'];
@@ -115,8 +116,8 @@ riderReports.monthlyOrders = function resolveTemplate(data) {
 riderReports.monthlyAttendence = function resolveTemplate(data) {
     var _hndlbar = Handlebars;
 
-    data_header = data.data2;
-    data_cols = data.data;
+    var rider_data = data.data;
+    var data_header = data.data2;
 
     if (data.data.length > 0) {
         data.city = data.data[0]['locname'];
@@ -214,8 +215,8 @@ riderReports.monthlyAttendence = function resolveTemplate(data) {
 
 riderReports.attendence = function resolveTemplate(data) {
     var _hndlbar = Handlebars;
-    data_header = data.data2;
-    data_cols = data.data;
+
+    var rider_data = data.data;
 
     function getTimedesc(diff) {
         diffHrs = Math.floor((diff % 86400000) / 3600000); // hours
@@ -318,6 +319,23 @@ riderReports.attendence = function resolveTemplate(data) {
     });
 
     return _hndlbar;
+}
+
+riderReports.getOrderHistory = function getOrderHistory(data) {
+    var _hndlbar = Handlebars;
+
+    var rider_data = data.data;
+    var params = data.params;
+
+    _hndlbar.registerHelper('getOrderType', function(row) {
+        if (params.format == "xls") {
+            return row.ordtype;
+        } else {
+            return '<div class="' + row.ordtype + '"></div>';
+        }
+    });
+
+    return _hndlbar
 }
 
 riderReports.salaryDetails = function salaryDetails(data) {
