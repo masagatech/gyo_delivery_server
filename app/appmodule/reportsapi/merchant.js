@@ -8,7 +8,8 @@ var download = gen.download;
 var reports = module.exports = {};
 
 var mrchtldrrptapi = require("../../reports/templates/merchant/mrchtldr.js");
-var mrchtordrptapi = require("../../reports/templates/order/mrchtorder.js");
+
+var ordrptapi = require("../../reports/templates/order/order.js");
 
 // Merchant Ledger Reports
 
@@ -42,7 +43,7 @@ reports.getMerchantOrderReports = function getMerchantOrderReports(req, res, don
                     data: data.rows[0],
                     data1: data.rows[1],
                     params: req.query
-                }, { 'all': 'order/mrchtorder.html' }, mrchtordrptapi.getMerchantOrderReports);
+                }, { 'all': 'order/mrchtorder.html' }, ordrptapi.getOrderReports);
             }
         } else {
             rs.resp(res, 200, data.rows);

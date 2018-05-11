@@ -283,8 +283,6 @@ order.saveOrderInfo_post = function saveOrderInfo(req, res, done, api_callback) 
             rs.resp(res, 200, data.rows);
             var _d = data.rows[0].funsave_orderinfo;
 
-            console.log(req.body.ordtype);
-
             if (req.body.ordtype !== "manual") {
                 var _uname = _d.uname;
                 var _uphone = _d.uphone;

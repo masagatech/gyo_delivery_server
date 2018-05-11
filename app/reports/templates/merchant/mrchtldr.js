@@ -7,9 +7,9 @@ reports.getMerchantLadgerReports = function getMerchantLadgerReports(data) {
 
     _hndlbar.registerHelper('getOrderType', function(row) {
         if (params.format == "xls") {
-            return row.ordtype;
+            return row.ordtypenm;
         } else {
-            return '<div class="' + row.ordtype + '"></div>';
+            return '<div class="' + row.ordtypenm + '"></div>';
         }
     });
 

@@ -49,15 +49,3 @@ order.exportInvoiceReports = function exportInvoiceReports(req, res, done) {
         rs.resp(res, 401, "error : " + err);
     }, 3)
 }
-
-order.getOrderDetailsExport = function getOrderDetailsExport(req, res, done) {
-    db.callProcedure("select " + globals.menuschema("funget_orderdetails_export") + "($1,$2,$3::json);", ['ord1', 'ord2', req.query], function(data) {
-        download(req, res, {
-            data: data.rows[0],
-            data1: data.rows[1],
-            params: req.query
-        }, { 'all': 'invoice/menuinvoicerpt.html' }, reportsapi.getReports);
-    }, function(err) {
-        rs.resp(res, 401, "error : " + err);
-    }, 2)
-}

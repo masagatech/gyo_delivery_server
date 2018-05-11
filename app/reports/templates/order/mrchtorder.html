@@ -18,26 +18,26 @@
             padding: 10px;
         }
         
-        .table {
+        table {
             border-collapse: collapse;
             font-size: 12px;
             width: 100%;
             border: 1px solid rgba(204, 204, 204, 0.35);
         }
         
-        .table th {
+        table th {
             background: #2196F3;
             color: #ffffff;
+            padding: 5px;
+        }
+        
+        table td {
             padding: 5px;
         }
         
         .tr-foot {
             background: #bdb8a9;
             color: #ffffff;
-            padding: 5px;
-        }
-        
-        .table td {
             padding: 5px;
         }
         
@@ -112,7 +112,7 @@
         }
         
         .manual,
-        Manual {
+        .Manual {
             background-color: #2196F3 !important;
             border-radius: 50%;
             color: #fff;
@@ -138,7 +138,7 @@
             </div>
             {{/data1}}
 
-            <table border="1" id="rptorder" class="table" cellspacing="0" cellpadding="5">
+            <table border="1" id="rptorder" cellspacing="0" cellpadding="5">
                 <thead>
                     {{#data1}}
                     <tr class="tr-foot {{showtable}}">
