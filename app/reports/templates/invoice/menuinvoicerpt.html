@@ -31,8 +31,12 @@
         
         .tr-foot {
             background: #bdb8a9;
-            color: #ffffff;
+            color: #000000;
             padding: 5px;
+        }
+        
+        .tr-foot td {
+            font-size: 10px;
         }
         
         hr {
@@ -83,7 +87,7 @@
     <table cellspacing="0" cellpadding="5">
         <tr>
             <td colspan="2">
-                <img src="{{payulogourl}}" height="80"> Thanks for choosing Goyo, {{custname}} ! Here are your order details:
+                <img src="{{{logourl}}}/{{goyo_logo}}" height="70"> Thanks for choosing Goyo, {{custname}} ! Here are your order details:
             </td>
         </tr>
         <tr>
@@ -91,22 +95,22 @@
                 <table cellspacing="0" cellpadding="5">
                     <tr>
                         <td width="25%">
-                            <span>Order No : </span> {{ordno}}
+                            <b>Order No : </b> {{ordno}}
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <span>Order placed at : </span> {{orddate}}
+                            <b>Placed at : </b> {{orddate}}
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <span>Order Status : </span> <span class="uppercase">{{statusdesc}}</span>
+                            <b>Status : </b> <span class="uppercase">{{statusdesc}}</span>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <span>Order {{status}} at : </span> {{statusdate}}
+                            <b>{{status}} at : </b> {{statusdate}}
                         </td>
                     </tr>
                 </table>
@@ -175,13 +179,13 @@
             <td>
                 {{itemname}} ({{foodtyp}})
             </td>
-            <td width="100px" align="right">
+            <td width="10%" align="right">
                 {{itemprice}}
             </td>
-            <td width="100px" align="right">
+            <td width="10%" align="right">
                 {{itemqty}}
             </td>
-            <td width="100px" align="right">
+            <td width="10%" align="right">
                 {{totprice}}
             </td>
         </tr>
@@ -190,7 +194,7 @@
             <td colspan="3" align="right">
                 Total Item Price :
             </td>
-            <td width="100px" align="right">
+            <td width="10%" align="right">
                 {{totitemamt}}
             </td>
         </tr>
@@ -198,7 +202,7 @@
             <td colspan="3" align="right">
                 GST Price :
             </td>
-            <td width="100px" align="right">
+            <td width="10%" align="right">
                 {{totgstamt}}
             </td>
         </tr>
@@ -206,7 +210,7 @@
             <td colspan="3" align="right">
                 Delivery Price :
             </td>
-            <td width="100px" align="right">
+            <td width="10%" align="right">
                 {{delvprice}}
             </td>
         </tr>
@@ -214,7 +218,7 @@
             <td colspan="3" align="right">
                 Container Price :
             </td>
-            <td width="100px" align="right">
+            <td width="10%" align="right">
                 {{containerprice}}
             </td>
         </tr>
@@ -222,7 +226,7 @@
             <td colspan="3" align="right">
                 Grand Total :
             </td>
-            <td width="100px" align="right">
+            <td width="10%" align="right">
                 {{totpayamt}}
             </td>
         </tr>

@@ -6,7 +6,7 @@ var globals = gen.globals;
 var download = gen.download;
 
 var order = module.exports = {};
-var reportsapi = require("../../reports/apis/reports.js");
+var invoicereportsapi = require("../../reports/templates/invoice/invoice.js");
 
 // Menu Order
 
@@ -24,7 +24,7 @@ order.getMenuOrderReports = function getMenuOrderReports(req, res, done) {
             data: data.rows[0],
             data1: data.rows[1],
             params: req.query
-        }, { 'all': url, 'headerfooter': 'no' }, reportsapi.getReports);
+        }, { 'all': url, 'headerfooter': 'no' }, invoicereportsapi.getInvoiceReports);
     }, function(err) {
         rs.resp(res, 401, "error : " + err);
     }, 2)
